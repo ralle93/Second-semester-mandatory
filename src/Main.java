@@ -1,12 +1,17 @@
 import Model.DataLayer;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
- * Created by rasmusthrane on 31/03/17.
+ * Mikkel is primary contributor for this class
  */
-public class Main {
+public class Main extends Application{
 
    public static void main(String[] args) {
+      launch();
+   }
 
+   public void start(Stage primaryStage) {
       DataLayer d = new DataLayer();
 
       d.connectToDb();

@@ -1,7 +1,11 @@
 package View;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -10,8 +14,19 @@ import javafx.scene.layout.VBox;
 public class View {
 
     public static Scene loginView() {
+        Label loginLabel = new Label("LOGIN");
+        Label userIdLabel = new Label("User ID:");
+        Label userPassword = new Label("User Password");
+
+        TextField userIdField = new TextField();
+
+        HBox hbox = new HBox();
+        hbox.getChildren().add(userIdLabel);
+        hbox.getChildren().add(userIdField);
 
         VBox vbox = new VBox();
+        vbox.getChildren().add(loginLabel);
+        vbox.getChildren().add(hbox);
         Scene loginScene = new Scene(vbox, 1000, 800);
         return loginScene;
     }

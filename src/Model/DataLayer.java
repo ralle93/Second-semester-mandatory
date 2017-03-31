@@ -8,6 +8,8 @@ import java.sql.*;
  */
 public class DataLayer {
    private Connection connection;
+   private Statement stmt;
+   private ResultSet rs;
 
    public void connectToDb(){
       final String dbURL = "jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8166696?useSSL=false";
@@ -33,13 +35,15 @@ public class DataLayer {
       return t;
    }
 
+   public void cleanUpEnviroment(){}
+
    public boolean fetchUser(String user, String pass) {
       String query = "SELECT * FROM  login_data";
 
       try {
-         Statement stmt = connection.createStatement();
+         stmt = connection.createStatement();
 
-         ResultSet rs = stmt.executeQuery(query);
+          rs = stmt.executeQuery(query);
 
          while(rs.next()){
             if (rs.getObject(1).toString().equals(user)) {

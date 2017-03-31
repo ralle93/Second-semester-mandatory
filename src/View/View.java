@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 public class View {
 
     public static Scene loginView() {
+
         VBox vbox = new VBox();
         Scene loginScene = new Scene(vbox, 1000, 800);
         return loginScene;

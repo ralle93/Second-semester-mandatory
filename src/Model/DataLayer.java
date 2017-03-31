@@ -40,20 +40,19 @@ public class DataLayer {
          Statement stmt = connection.createStatement();
 
          ResultSet rs = stmt.executeQuery(query);
-         System.out.println(rs.toString());
+
          while(rs.next()){
-            String usern = rs.getObject(1).toString();
-            String pass = rs.getObject(2).toString();
-
-            System.out.println("username = " + usern + "  password = " + pass);
-
+            if (rs.getObject(1).toString().equals(user)) {
+               if (rs.getObject(2).toString().equals(pass)) {
+                  return true;
+               }
+            }
          }
-
-         connection.close();
 
       } catch (SQLException e) {
          System.out.println(e);
       }
-      return true;
+
+      return false;
    }
 }

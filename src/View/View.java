@@ -1,7 +1,7 @@
 package View;
 
 /**
- * Created by rasmusthrane on 31/03/17.
+ * Tommy is primary contributor for this class.
  */
 public class View {
 

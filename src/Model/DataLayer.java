@@ -29,12 +29,32 @@ public class DataLayer {
 
    }
 
-   public Item fetchItem(){
+   public Item fetchItem(int id){
+
+
+
       Item t = new Item();
-
-
       return t;
    }
+
+   public void cleanUpEnviroment(){
+     try{
+        if(connection!= null){
+           connection.close();
+        }
+        if(stmt != null){
+           stmt.close();
+        }
+        if(rs!=null){
+           rs.close();
+        }
+
+     }catch(SQLException e){
+        System.out.println(e);
+     }
+
+   }
+
 
    public User fetchUser(String user, String pass) {
       String query = "SELECT * FROM  login_data";
@@ -42,6 +62,9 @@ public class DataLayer {
       try {
          stmt = connection.createStatement();
          rs = stmt.executeQuery(query);
+         stmt = connection.createStatement();
+
+          rs = stmt.executeQuery(query);
 
          while(rs.next()){
             if (rs.getString(1).equals(user)) {

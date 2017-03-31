@@ -3,7 +3,6 @@ package Model;
 import Controller.Item;
 
 import java.sql.*;
-
 /**
  *         ralle drengen arbejder her
  */
@@ -23,7 +22,6 @@ public class DataLayer {
    }
 
    public void update(Item item){
-
 
    }
 

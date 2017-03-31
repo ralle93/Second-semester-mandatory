@@ -55,7 +55,7 @@ public class DataLayer {
 
    }
 
-   public boolean fetchUser(String user, String pass) {
+
    public User fetchUser(String user, String pass) {
       String query = "SELECT * FROM  login_data";
 

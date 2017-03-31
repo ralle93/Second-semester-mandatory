@@ -26,6 +26,14 @@ public class View {
         userNameField.setPromptText("Username");
         PasswordField passwordField = new PasswordField();
 
+        // TODO burde laves om til noget med bedre kode konvention
+        /*loginButton.setOnAction(e -> {
+           String user = userNameField.getText();
+           String pass = passwordField.getText();
+
+           if (Main.c.verifyUser(user, pass))
+        });*/
+
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPadding(new Insets(10,10,10,10));
@@ -58,6 +66,8 @@ public class View {
         Button addButton = new Button("Add");
         Button editButton = new Button("Edit");
         Button deleteButton = new Button("Delete");
+        Button inventoryButton = new Button("Inventory");
+        Button userEdit = new Button("User Edit");
 
         TableView inventoryTable = new TableView();
 
@@ -68,7 +78,10 @@ public class View {
         hbox.getChildren().add(deleteButton);
 
         VBox vbox = new VBox();
+        vbox.setSpacing(10);
         vbox.setAlignment(Pos.BOTTOM_CENTER);
+        vbox.getChildren().add(inventoryButton);
+        vbox.getChildren().add(userEdit);
         vbox.getChildren().add(logoutButton);
         vbox.getChildren().add(quitButton);
 

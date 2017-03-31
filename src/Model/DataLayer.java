@@ -33,5 +33,9 @@ public class DataLayer {
 
    }
 
+   public static boolean fetchUser(String user, String pass) {
+      return true;
+   }
+
 
 }

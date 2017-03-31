@@ -1,3 +1,4 @@
+import Controller.Controller;
 import Model.DataLayer;
 import View.View;
 import javafx.application.Application;
@@ -13,6 +14,7 @@ public class Main extends Application{
    }
 
    public void start(Stage primaryStage) {
+      //testShit();
       DataLayer d = new DataLayer();
 
       d.connectToDb();
@@ -20,5 +22,14 @@ public class Main extends Application{
       primaryStage.setTitle("Inventory");
       primaryStage.setScene(View.loginView());
       primaryStage.show();
+   }
+
+   public void testShit() {
+      DataLayer d = new DataLayer();
+      d.connectToDb();
+      Controller c = new Controller(d);
+
+      System.out.println(c.verifyUser("mikk7506", "12345"));
+      System.out.println(c.verifyUser("mikk7506","1234"));
    }
 }

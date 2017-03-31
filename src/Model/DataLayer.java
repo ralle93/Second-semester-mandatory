@@ -42,8 +42,8 @@ public class DataLayer {
          ResultSet rs = stmt.executeQuery(query);
 
          while(rs.next()){
-            if (rs.getObject(1).toString().equals(user)) {
-               if (rs.getObject(2).toString().equals(pass)) {
+            if (rs.getString(1).equals(user)) {
+               if (rs.getString(2).equals(pass)) {
                   return true;
                }
             }

@@ -9,7 +9,7 @@ public class Controller {
    private DataLayer d;
 
    public Controller(DataLayer dataLayer) {
-      d = dataLayer;
+      this.d = dataLayer;
    }
 
    public boolean verifyUser(String user, String pass) {

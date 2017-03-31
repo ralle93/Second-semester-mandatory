@@ -17,7 +17,7 @@ public class Main extends Application{
 
       d.connectToDb();
 
-      primaryStage.setTitle("Inventory");
+      primaryStage.setTitle("Inventory Management version. 0.01");
       primaryStage.setScene(View.loginView());
       primaryStage.show();
    }

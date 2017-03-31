@@ -27,7 +27,11 @@ public class DataLayer {
 
    }
 
-   public void fetch(Item item){
+   public Item fetch(){
+      Item t = new Item();
+
+
+      return t;
 
    }
 

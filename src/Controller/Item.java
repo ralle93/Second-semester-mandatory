@@ -9,12 +9,13 @@ public class Item {
    private String name;
    private String description;
 
-   Item(int id, int quantity, String name, String description) {
+   public Item(int id, int quantity, String name, String description) {
       this.id = id;
       this.quantity = quantity;
       this.name = name;
       this.description = description;
    }
+   public Item(){}
 
    public int getId() {
       return id;

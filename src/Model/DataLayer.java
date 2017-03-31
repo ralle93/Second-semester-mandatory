@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.Item;
+import Controller.User;
 
 import java.sql.*;
 /**
@@ -8,6 +9,8 @@ import java.sql.*;
  */
 public class DataLayer {
    private Connection connection;
+   private Statement stmt;
+   private ResultSet rs;
 
    public void connectToDb(){
       final String dbURL = "jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8166696?useSSL=false";
@@ -26,25 +29,54 @@ public class DataLayer {
 
    }
 
-   public Item fetchItem(){
+   public Item fetchItem(int id){
+
+
+
       Item t = new Item();
-
-
       return t;
    }
 
-   public boolean fetchUser(String user, String pass) {
+   public void cleanUpEnviroment(){
+     try{
+        if(connection!= null){
+           connection.close();
+        }
+        if(stmt != null){
+           stmt.close();
+        }
+        if(rs!=null){
+           rs.close();
+        }
+
+     }catch(SQLException e){
+        System.out.println(e);
+     }
+
+   }
+
+
+   public User fetchUser(String user, String pass) {
       String query = "SELECT * FROM  login_data";
 
       try {
-         Statement stmt = connection.createStatement();
+         stmt = connection.createStatement();
+         rs = stmt.executeQuery(query);
+         stmt = connection.createStatement();
 
-         ResultSet rs = stmt.executeQuery(query);
+          rs = stmt.executeQuery(query);
 
          while(rs.next()){
-            if (rs.getObject(1).toString().equals(user)) {
-               if (rs.getObject(2).toString().equals(pass)) {
-                  return true;
+            if (rs.getString(1).equals(user)) {
+               if (rs.getString(2).equals(pass)) {
+                  User temp = new User();
+
+                  temp.setAccessLevel(rs.getInt(3));
+                  temp.setUsername(rs.getString(1));
+                  temp.setPassword(rs.getString(2));
+                  temp.setEmail(rs.getString(4));
+
+                  return temp;
                }
             }
          }
@@ -53,6 +85,6 @@ public class DataLayer {
          System.out.println(e);
       }
 
-      return false;
+      return null;
    }
 }

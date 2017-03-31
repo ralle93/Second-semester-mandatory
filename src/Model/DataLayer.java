@@ -28,14 +28,31 @@ public class DataLayer {
 
    }
 
-   public Item fetchItem(){
+   public Item fetchItem(int id){
+
+
+
       Item t = new Item();
-
-
       return t;
    }
 
-   public void cleanUpEnviroment(){}
+   public void cleanUpEnviroment(){
+     try{
+        if(connection!= null){
+           connection.close();
+        }
+        if(stmt != null){
+           stmt.close();
+        }
+        if(rs!=null){
+           rs.close();
+        }
+
+     }catch(SQLException e){
+        System.out.println(e);
+     }
+
+   }
 
    public boolean fetchUser(String user, String pass) {
       String query = "SELECT * FROM  login_data";

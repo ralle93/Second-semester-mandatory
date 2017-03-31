@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 public class Main extends Application{
    public DataLayer d;
    public Controller c;
+   public View v;
 
    public static void main(String[] args) {
       launch();
@@ -20,10 +21,12 @@ public class Main extends Application{
       //testMethod();
       d = new DataLayer();
       c = new Controller(d);
+      v = new View(c);
       d.connectToDb();
 
+      // TODO Skal laves om så view er et object for sig, der selv ved hvad den skal vise
       primaryStage.setTitle("Inventory Management version. 0.01");
-      primaryStage.setScene(View.loginView());
+      primaryStage.setScene(v.loginView());
       primaryStage.show();
    }
 

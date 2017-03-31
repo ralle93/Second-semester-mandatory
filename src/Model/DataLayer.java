@@ -55,16 +55,12 @@ public class DataLayer {
 
    }
 
-
    public User fetchUser(String user, String pass) {
       String query = "SELECT * FROM  login_data";
 
       try {
          stmt = connection.createStatement();
          rs = stmt.executeQuery(query);
-         stmt = connection.createStatement();
-
-          rs = stmt.executeQuery(query);
 
          while(rs.next()){
             if (rs.getString(1).equals(user)) {
@@ -80,8 +76,8 @@ public class DataLayer {
                }
             }
          }
-
-      } catch (SQLException e) {
+      }
+      catch (SQLException e) {
          System.out.println(e);
       }
 

@@ -62,9 +62,6 @@ public class DataLayer {
       try {
          stmt = connection.createStatement();
          rs = stmt.executeQuery(query);
-         stmt = connection.createStatement();
-
-          rs = stmt.executeQuery(query);
 
          while(rs.next()){
             if (rs.getString(1).equals(user)) {

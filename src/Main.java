@@ -14,7 +14,7 @@ public class Main extends Application{
    }
 
    public void start(Stage primaryStage) {
-      //testShit();
+      //testMethod();
       DataLayer d = new DataLayer();
       Controller c = new Controller(d);
       d.connectToDb();
@@ -24,7 +24,7 @@ public class Main extends Application{
       primaryStage.show();
    }
 
-   public void testShit() {
+   public void testMethod() {
       DataLayer d = new DataLayer();
       d.connectToDb();
       Controller c = new Controller(d);

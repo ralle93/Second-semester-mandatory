@@ -3,7 +3,7 @@ package Model;
 import java.sql.*;
 
 /**
- * Created by rasmusthrane on 31/03/17.
+ *         ralle drengen arbejder her
  */
 public class DataLayer {
 
@@ -12,15 +12,15 @@ public class DataLayer {
       String username = "sql8166696";
       String password = "Lp7AZi7fVf";
 
-      String query = "SELECT * FROM  loginform";
-
       try {
          Connection connection = DriverManager.getConnection(dbURL, username, password);
 
+         Statement stmt = connection.createStatement();
 
-         System.out.println(connection);
       } catch (SQLException e) {
          System.out.println(e);
       }
    }
+
+
 }

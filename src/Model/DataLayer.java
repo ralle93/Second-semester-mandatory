@@ -7,6 +7,7 @@ import java.sql.*;
  *         ralle drengen arbejder her
  */
 public class DataLayer {
+   private Connection connection;
 
    public void connectToDb(){
       final String dbURL = "jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8166696?useSSL=false";
@@ -14,7 +15,7 @@ public class DataLayer {
       final String password = "Lp7AZi7fVf";
 
       try {
-         Connection connection = DriverManager.getConnection(dbURL, username, password);
+         connection = DriverManager.getConnection(dbURL, username, password);
 
       } catch (SQLException e) {
          System.out.println(e);
@@ -25,7 +26,7 @@ public class DataLayer {
 
    }
 
-   public Item fetch(){
+   public Item fetchItem(){
       Item t = new Item();
 
 

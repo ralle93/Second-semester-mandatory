@@ -13,5 +13,10 @@ public class View {
 
     }
 
+    public static void inventoryView() {
+
+    }
+
+
 
 }

@@ -29,9 +29,18 @@ public class DataLayer {
 
    }
 
-   public Item fetchItem(int id){
+   public Item fetchItem(int index){
+      String query = "SELECT amount, name, description from sql8166696.inventory where id = " + index;
 
+      try{
+            stmt = connection.createStatement();
+            rs = stmt.executeQuery(query);
+            while(rs.next()){
 
+            }
+      }catch(SQLException e){
+         System.out.println(e);
+      }
 
       Item t = new Item();
       return t;
@@ -55,16 +64,12 @@ public class DataLayer {
 
    }
 
-
    public User fetchUser(String user, String pass) {
       String query = "SELECT * FROM  login_data";
 
       try {
          stmt = connection.createStatement();
          rs = stmt.executeQuery(query);
-         stmt = connection.createStatement();
-
-          rs = stmt.executeQuery(query);
 
          while(rs.next()){
             if (rs.getString(1).equals(user)) {
@@ -80,8 +85,8 @@ public class DataLayer {
                }
             }
          }
-
-      } catch (SQLException e) {
+      }
+      catch (SQLException e) {
          System.out.println(e);
       }
 

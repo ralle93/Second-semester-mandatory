@@ -17,6 +17,7 @@ public class DataLayer {
       try {
          Connection connection = DriverManager.getConnection(dbURL, username, password);
 
+
          System.out.println(connection);
       } catch (SQLException e) {
          System.out.println(e);

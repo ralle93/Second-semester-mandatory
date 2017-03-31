@@ -1,4 +1,5 @@
 import Model.DataLayer;
+import View.View;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -15,5 +16,9 @@ public class Main extends Application{
       DataLayer d = new DataLayer();
 
       d.connectToDb();
+
+      primaryStage.setTitle("Inventory");
+      primaryStage.setScene(View.loginView());
+      primaryStage.show();
    }
 }

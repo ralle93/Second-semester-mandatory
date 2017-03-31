@@ -20,7 +20,7 @@ public class Main extends Application{
       //testMethod();
       d = new DataLayer();
       c = new Controller(d);
-      d.connectToDb();
+      c.connectdb();
 
       primaryStage.setTitle("Inventory Management version. 0.01");
       primaryStage.setScene(View.loginView());

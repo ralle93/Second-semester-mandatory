@@ -1,6 +1,7 @@
+package View;
+
 import Controller.Controller;
 import Model.DataLayer;
-import View.View;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -8,6 +9,8 @@ import javafx.stage.Stage;
  * Mikkel is primary contributor for this class
  */
 public class Main extends Application{
+   public DataLayer d;
+   public Controller c;
 
    public static void main(String[] args) {
       launch();
@@ -15,12 +18,12 @@ public class Main extends Application{
 
    public void start(Stage primaryStage) {
       //testMethod();
-      DataLayer d = new DataLayer();
-      Controller c = new Controller(d);
+      d = new DataLayer();
+      c = new Controller(d);
       d.connectToDb();
 
       primaryStage.setTitle("Inventory Management version. 0.01");
-      primaryStage.setScene(View.mainView());
+      primaryStage.setScene(View.loginView());
       primaryStage.show();
    }
 

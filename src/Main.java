@@ -16,7 +16,7 @@ public class Main extends Application{
    public void start(Stage primaryStage) {
       //testShit();
       DataLayer d = new DataLayer();
-
+      Controller c = new Controller(d);
       d.connectToDb();
 
       primaryStage.setTitle("Inventory");

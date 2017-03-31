@@ -16,6 +16,13 @@ public class User {
       this.email = email;
    }
 
+   public User() {
+      this.accessLevel = 3;
+      this.username = "temp";
+      this.password = "temp";
+      this.email = "temp";
+   }
+
    public int getAccessLevel() {
       return accessLevel;
    }

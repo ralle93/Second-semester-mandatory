@@ -7,12 +7,20 @@ import Model.DataLayer;
  */
 public class Controller {
    private DataLayer d;
+   private User loggedUser;
 
    public Controller(DataLayer dataLayer) {
       this.d = dataLayer;
    }
 
    public boolean verifyUser(String user, String pass) {
-      return d.fetchUser(user, pass);
+      User temp = d.fetchUser(user, pass);
+
+      if (temp != null) {
+         loggedUser = temp;
+         return true;
+      }
+
+      return false;
    }
 }

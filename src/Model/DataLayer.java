@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.Item;
+import Controller.User;
 
 import java.sql.*;
 /**
@@ -55,9 +56,12 @@ public class DataLayer {
    }
 
    public boolean fetchUser(String user, String pass) {
+   public User fetchUser(String user, String pass) {
       String query = "SELECT * FROM  login_data";
 
       try {
+         stmt = connection.createStatement();
+         rs = stmt.executeQuery(query);
          stmt = connection.createStatement();
 
           rs = stmt.executeQuery(query);
@@ -65,7 +69,14 @@ public class DataLayer {
          while(rs.next()){
             if (rs.getString(1).equals(user)) {
                if (rs.getString(2).equals(pass)) {
-                  return true;
+                  User temp = new User();
+
+                  temp.setAccessLevel(rs.getInt(3));
+                  temp.setUsername(rs.getString(1));
+                  temp.setPassword(rs.getString(2));
+                  temp.setEmail(rs.getString(4));
+
+                  return temp;
                }
             }
          }
@@ -74,6 +85,6 @@ public class DataLayer {
          System.out.println(e);
       }
 
-      return false;
+      return null;
    }
 }

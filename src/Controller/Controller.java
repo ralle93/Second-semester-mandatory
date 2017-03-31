@@ -23,4 +23,7 @@ public class Controller {
 
       return false;
    }
+   public void connectdb(){
+      d.connectToDb();
+   }
 }

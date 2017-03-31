@@ -22,7 +22,7 @@ public class Main extends Application{
       d = new DataLayer();
       c = new Controller(d);
       v = new View(c);
-      d.connectToDb();
+      c.connectdb();
 
       // TODO Skal laves om så view er et object for sig, der selv ved hvad den skal vise
       primaryStage.setTitle("Inventory Management version. 0.01");

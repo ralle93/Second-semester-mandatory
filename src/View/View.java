@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,6 +15,11 @@ import javafx.stage.Stage;
  * Tommy is primary contributor for this class.
  */
 public class View {
+   private Controller c;
+
+   View(Controller c) {
+      this.c = c;
+   }
 
     Stage primaryStage = new Stage();
 
@@ -39,12 +45,14 @@ public class View {
         PasswordField passwordField = new PasswordField();
 
         // TODO burde laves om til noget med bedre kode konvention
-        /*loginButton.setOnAction(e -> {
+        loginButton.setOnAction(e -> {
            String user = userNameField.getText();
            String pass = passwordField.getText();
 
-           if (Main.c.verifyUser(user, pass))
-        });*/
+           if (c.verifyUser(user, pass)) {
+              // TODO
+           }
+        });
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);

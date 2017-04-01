@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 public class Main extends Application{
    public DataLayer d;
    public Controller c;
+   public View v;
 
    public static void main(String[] args) {
       launch();
@@ -20,7 +21,8 @@ public class Main extends Application{
       //testMethod();
       d = new DataLayer();
       c = new Controller(d);
-      d.connectToDb();
+      v = new View(c);
+      c.connectdb();
 
       View view = new View(primaryStage);
    }

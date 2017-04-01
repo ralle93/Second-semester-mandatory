@@ -31,19 +31,24 @@ public class DataLayer {
 
    public Item fetchItem(int index){
       String query = "SELECT amount, name, description from sql8166696.inventory where id = " + index;
+      String name;
+      String description;
+      int quantity;
+      Item t;
 
       try{
-            stmt = connection.createStatement();
-            rs = stmt.executeQuery(query);
-            while(rs.next()){
+         stmt = connection.createStatement();
+         rs = stmt.executeQuery(query);
 
-            }
+         quantity = rs.getInt(2);
+         name = rs.getString(3);
+         description = rs.getString(4);
+         t = new Item(index,quantity,name,description);
+         return t;
       }catch(SQLException e){
          System.out.println(e);
       }
-
-      Item t = new Item();
-      return t;
+      return null;
    }
 
    public void cleanUpEnviroment(){

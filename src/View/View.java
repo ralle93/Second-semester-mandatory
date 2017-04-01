@@ -1,7 +1,6 @@
 package View;
 
 import Controller.Controller;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -17,32 +16,39 @@ import javafx.stage.Stage;
 public class View {
    private Controller c;
 
+   private Stage primaryStage = new Stage();
+
+   // Objects used in loginView
+   private Label loginLabel = new Label("LOGIN");
+   private Label userIdLabel = new Label("User ID:");
+   private Label userPassword = new Label("User Password");
+   private Button quitButton = new Button("Quit");
+   private Button loginButton = new Button("Login");
+   private TextField userNameField = new TextField();
+   private PasswordField passwordField = new PasswordField();
+   private GridPane gridPane = new GridPane();
+   private HBox hbox = new HBox();
+   private VBox vbox = new VBox();
+   private Scene loginScene = new Scene(vbox, 1000, 800);
+
    View(Controller c) {
       this.c = c;
    }
 
-    Stage primaryStage = new Stage();
+   // Constructer for View
+   public View(Stage primaryStage) {
+       this.primaryStage = primaryStage;
 
-    // Constructer for View
-    public View(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+       primaryStage.setTitle("Inventory Management version. 0.01");
+       primaryStage.setScene(loginView());
+       primaryStage.show();
+   }
 
-        primaryStage.setTitle("Inventory Management version. 0.01");
-        primaryStage.setScene(mainView());
-        primaryStage.show();
-    }
+   // GUI for login Screen.
+   public Scene loginView() {
 
-    // GUI for login Screen.
-    public Scene loginView() {
-        Label loginLabel = new Label("LOGIN");
-        Label userIdLabel = new Label("User ID:");
-        Label userPassword = new Label("User Password");
-        Button quitButton = new Button("Quit");
-        Button loginButton = new Button("Login");
-
-        TextField userNameField = new TextField();
         userNameField.setPromptText("Username");
-        PasswordField passwordField = new PasswordField();
+        passwordField.setPromptText("Password");
 
         // TODO burde laves om til noget med bedre kode konvention
         loginButton.setOnAction(e -> {
@@ -51,35 +57,39 @@ public class View {
 
            if (c.verifyUser(user, pass)) {
               // TODO
+               primaryStage.setScene(mainView());
            }
         });
 
-        GridPane gridPane = new GridPane();
-        gridPane.setAlignment(Pos.CENTER);
-        gridPane.setPadding(new Insets(10,10,10,10));
-        gridPane.setVgap(10);
-        gridPane.setHgap(10);
         gridPane.add(userIdLabel, 0, 0);
         gridPane.add(userNameField, 1, 0);
         gridPane.add(userPassword, 0,1);
         gridPane.add(passwordField, 1,1);
 
-        HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
         hbox.getChildren().add(quitButton);
         hbox.getChildren().add(loginButton);
 
-        VBox vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(25);
         vbox.getChildren().add(loginLabel);
         vbox.getChildren().add(gridPane);
         vbox.getChildren().add(hbox);
 
-        Style.styleLoginVBox(vbox);
+        loginViewStyle();
 
-        Scene loginScene = new Scene(vbox, 1000, 800);
         return loginScene;
+    }
+
+    public void loginViewStyle() {
+        Style.styleLoginVBox(vbox);
+        Style.styleLoginHBox(hbox);
+        Style.styleloginGrid(gridPane);
+        Style.styleloginLabel(loginLabel);
+        Style.styleloginLabel(userIdLabel);
+        Style.styleloginLabel(userPassword);
+        Style.styleButtons(loginButton);
+        Style.styleButtons(quitButton);
+        Style.styleTextfield(userNameField);
+        Style.stylePasswordField(passwordField);
     }
 
     // GUI for main program view.

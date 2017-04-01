@@ -20,8 +20,8 @@ public class View {
 
    // Objects used in loginView
    private Label loginLabel = new Label("LOGIN");
-   private Label userIdLabel = new Label("User ID:");
-   private Label userPassword = new Label("User Password");
+   private Label userIdLabel = new Label("Username:");
+   private Label userPassword = new Label("User Password:");
    private Button quitButton = new Button("Quit");
    private Button loginButton = new Button("Login");
    private TextField userNameField = new TextField();
@@ -83,7 +83,7 @@ public class View {
         Style.styleLoginVBox(vbox);
         Style.styleLoginHBox(hbox);
         Style.styleloginGrid(gridPane);
-        Style.styleloginLabel(loginLabel);
+        Style.styleloginTitleLabel(loginLabel);
         Style.styleloginLabel(userIdLabel);
         Style.styleloginLabel(userPassword);
         Style.styleButtons(loginButton);

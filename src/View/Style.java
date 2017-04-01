@@ -26,11 +26,8 @@ public class Style {
     public static void styleloginGrid(GridPane gridPane) {
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPadding(new Insets(10,10,10,10));
-        gridPane.setVgap(10);
+        gridPane.setVgap(25);
         gridPane.setHgap(10);
-        gridPane.setStyle("-fx-border-radius: 2%;"+
-                          "-fx-border-width: 2px;"+
-                          "-fx-border-color: blueviolet;");
     }
 
     public static void styleLoginHBox(HBox hbox) {
@@ -38,8 +35,20 @@ public class Style {
         hbox.setPadding(new Insets(10,10,10,10));
     }
 
+    public static void styleloginTitleLabel(Label label) {
+        label.setPadding(new Insets(25,50,25,50));
+        label.setStyle("-fx-text-fill: blueviolet;"+
+                       "-fx-font-size: 48px;"+
+                       "-fx-font-family: monospace;"+
+                       "-fx-border-color: blueviolet;"+
+                       "-fx-border-width: 3px;"+
+                       "-fx-border-radius: 10%");
+    }
+
     public static void styleloginLabel(Label label) {
-        label.setStyle("-fx-text-fill: blueviolet;");
+        label.setStyle("-fx-text-fill: blueviolet;"+
+                       "-fx-font-family: monospace;"+
+                       "-fx-font-size: 18px");
     }
 
     public static void styleButtons(Button button) {

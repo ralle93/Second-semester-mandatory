@@ -31,6 +31,19 @@ public class View {
    private VBox vbox = new VBox();
    private Scene loginScene = new Scene(vbox, 1000, 800);
 
+   private Button logoutButton = new Button("Logout");
+   private Button mainQuitButton = new Button("Quit");
+   private Button addButton = new Button("Add");
+   private Button editButton = new Button("Edit");
+   private Button deleteButton = new Button("Delete");
+   private Button inventoryButton = new Button("Inventory");
+   private Button userEdit = new Button("User Edit");
+   private TableView inventoryTable = new TableView();
+   private HBox mainHBox = new HBox();
+   private VBox mainVBox = new VBox();
+   private BorderPane borderpane = new BorderPane();
+   private Scene mainScene = new Scene(borderpane, 1000, 800);
+
    View(Controller c) {
       this.c = c;
    }
@@ -40,7 +53,7 @@ public class View {
        this.primaryStage = primaryStage;
 
        primaryStage.setTitle("Inventory Management version. 0.01");
-       primaryStage.setScene(loginView());
+       primaryStage.setScene(mainView());
        primaryStage.show();
    }
 
@@ -74,12 +87,12 @@ public class View {
         vbox.getChildren().add(gridPane);
         vbox.getChildren().add(hbox);
 
-        loginViewStyle();
+        loginViewStyleLoader();
 
         return loginScene;
     }
 
-    public void loginViewStyle() {
+    public void loginViewStyleLoader() {
         Style.styleLoginVBox(vbox);
         Style.styleLoginHBox(hbox);
         Style.styleloginGrid(gridPane);
@@ -94,36 +107,23 @@ public class View {
 
     // GUI for main program view.
     public Scene mainView() {
-        Button logoutButton = new Button("Logout");
-        Button quitButton = new Button("Quit");
-        Button addButton = new Button("Add");
-        Button editButton = new Button("Edit");
-        Button deleteButton = new Button("Delete");
-        Button inventoryButton = new Button("Inventory");
-        Button userEdit = new Button("User Edit");
 
-        TableView inventoryTable = new TableView();
+        mainHBox.setAlignment(Pos.CENTER);
+        mainHBox.getChildren().add(addButton);
+        mainHBox.getChildren().add(editButton);
+        mainHBox.getChildren().add(deleteButton);
 
-        HBox hbox = new HBox();
-        hbox.setAlignment(Pos.CENTER);
-        hbox.getChildren().add(addButton);
-        hbox.getChildren().add(editButton);
-        hbox.getChildren().add(deleteButton);
+        mainVBox.setSpacing(10);
+        mainVBox.setAlignment(Pos.BOTTOM_CENTER);
+        mainVBox.getChildren().add(inventoryButton);
+        mainVBox.getChildren().add(userEdit);
+        mainVBox.getChildren().add(logoutButton);
+        mainVBox.getChildren().add(mainQuitButton);
 
-        VBox vbox = new VBox();
-        vbox.setSpacing(10);
-        vbox.setAlignment(Pos.BOTTOM_CENTER);
-        vbox.getChildren().add(inventoryButton);
-        vbox.getChildren().add(userEdit);
-        vbox.getChildren().add(logoutButton);
-        vbox.getChildren().add(quitButton);
-
-        BorderPane borderpane = new BorderPane();
-        borderpane.setTop(hbox);
-        borderpane.setLeft(vbox);
+        borderpane.setTop(mainHBox);
+        borderpane.setLeft(mainVBox);
         borderpane.setCenter(inventoryTable);
 
-        Scene mainScene = new Scene(borderpane, 1000, 800);
         return mainScene;
     }
 }

@@ -8,14 +8,26 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * Tommy is primary contributor for this class.
  */
 public class View {
 
+    Stage primaryStage = new Stage();
+
+    // Constructer for View
+    public View(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
+        primaryStage.setTitle("Inventory Management version. 0.01");
+        primaryStage.setScene(mainView());
+        primaryStage.show();
+    }
+
     // GUI for login Screen.
-    public static Scene loginView() {
+    public Scene loginView() {
         Label loginLabel = new Label("LOGIN");
         Label userIdLabel = new Label("User ID:");
         Label userPassword = new Label("User Password");
@@ -55,12 +67,15 @@ public class View {
         vbox.getChildren().add(loginLabel);
         vbox.getChildren().add(gridPane);
         vbox.getChildren().add(hbox);
+
+        Style.styleLoginVBox(vbox);
+
         Scene loginScene = new Scene(vbox, 1000, 800);
         return loginScene;
     }
 
     // GUI for main program view.
-    public static Scene mainView() {
+    public Scene mainView() {
         Button logoutButton = new Button("Logout");
         Button quitButton = new Button("Quit");
         Button addButton = new Button("Add");

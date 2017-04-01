@@ -22,9 +22,7 @@ public class Main extends Application{
       c = new Controller(d);
       d.connectToDb();
 
-      primaryStage.setTitle("Inventory Management version. 0.01");
-      primaryStage.setScene(View.loginView());
-      primaryStage.show();
+      View view = new View(primaryStage);
    }
 
    public void testMethod() {

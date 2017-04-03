@@ -23,7 +23,12 @@ public class Controller {
 
       return false;
    }
+
    public void connectdb(){
       d.connectToDb();
+   }
+
+   public void dataFetch(int index){
+      d.fetchItem(index);
    }
 }

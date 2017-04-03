@@ -21,6 +21,7 @@ public class DataLayer {
 
       try {
          connection = DriverManager.getConnection(dbURL, username, password);
+         System.out.println("Database is now connected!");
 
       } catch (SQLException e) {
          System.out.println(e);
@@ -28,7 +29,7 @@ public class DataLayer {
    }
 
    public void update(Item item){
-      String query = "UPDATE sql8166696.inventory ";
+      String query = "UPDATE inventory ";
       query += "SET amount = " + item.getQuantity() + ", ";
       query += "name = " + item.getName() + ",";
       query += "description = " + item.getDescription() + "WHERE id = " + item.getId() + ";";
@@ -46,7 +47,7 @@ public class DataLayer {
    }
 
    public Item fetchItem(int index){
-      String query = "SELECT amount, name, description from sql8166696.inventory where id = " + index;
+      String query = "SELECT * from sql8166696.inventory WHERE id = " + index;
       String name;
       String description;
       int quantity;
@@ -55,12 +56,13 @@ public class DataLayer {
       try{
          stmt = connection.createStatement();
          rs = stmt.executeQuery(query);
+         rs.next();
 
          quantity = rs.getInt(2);
          name = rs.getString(3);
          description = rs.getString(4);
          t = new Item(index,quantity,name,description);
-         System.out.println(t.getName());// test
+
          return t;
       }catch(SQLException e){
          System.out.println(e);

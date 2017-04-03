@@ -43,11 +43,13 @@ public class Controller {
    }
 
    public ObservableList<Item> getItems() {
-      Item temp = new Item();
       ObservableList<Item> list = FXCollections.observableArrayList();
       int i = 1;
+      Item temp = dataFetch(i);
 
       while (temp != null) {
+         list.add(temp);
+         i++;
          temp = dataFetch(i);
       }
 

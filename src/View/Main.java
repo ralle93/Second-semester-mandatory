@@ -39,9 +39,5 @@ public class Main extends Application{
       System.out.println(c.verifyUser("mikk7506","1234"));
    }
    public void rasmusTest(){
-     Item t = new Item(10, "Tommy Action Figur", "Defekt, mangler 6-pack");
-      c.addItemToDb(t);
-
-
    }
 }

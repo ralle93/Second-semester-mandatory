@@ -50,7 +50,7 @@ public class View {
    }
 
    // Constructer for View
-   public View(Stage primaryStage) {
+   View(Stage primaryStage) {
        this.primaryStage = primaryStage;
 
        primaryStage.setTitle("Inventory Management version. 0.01");
@@ -63,7 +63,7 @@ public class View {
      * GUI setup for loginView.
      * @return loginScene
      */
-   public Scene loginView() {
+   private Scene loginView() {
 
        // This is only a temporary setup for loginButton
        loginButton.setOnAction(event -> {
@@ -72,9 +72,7 @@ public class View {
            primaryStage.show();
        });
 
-       quitButton.setOnAction(event -> {
-           primaryStage.close();
-       });
+       quitButton.setOnAction(event -> primaryStage.close());
 
         userNameField.setPromptText("Username");
         passwordField.setPromptText("Password");
@@ -116,7 +114,7 @@ public class View {
      * Login View Style:
      * Style Loader for loginView, a helper method for that loads css styling for loginView
      */
-    public void loginViewStyleLoader() {
+    private void loginViewStyleLoader() {
         Style.styleLoginVBox(vbox);
         Style.styleLoginHBox(hbox);
         Style.styleloginGrid(gridPane);
@@ -134,7 +132,7 @@ public class View {
      * GUI setup for mainView.
      * @return mainScene
      */
-    public Scene mainView() {
+    private Scene mainView() {
 
         // Does not work yet.
         logoutButton.setOnAction(event -> {
@@ -143,9 +141,7 @@ public class View {
             primaryStage.show();
         });
 
-        mainQuitButton.setOnAction(evente -> {
-            primaryStage.close();
-        });
+        mainQuitButton.setOnAction(evente -> primaryStage.close());
 
         mainHBox.setAlignment(Pos.TOP_CENTER);
         mainHBox.getChildren().add(addButton);
@@ -172,7 +168,7 @@ public class View {
      * Main View Style:
      * Style Loader for mainView, a helper method for that loads css styling for mainView
      */
-    public void mainViewStyleLoader() {
+    private void mainViewStyleLoader() {
         Style.styleBorderPane(borderpane);
         Style.styleMainVBox(mainLeftVBox);
         Style.styleMainHBox(mainHBox);

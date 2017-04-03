@@ -68,7 +68,9 @@ public class DataLayer {
             description = rs.getString(4);
             t = new Item(index,quantity,name,description);
          }
-         return t;
+         if(t != null){
+            return t;
+         } return null;
       }catch(SQLException e){
          System.out.println(e);
       }

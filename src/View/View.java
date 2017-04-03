@@ -165,10 +165,14 @@ public class View {
          if (e.getCode().equals(KeyCode.ENTER)) {
             ObservableList<Item> list = c.getItems();
             ObservableList<Item> searchResults = FXCollections.observableArrayList();
-            String searchStr = searchField.getText();
+            String searchStr = searchField.getText().toLowerCase();
 
             for (Item i : list) {
-               if (i.getName().contains(searchStr)) {
+               if (i.getName().toLowerCase().contains(searchStr)) {
+                  searchResults.add(i);
+               } else if (i.getDescription().toLowerCase().contains(searchStr)) {
+                  searchResults.add(i);
+               } else if (Integer.toString(i.getId()).contains(searchStr)) {
                   searchResults.add(i);
                }
             }

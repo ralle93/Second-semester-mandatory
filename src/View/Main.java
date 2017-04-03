@@ -23,7 +23,7 @@ public class Main extends Application{
       c = new Controller(d);
       v = new View(c, primaryStage);
       c.connectDb();
-      rasmusTest();
+      //rasmusTest();
 
 
    }

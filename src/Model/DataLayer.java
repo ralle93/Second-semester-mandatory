@@ -31,17 +31,11 @@ public class DataLayer {
 
    public void addItemToDB(Item item){
       String query ="INSERT INTO inventory (quantity, name, description) \n";
-      query += "VALUES ();";
-      String name;
-      String description;
-      int quantity;
-      Item t = null;
-
+      query += "VALUES (" + item.getQuantity() + ", '" + item.getName() + "', '" + item.getDescription() + "');";
+      System.out.println(query);
       try{
          stmt = connection.createStatement();
-
          stmt.executeUpdate(query);
-
 
       }catch(SQLException e){
          System.out.println(e);

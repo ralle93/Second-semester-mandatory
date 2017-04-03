@@ -18,7 +18,7 @@ public class Main extends Application{
    }
 
    public void start(Stage primaryStage) {
-      //testMethod();
+      testMethod();
       d = new DataLayer();
       c = new Controller(d);
       v = new View(c);
@@ -26,15 +26,15 @@ public class Main extends Application{
 
       View view = new View(primaryStage);
 
-
    }
 
    public void testMethod() {
       DataLayer d = new DataLayer();
       d.connectToDb();
       Controller c = new Controller(d);
-
+      d.fetchItem(2);
+      /*
       System.out.println(c.verifyUser("mikk7506", "12345"));
-      System.out.println(c.verifyUser("mikk7506","1234"));
+      System.out.println(c.verifyUser("mikk7506","1234")); */
    }
 }

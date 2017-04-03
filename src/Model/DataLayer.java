@@ -57,7 +57,7 @@ public class DataLayer {
       String name;
       String description;
       int quantity;
-      Item t = new Item();
+      Item t = null;
 
       try{
          stmt = connection.createStatement();

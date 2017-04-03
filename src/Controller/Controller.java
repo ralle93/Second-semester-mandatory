@@ -28,8 +28,8 @@ public class Controller {
       d.connectToDb();
    }
 
-   public void dataFetch(int index){
-      d.fetchItem(index);
+   public Item dataFetch(int index){
+      return d.fetchItem(index);
    }
 
    public boolean updateItem(Item item){

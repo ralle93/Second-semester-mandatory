@@ -59,7 +59,6 @@ public class DataLayer {
       int quantity;
       Item t = null;
 
-
       try{
          stmt = connection.createStatement();
          rs = stmt.executeQuery(query);
@@ -69,14 +68,10 @@ public class DataLayer {
             description = rs.getString(4);
             t = new Item(index,quantity,name,description);
          }
-
-         if(t != null){
-            return t;
-         } return null;
       }catch(SQLException e){
          System.out.println(e);
       }
-      return null;
+      return t;
    }
 
    public void cleanUpEnviroment(){

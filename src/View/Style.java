@@ -3,10 +3,8 @@ package View;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,57 +35,110 @@ public class Style {
 
     public static void styleloginTitleLabel(Label label) {
         label.setPadding(new Insets(25,50,25,50));
-        label.setStyle("-fx-text-fill: blueviolet;"+
+        label.setStyle("-fx-text-fill: cadetblue;"+
                        "-fx-font-size: 48px;"+
                        "-fx-font-family: monospace;"+
-                       "-fx-border-color: blueviolet;"+
+                       "-fx-border-color: cadetblue;"+
                        "-fx-border-width: 3px;"+
                        "-fx-border-radius: 10%");
     }
 
     public static void styleloginLabel(Label label) {
-        label.setStyle("-fx-text-fill: blueviolet;"+
+        label.setStyle("-fx-text-fill: cadetblue;"+
                        "-fx-font-family: monospace;"+
                        "-fx-font-size: 18px");
     }
 
     public static void styleButtons(Button button) {
-        button.setStyle("-fx-text-fill: blueviolet;"+
+        button.setStyle("-fx-text-fill: cadetblue;"+
                         "-fx-background-color: azure;"+
                         "-fx-border-width: 2px;"+
-                        "-fx-border-color: blueviolet;"+
+                        "-fx-border-color: cadetblue;"+
                         "-fx-border-radius: 20%;");
         button.setOnMouseEntered(event -> {
             button.setStyle("-fx-text-fill: azure;"+
-                            "-fx-background-color: blueviolet;"+
+                            "-fx-background-color: cadetblue;"+
                             "-fx-border-width: 2px;"+
                             "-fx-border-color: transparent;"+
                             "-fx-border-radius: 20%;");
         });
         button.setOnMouseExited(event -> {
-            button.setStyle("-fx-text-fill: blueviolet;"+
+            button.setStyle("-fx-text-fill: cadetblue;"+
                             "-fx-background-color: transparent;"+
                             "-fx-border-width: 2px;"+
-                            "-fx-border-color: blueviolet;"+
+                            "-fx-border-color: cadetblue;"+
                             "-fx-border-radius: 20%;");
         });
     }
 
     public static void styleTextfield(TextField textField) {
         textField.setStyle("-fx-background-color: azure;"+
-                           "-fx-border-color: blueviolet;"+
+                           "-fx-border-color: cadetblue;"+
                            "-fx-border-width: 2px;"+
                            "-fx-border-radius: 2%;"+
-                           "-fx-text-fill: blueviolet;"+
+                           "-fx-text-fill: cadetblue;"+
                            "-fx-prompt-text-fill: blueviolet;");
     }
 
     public static void stylePasswordField(PasswordField passwordField) {
         passwordField.setStyle("-fx-background-color: azure;"+
-                               "-fx-border-color: blueviolet;"+
+                               "-fx-border-color: cadetblue;"+
                                "-fx-border-width: 2px;"+
                                "-fx-border-radius: 2%;"+
-                               "-fx-text-fill: blueviolet;"+
-                               "-fx-prompt-text-fill: blueviolet;");
+                               "-fx-text-fill: cadetblue;"+
+                               "-fx-prompt-text-fill: cadetblue;");
+    }
+
+    /**
+     * STYLING Main View
+     */
+    public static void styleBorderPane(BorderPane borderPane) {
+        borderPane.setPadding(new Insets(10,10,10,10));
+        borderPane.setStyle("-fx-background-color: azure;");
+    }
+
+    public static void styleMainVBox(VBox vbox) {
+        vbox.setAlignment(Pos.TOP_CENTER);
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(10,10,10,10));
+        vbox.setStyle("-fx-background-color: azure;");
+    }
+
+    public static void styleMainHBox(HBox hbox) {
+        hbox.setPadding(new Insets(10,10,10,10));
+        hbox.setSpacing(10);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setStyle("-fx-background-color: azure;");
+    }
+
+    public static void styleButtonForMainView(Button button) {
+        button.setMaxWidth(150);
+        button.setMinWidth(150);
+        button.setStyle("-fx-background-color: transparent;"+
+                        "-fx-border-width: 2px;"+
+                        "-fx-border-radius: 20%;"+
+                        "-fx-border-color: cadetblue;"+
+                        "-fx-text-fill: cadetblue;");
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-color: cadetblue;"+
+                            "-fx-border-width: 2px;"+
+                            "-fx-border-radius: 20%;"+
+                            "-fx-border-color: cadetblue;"+
+                            "-fx-text-fill: azure;");
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-color: transparent;"+
+                            "-fx-border-width: 2px;"+
+                            "-fx-border-radius: 20%;"+
+                            "-fx-border-color: cadetblue;"+
+                            "-fx-text-fill: cadetblue;");
+        });
+    }
+
+    public static void styleTableView(TableView tableView) {
+        tableView.setStyle("-fx-border-width: 5px;"+
+                            "-fx-border-color: cadetblue;"+
+                            "-fx-border-radius: 2%;"+
+                            "-fx-background-color: azure;");
     }
 }

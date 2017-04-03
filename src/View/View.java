@@ -105,6 +105,11 @@ public class View {
         Style.stylePasswordField(passwordField);
     }
 
+
+    /**
+     * Main View Styles
+     */
+
     // GUI for main program view.
     public Scene mainView() {
 
@@ -124,6 +129,23 @@ public class View {
         borderpane.setLeft(mainVBox);
         borderpane.setCenter(inventoryTable);
 
+        mainViewStyleLoader();
+
         return mainScene;
     }
+
+    public void mainViewStyleLoader() {
+        Style.styleBorderPane(borderpane);
+        Style.styleMainVBox(mainVBox);
+        Style.styleMainHBox(mainHBox);
+        Style.styleButtonForMainView(logoutButton);
+        Style.styleButtonForMainView(mainQuitButton);
+        Style.styleButtonForMainView(userEdit);
+        Style.styleButtonForMainView(inventoryButton);
+        Style.styleButtonForMainView(addButton);
+        Style.styleButtonForMainView(editButton);
+        Style.styleButtonForMainView(deleteButton);
+        Style.styleTableView(inventoryTable);
+    }
+
 }

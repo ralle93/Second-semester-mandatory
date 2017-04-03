@@ -28,7 +28,7 @@ public class DataLayer {
    }
 
    public void update(Item item){
-      String query = "UPDATE sql8166696.inventory ";
+      String query = "UPDATE inventory ";
       query += "SET amount = " + item.getQuantity() + ", ";
       query += "name = " + item.getName() + ",";
       query += "description = " + item.getDescription() + "WHERE id = " + item.getId() + ";";
@@ -46,7 +46,7 @@ public class DataLayer {
    }
 
    public Item fetchItem(int index){
-      String query = "SELECT amount, name, description from sql8166696.inventory where id = " + index;
+      String query = "SELECT * from sql8166696.inventory WHERE id = " + index +";";
       String name;
       String description;
       int quantity;

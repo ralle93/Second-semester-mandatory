@@ -32,10 +32,17 @@ public class DataLayer {
       query += "SET amount = " + item.getQuantity() + ", ";
       query += "name = " + item.getName() + ",";
       query += "description = " + item.getDescription() + "WHERE id = " + item.getId() + ";";
+      try{
+         stmt = connection.createStatement();
+         rs = stmt.executeQuery(query);
 
+         while(rs.next()){
 
-
-
+         }
+         System.out.println(query); //test
+      }catch(SQLException e){
+         System.out.println(e);
+      }
    }
 
    public Item fetchItem(int index){
@@ -53,6 +60,7 @@ public class DataLayer {
          name = rs.getString(3);
          description = rs.getString(4);
          t = new Item(index,quantity,name,description);
+         System.out.println(t.getName());// test
          return t;
       }catch(SQLException e){
          System.out.println(e);
@@ -71,11 +79,9 @@ public class DataLayer {
         if(rs!=null){
            rs.close();
         }
-
      }catch(SQLException e){
         System.out.println(e);
      }
-
    }
 
    public User fetchUser(String user, String pass) {

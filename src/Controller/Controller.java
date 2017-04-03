@@ -4,6 +4,9 @@ import Model.DataLayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 /**
  * Mikkel is primary contributor for this class
  */
@@ -30,8 +33,8 @@ public class Controller {
       d.connectToDb();
    }
 
-   public Item dataFetch(int index){
-      return d.fetchItem(index);
+   public ArrayList<Item> dataFetch(int index){
+      return d.fetchItems();
    }
 
    public boolean updateItem(Item item){

@@ -33,10 +33,6 @@ public class Controller {
       d.connectToDb();
    }
 
-   public ArrayList<Item> dataFetch(int index){
-      return d.fetchItems();
-   }
-
    public boolean updateItem(Item item){
       if(item != null) {
          d.update(item);

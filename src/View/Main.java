@@ -33,8 +33,8 @@ public class Main extends Application{
       d.connectToDb();
       Controller c = new Controller(d);
 
-      /*
+
       System.out.println(c.verifyUser("mikk7506", "12345"));
-      System.out.println(c.verifyUser("mikk7506","1234")); */
+      System.out.println(c.verifyUser("mikk7506","1234"));
    }
 }

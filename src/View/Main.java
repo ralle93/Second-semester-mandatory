@@ -21,11 +21,10 @@ public class Main extends Application{
      // testMethod();
       d = new DataLayer();
       c = new Controller(d);
-      v = new View(c);
+      v = new View(c, primaryStage);
       c.connectDb();
+      rasmusTest();
 
-
-      View view = new View(primaryStage);
 
    }
 
@@ -37,5 +36,8 @@ public class Main extends Application{
 
       System.out.println(c.verifyUser("mikk7506", "12345"));
       System.out.println(c.verifyUser("mikk7506","1234"));
+   }
+   public void rasmusTest(){
+      System.out.println(c.updateItem(d.fetchItem(1)));
    }
 }

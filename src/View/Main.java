@@ -22,9 +22,7 @@ public class Main extends Application{
       d = new DataLayer();
       c = new Controller(d);
       v = new View(c, primaryStage);
-      c.connectdb();
-
-      View view = new View(primaryStage);
+      c.connectDb();
 
    }
 

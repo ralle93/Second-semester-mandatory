@@ -2,11 +2,14 @@ package View;
 
 import Controller.Controller;
 import Controller.Item;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -77,6 +80,9 @@ public class View {
 
       userNameField.setPromptText("Username");
       passwordField.setPromptText("Password");
+
+      userNameField.setText("mikk7506");
+      passwordField.setText("12345");
 
       // TODO burde laves om til noget med bedre kode konvention
       loginButton.setOnAction(e -> {
@@ -153,6 +159,27 @@ public class View {
       inventoryTable.setPadding(new Insets(10,10,10,10));
       inventoryTable.setItems(c.getItems());
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
+
+      // Search
+      searchField.setOnKeyPressed(e -> {
+         if (e.getCode().equals(KeyCode.ENTER)) {
+            ObservableList<Item> list = c.getItems();
+            ObservableList<Item> searchResults = FXCollections.observableArrayList();
+            String searchStr = searchField.getText().toLowerCase();
+
+            for (Item i : list) {
+               if (i.getName().toLowerCase().contains(searchStr)) {
+                  searchResults.add(i);
+               } else if (i.getDescription().toLowerCase().contains(searchStr)) {
+                  searchResults.add(i);
+               } else if (Integer.toString(i.getId()).contains(searchStr)) {
+                  searchResults.add(i);
+               }
+            }
+
+            inventoryTable.setItems(searchResults);
+         }
+      });
 
       // Does not work yet.
       logoutButton.setOnAction(event -> {

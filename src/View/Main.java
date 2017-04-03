@@ -24,8 +24,6 @@ public class Main extends Application{
       v = new View(c, primaryStage);
       c.connectDb();
       rasmusTest();
-
-
    }
 
    public void testMethod() {

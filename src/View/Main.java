@@ -39,7 +39,8 @@ public class Main extends Application{
       System.out.println(c.verifyUser("mikk7506","1234"));
    }
    public void rasmusTest(){
-      Item t = new Item(200, "Macbook", "Den er dyr");
-      d.addItemToDB(t);
+      Item t = new Item(8,200, "Macbook", "Den er dyr");
+      c.removeItemFromDb(t);
+
    }
 }

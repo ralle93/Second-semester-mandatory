@@ -43,7 +43,16 @@ public class DataLayer {
    }
 
    public void removeItemFromDb(Item item){
+      String query = "DELETE FROM inventory \n";
+      query += "WHERE id = " + item.getId() +";";
+      System.out.println(query);
+      try{
+         stmt = connection.createStatement();
+         stmt.executeUpdate(query);
 
+      }catch(SQLException e){
+         System.out.println(e);
+      }
    }
 
    public void update(Item item){

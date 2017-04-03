@@ -114,6 +114,8 @@ class Style {
     }
 
     static void styleMainSearchField(TextField textField) {
+        textField.setMinWidth(500);
+        textField.setMaxWidth(500);
         textField.setPadding(new Insets(10,10,10,10));
         textField.setStyle("-fx-border-color: cadetblue;"+
                             "-fx-border-width: 2px;"+

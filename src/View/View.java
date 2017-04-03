@@ -130,8 +130,7 @@ public class View {
 
       // Does not work yet.
       logoutButton.setOnAction(event -> {
-         loginView();
-         primaryStage.setScene(loginScene);
+         primaryStage.setScene(loginView());
          primaryStage.show();
       });
 

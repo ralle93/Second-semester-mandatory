@@ -1,30 +1,35 @@
+package View;
+
 import Controller.Controller;
 import Model.DataLayer;
-import View.View;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
  * Mikkel is primary contributor for this class
  */
-public class Main extends Application {
+public class Main extends Application{
+   public DataLayer d;
+   public Controller c;
+   public View v;
 
    public static void main(String[] args) {
       launch();
    }
 
    public void start(Stage primaryStage) {
-      //testShit();
-      DataLayer d = new DataLayer();
+      //testMethod();
+      d = new DataLayer();
+      c = new Controller(d);
+      v = new View(c);
+      c.connectdb();
 
-      d.connectToDb();
+      View view = new View(primaryStage);
 
-      primaryStage.setTitle("Inventory");
-      primaryStage.setScene(View.loginView());
-      primaryStage.show();
+
    }
 
-   public void testShit() {
+   public void testMethod() {
       DataLayer d = new DataLayer();
       d.connectToDb();
       Controller c = new Controller(d);

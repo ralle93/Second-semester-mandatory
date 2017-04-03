@@ -12,6 +12,8 @@ public class DataLayer {
    private Statement stmt;
    private ResultSet rs;
 
+   public DataLayer(){}
+
    public void connectToDb(){
       final String dbURL = "jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8166696?useSSL=false";
       final String username = "sql8166696";
@@ -26,6 +28,13 @@ public class DataLayer {
    }
 
    public void update(Item item){
+      String query = "UPDATE sql8166696.inventory ";
+      query += "SET amount = " + item.getQuantity() + ", ";
+      query += "name = " + item.getName() + ",";
+      query += "description = " + item.getDescription() + "WHERE id = " + item.getId() + ";";
+
+
+
 
    }
 

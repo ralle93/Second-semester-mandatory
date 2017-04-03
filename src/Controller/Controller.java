@@ -24,11 +24,19 @@ public class Controller {
       return false;
    }
 
-   public void connectdb(){
+   public void connectDb(){
       d.connectToDb();
    }
 
    public void dataFetch(int index){
       d.fetchItem(index);
+   }
+
+   public boolean updateItem(Item item){
+      if(item != null) {
+         d.update(item);
+         return true;
+      }
+      return false;
    }
 }

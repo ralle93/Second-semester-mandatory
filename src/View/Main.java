@@ -24,6 +24,8 @@ public class Main extends Application{
       v = new View(c, primaryStage);
       c.connectdb();
 
+      View view = new View(primaryStage);
+
    }
 
    public void testMethod() {

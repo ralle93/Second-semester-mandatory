@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -142,6 +143,8 @@ public class View {
         });
 
         mainQuitButton.setOnAction(evente -> primaryStage.close());
+
+        inventoryTable.setPadding(new Insets(10,10,10,10));
 
         mainHBox.setAlignment(Pos.TOP_CENTER);
         mainHBox.getChildren().add(addButton);

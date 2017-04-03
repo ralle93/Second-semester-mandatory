@@ -61,7 +61,7 @@ public class View {
 
       loginView();
 
-      primaryStage.setTitle("Inventory Management version. 0.01");
+      primaryStage.setTitle("Inventory Management version. 0.1");
       primaryStage.setScene(loginScene);
       primaryStage.show();
    }

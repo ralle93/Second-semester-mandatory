@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.DataLayer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Mikkel is primary contributor for this class
@@ -38,5 +40,17 @@ public class Controller {
          return true;
       }
       return false;
+   }
+
+   public ObservableList<Item> getItems() {
+      Item temp = new Item();
+      ObservableList<Item> list = FXCollections.observableArrayList();
+      int i = 1;
+
+      while (temp != null) {
+         temp = dataFetch(i);
+      }
+
+      return list;
    }
 }

@@ -31,6 +31,7 @@ public class View {
    private VBox vbox = new VBox();
    private Scene loginScene = new Scene(vbox, 1000, 800);
 
+   // Objects used in mainView
    private Button logoutButton = new Button("Logout");
    private Button mainQuitButton = new Button("Quit");
    private Button addButton = new Button("Add");
@@ -40,7 +41,7 @@ public class View {
    private Button userEdit = new Button("User Edit");
    private TableView inventoryTable = new TableView();
    private HBox mainHBox = new HBox();
-   private VBox mainVBox = new VBox();
+   private VBox mainLeftVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
    private Scene mainScene = new Scene(borderpane, 1000, 800);
 
@@ -53,12 +54,20 @@ public class View {
        this.primaryStage = primaryStage;
 
        primaryStage.setTitle("Inventory Management version. 0.01");
-       primaryStage.setScene(mainView());
+       primaryStage.setScene(loginView());
        primaryStage.show();
    }
 
-   // GUI for login Screen.
+    /**
+     * Login View:
+     * GUI setup for loginView.
+     * @return loginScene
+     */
    public Scene loginView() {
+
+       quitButton.setOnAction(event -> {
+           primaryStage.close();
+       });
 
         userNameField.setPromptText("Username");
         passwordField.setPromptText("Password");
@@ -92,6 +101,10 @@ public class View {
         return loginScene;
     }
 
+    /**
+     * Login View Style:
+     * Style Loader for loginView, a helper method for that loads css styling for loginView
+     */
     public void loginViewStyleLoader() {
         Style.styleLoginVBox(vbox);
         Style.styleLoginHBox(hbox);
@@ -105,28 +118,31 @@ public class View {
         Style.stylePasswordField(passwordField);
     }
 
-
     /**
-     * Main View Styles
+     * Main View:
+     * GUI setup for mainView.
+     * @return mainScene
      */
-
-    // GUI for main program view.
     public Scene mainView() {
 
-        mainHBox.setAlignment(Pos.CENTER);
+        mainQuitButton.setOnAction(evente -> {
+            primaryStage.close();
+        });
+
+        mainHBox.setAlignment(Pos.TOP_CENTER);
         mainHBox.getChildren().add(addButton);
         mainHBox.getChildren().add(editButton);
         mainHBox.getChildren().add(deleteButton);
 
-        mainVBox.setSpacing(10);
-        mainVBox.setAlignment(Pos.BOTTOM_CENTER);
-        mainVBox.getChildren().add(inventoryButton);
-        mainVBox.getChildren().add(userEdit);
-        mainVBox.getChildren().add(logoutButton);
-        mainVBox.getChildren().add(mainQuitButton);
+        mainLeftVBox.setSpacing(10);
+        mainLeftVBox.setAlignment(Pos.BOTTOM_CENTER);
+        mainLeftVBox.getChildren().add(inventoryButton);
+        mainLeftVBox.getChildren().add(userEdit);
+        mainLeftVBox.getChildren().add(logoutButton);
+        mainLeftVBox.getChildren().add(mainQuitButton);
 
+        borderpane.setLeft(mainLeftVBox);
         borderpane.setTop(mainHBox);
-        borderpane.setLeft(mainVBox);
         borderpane.setCenter(inventoryTable);
 
         mainViewStyleLoader();
@@ -134,9 +150,13 @@ public class View {
         return mainScene;
     }
 
+    /**
+     * Main View Style:
+     * Style Loader for mainView, a helper method for that loads css styling for mainView
+     */
     public void mainViewStyleLoader() {
         Style.styleBorderPane(borderpane);
-        Style.styleMainVBox(mainVBox);
+        Style.styleMainVBox(mainLeftVBox);
         Style.styleMainHBox(mainHBox);
         Style.styleButtonForMainView(logoutButton);
         Style.styleButtonForMainView(mainQuitButton);

@@ -77,7 +77,7 @@ public class Style {
                            "-fx-border-width: 2px;"+
                            "-fx-border-radius: 2%;"+
                            "-fx-text-fill: cadetblue;"+
-                           "-fx-prompt-text-fill: blueviolet;");
+                           "-fx-prompt-text-fill: cadetblue;");
     }
 
     public static void stylePasswordField(PasswordField passwordField) {

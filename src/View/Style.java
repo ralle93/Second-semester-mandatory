@@ -56,11 +56,11 @@ class Style {
                         "-fx-border-radius: 20%;"
         );
         button.setOnMouseEntered(event -> button.setStyle(
+                "-fx-border-radius: 20%;"+
                 "-fx-text-fill: azure;"+
                 "-fx-background-color: cadetblue;"+
                 "-fx-border-width: 2px;"+
-                "-fx-border-color: transparent;"+
-                "-fx-border-radius: 20%;")
+                "-fx-border-color: transparent;")
         );
         button.setOnMouseExited(event -> button.setStyle(
                         "-fx-text-fill: cadetblue;"+
@@ -111,6 +111,14 @@ class Style {
         hbox.setSpacing(10);
         hbox.setAlignment(Pos.CENTER);
         hbox.setStyle("-fx-background-color: azure;");
+    }
+
+    static void styleMainSearchField(TextField textField) {
+        textField.setPadding(new Insets(10,10,10,10));
+        textField.setStyle("-fx-border-color: cadetblue;"+
+                            "-fx-border-width: 2px;"+
+                            "-fx-border-radius: 20%;"+
+                            "-fx-background-color: transparent;");
     }
 
     static void styleButtonForMainView(Button button) {

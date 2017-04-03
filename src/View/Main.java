@@ -23,6 +23,8 @@ public class Main extends Application{
       c = new Controller(d);
       v = new View(c, primaryStage);
       c.connectDb();
+      rasmusTest();
+
 
    }
 
@@ -34,5 +36,8 @@ public class Main extends Application{
 
       System.out.println(c.verifyUser("mikk7506", "12345"));
       System.out.println(c.verifyUser("mikk7506","1234"));
+   }
+   public void rasmusTest(){
+      System.out.println(c.updateItem(d.fetchItem(1)));
    }
 }

@@ -109,7 +109,6 @@ public class DataLayer {
                   temp.setUsername(rs.getString(1));
                   temp.setPassword(rs.getString(2));
                   temp.setEmail(rs.getString(4));
-                  cleanUpEnviroment();
 
                   return temp;
                }

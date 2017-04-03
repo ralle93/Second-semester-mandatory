@@ -32,7 +32,7 @@ public class View {
    private GridPane gridPane = new GridPane();
    private HBox hbox = new HBox();
    private VBox vbox = new VBox();
-   private Scene loginScene = new Scene(vbox, 1000, 800);
+   private Scene loginScene = new Scene(vbox, 1280, 800);
 
    // Objects used in mainView
    private Label labelMainUserID = new Label();
@@ -46,13 +46,13 @@ public class View {
    private Button inventoryButton = new Button("Inventory");
    private Button userEdit = new Button("User Edit");
    private TextField searchField = new TextField();
-   private TableView inventoryTable = new TableView();
+   private TableView inventoryTable = new TableView<>();
    private HBox mainHBox = new HBox();
    private VBox mainTopVBox = new VBox();
    private VBox mainRightVBox = new VBox();
    private VBox mainLeftVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
-   private Scene mainScene = new Scene(borderpane, 1000, 800);
+   private Scene mainScene = new Scene(borderpane, 1200, 800);
 
    View(Controller c, Stage stage) {
       this.c = c;
@@ -135,23 +135,24 @@ public class View {
    private Scene mainView() {
 
       TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
-      idColumn.setMinWidth(50);
+      idColumn.setMinWidth(25);
       idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
       TableColumn<Item, Integer> quantityColumn = new TableColumn("QUANTITY");
-      idColumn.setMinWidth(50);
-      idColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+      quantityColumn.setMinWidth(25);
+      quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-      TableColumn<Item, String> nameColumn = new TableColumn("ITEM NAME");
-      idColumn.setMinWidth(500);
-      idColumn.setCellValueFactory(new PropertyValueFactory("itemName"));
+      TableColumn<Item, String> nameColumn = new TableColumn("NAME");
+      nameColumn.setMinWidth(100);
+      nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
 
       TableColumn<Item, String> descriptionColumn = new TableColumn("DESCRIPTION");
-      idColumn.setMinWidth(500);
-      idColumn.setCellValueFactory(new PropertyValueFactory("description"));
+      descriptionColumn.setMinWidth(500);
+      descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
 
       inventoryTable.setPadding(new Insets(10,10,10,10));
-      inventoryTable.setItems();
+      inventoryTable.setItems(c.getItems());
+      inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
 
       // Does not work yet.
       logoutButton.setOnAction(event -> {

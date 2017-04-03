@@ -21,11 +21,20 @@ public class DataLayer {
 
       try {
          connection = DriverManager.getConnection(dbURL, username, password);
-         System.out.println("Database is now connected!");
-
+         if(connection != null){
+            System.out.println("Database is now connected!");
+         }
       } catch (SQLException e) {
          System.out.println(e);
       }
+   }
+
+   public void addItemToDB(Item item){
+
+   }
+
+   public void removeItemFromDb(Item item){
+
    }
 
    public void update(Item item){
@@ -51,18 +60,17 @@ public class DataLayer {
       String name;
       String description;
       int quantity;
-      Item t;
+      Item t = new Item();
 
       try{
          stmt = connection.createStatement();
          rs = stmt.executeQuery(query);
-         rs.next();
-
-         quantity = rs.getInt(2);
-         name = rs.getString(3);
-         description = rs.getString(4);
-         t = new Item(index,quantity,name,description);
-
+         while(rs.next()){
+            quantity = rs.getInt(2);
+            name = rs.getString(3);
+            description = rs.getString(4);
+            t = new Item(index,quantity,name,description);
+         }
          return t;
       }catch(SQLException e){
          System.out.println(e);

@@ -43,6 +43,11 @@ public class Main extends Application{
 
       for (Item i : list) {
          System.out.println(i.getName());
+      }
+
+      for (int i = 1; i < 20; i++) {
+         Item item = c.dataFetch(i);
+         System.out.println(item);
       }*/
    }
 }

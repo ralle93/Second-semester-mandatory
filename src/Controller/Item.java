@@ -17,6 +17,12 @@ public class Item {
    }
    public Item(){}
 
+   public Item(int quantity, String name, String description){
+      this.quantity=quantity;
+      this.name=name;
+      this.description=description;
+   }
+
    public int getId() {
       return id;
    }

@@ -42,6 +42,22 @@ public class Controller {
       return false;
    }
 
+   public boolean addItemToDb(Item item){
+      if(item != null){
+         d.addItemToDB(item);
+         return true;
+      }
+      return false;
+   }
+
+   public boolean removeItemFromDb(Item item){
+      if(item != null){
+         d.removeItemFromDb(item);
+         return true;
+      }
+      return false;
+   }
+
    public ObservableList<Item> getItems() {
       ObservableList<Item> list = FXCollections.observableArrayList();
       int i = 1;

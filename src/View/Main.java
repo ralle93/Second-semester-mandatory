@@ -21,10 +21,8 @@ public class Main extends Application{
      // testMethod();
       d = new DataLayer();
       c = new Controller(d);
-      v = new View(c);
+      v = new View(c, primaryStage);
       c.connectdb();
-
-      View view = new View(primaryStage);
 
    }
 

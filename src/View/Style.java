@@ -115,6 +115,10 @@ class Style {
 
     static void styleMainSearchField(TextField textField) {
         textField.setPadding(new Insets(10,10,10,10));
+        textField.setStyle("-fx-border-color: cadetblue;"+
+                            "-fx-border-width: 2px;"+
+                            "-fx-border-radius: 20%;"+
+                            "-fx-background-color: transparent;");
     }
 
     static void styleButtonForMainView(Button button) {

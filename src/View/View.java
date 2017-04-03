@@ -48,147 +48,138 @@ public class View {
    private BorderPane borderpane = new BorderPane();
    private Scene mainScene = new Scene(borderpane, 1000, 800);
 
-   View(Controller c) {
+   View(Controller c, Stage stage) {
       this.c = c;
+
+      this.primaryStage = stage;
+
+      loginView();
+
+      primaryStage.setTitle("Inventory Management version. 0.01");
+      primaryStage.setScene(loginScene);
+      primaryStage.show();
    }
 
-   // Constructer for View
-   View(Stage primaryStage) {
-       this.primaryStage = primaryStage;
-
-       primaryStage.setTitle("Inventory Management version. 0.01");
-       primaryStage.setScene(loginView());
-       primaryStage.show();
-   }
-
-    /**
-     * Login View:
-     * GUI setup for loginView.
-     * @return loginScene
-     */
+   /**
+    * Login View:
+    * GUI setup for loginView.
+    * @return loginScene
+    */
    private Scene loginView() {
 
-       // This is only a temporary setup for loginButton
-       loginButton.setOnAction(event -> {
-           mainView();
-           primaryStage.setScene(mainScene);
-           primaryStage.show();
-       });
+      quitButton.setOnAction(event -> primaryStage.close());
 
-       quitButton.setOnAction(event -> primaryStage.close());
+      userNameField.setPromptText("Username");
+      passwordField.setPromptText("Password");
 
-        userNameField.setPromptText("Username");
-        passwordField.setPromptText("Password");
+      // TODO burde laves om til noget med bedre kode konvention
+      loginButton.setOnAction(e -> {
+         String user = userNameField.getText();
+         String pass = passwordField.getText();
 
-        // TODO burde laves om til noget med bedre kode konvention
-        /*
-        loginButton.setOnAction(e -> {
-           String user = userNameField.getText();
-           String pass = passwordField.getText();
-
-           if (c.verifyUser(user, pass)) {
-              // TODO
-              mainView();
-              primaryStage.setScene(mainView());
-              primaryStage.show();
-           }
-        });
-        */
-
-        gridPane.add(userIdLabel, 0, 0);
-        gridPane.add(userNameField, 1, 0);
-        gridPane.add(userPassword, 0,1);
-        gridPane.add(passwordField, 1,1);
-
-        hbox.setAlignment(Pos.CENTER);
-        hbox.getChildren().add(quitButton);
-        hbox.getChildren().add(loginButton);
-
-        vbox.getChildren().add(loginLabel);
-        vbox.getChildren().add(gridPane);
-        vbox.getChildren().add(hbox);
-
-        loginViewStyleLoader();
-
-        return loginScene;
-    }
-
-    /**
-     * Login View Style:
-     * Style Loader for loginView, a helper method for that loads css styling for loginView
-     */
-    private void loginViewStyleLoader() {
-        Style.styleLoginVBox(vbox);
-        Style.styleLoginHBox(hbox);
-        Style.styleloginGrid(gridPane);
-        Style.styleloginTitleLabel(loginLabel);
-        Style.styleloginLabel(userIdLabel);
-        Style.styleloginLabel(userPassword);
-        Style.styleButtons(loginButton);
-        Style.styleButtons(quitButton);
-        Style.styleTextfield(userNameField);
-        Style.stylePasswordField(passwordField);
-    }
-
-    /**
-     * Main View:
-     * GUI setup for mainView.
-     * @return mainScene
-     */
-    private Scene mainView() {
-
-        // Does not work yet.
-        logoutButton.setOnAction(event -> {
-            loginView();
-            primaryStage.setScene(loginScene);
+         if (c.verifyUser(user, pass)) {
+            // TODO
+            primaryStage.setScene(mainView());
             primaryStage.show();
-        });
+         } else {
+            System.out.println("login error");
+         }
+      });
 
-        mainQuitButton.setOnAction(evente -> primaryStage.close());
+      gridPane.add(userIdLabel, 0, 0);
+      gridPane.add(userNameField, 1, 0);
+      gridPane.add(userPassword, 0,1);
+      gridPane.add(passwordField, 1,1);
 
-        searchField.setPromptText("Search");
+      hbox.setAlignment(Pos.CENTER);
+      hbox.getChildren().add(quitButton);
+      hbox.getChildren().add(loginButton);
 
-        inventoryTable.setPadding(new Insets(10,10,10,10));
+      vbox.getChildren().add(loginLabel);
+      vbox.getChildren().add(gridPane);
+      vbox.getChildren().add(hbox);
 
-        mainHBox.setAlignment(Pos.TOP_CENTER);
-        mainHBox.getChildren().add(searchField);
+      loginViewStyleLoader();
 
-        mainRightVBox.getChildren().add(addButton);
-        mainRightVBox.getChildren().add(editButton);
-        mainRightVBox.getChildren().add(deleteButton);
+      return loginScene;
+   }
 
-        mainLeftVBox.getChildren().add(inventoryButton);
-        mainLeftVBox.getChildren().add(userEdit);
-        mainLeftVBox.getChildren().add(logoutButton);
-        mainLeftVBox.getChildren().add(mainQuitButton);
+   /**
+    * Login View Style:
+    * Style Loader for loginView, a helper method for that loads css styling for loginView
+    */
+   private void loginViewStyleLoader() {
+      Style.styleLoginVBox(vbox);
+      Style.styleLoginHBox(hbox);
+      Style.styleloginGrid(gridPane);
+      Style.styleloginTitleLabel(loginLabel);
+      Style.styleloginLabel(userIdLabel);
+      Style.styleloginLabel(userPassword);
+      Style.styleButtons(loginButton);
+      Style.styleButtons(quitButton);
+      Style.styleTextfield(userNameField);
+      Style.stylePasswordField(passwordField);
+   }
 
-        borderpane.setRight(mainRightVBox);
-        borderpane.setLeft(mainLeftVBox);
-        borderpane.setTop(mainHBox);
-        borderpane.setCenter(inventoryTable);
+   /**
+    * Main View:
+    * GUI setup for mainView.
+    * @return mainScene
+    */
+   private Scene mainView() {
 
-        mainViewStyleLoader();
+      // Does not work yet.
+      logoutButton.setOnAction(event -> {
+         loginView();
+         primaryStage.setScene(loginScene);
+         primaryStage.show();
+      });
 
-        return mainScene;
+      mainQuitButton.setOnAction(evente -> primaryStage.close());
+
+      searchField.setPromptText("Search");
+
+      inventoryTable.setPadding(new Insets(10,10,10,10));
+
+      mainHBox.setAlignment(Pos.TOP_CENTER);
+      mainHBox.getChildren().add(searchField);
+
+      mainRightVBox.getChildren().add(addButton);
+      mainRightVBox.getChildren().add(editButton);
+      mainRightVBox.getChildren().add(deleteButton);
+
+      mainLeftVBox.getChildren().add(inventoryButton);
+      mainLeftVBox.getChildren().add(userEdit);
+      mainLeftVBox.getChildren().add(logoutButton);
+      mainLeftVBox.getChildren().add(mainQuitButton);
+
+      borderpane.setRight(mainRightVBox);
+      borderpane.setLeft(mainLeftVBox);
+      borderpane.setTop(mainHBox);
+      borderpane.setCenter(inventoryTable);
+
+      mainViewStyleLoader();
+
+      return mainScene;
     }
 
-    /**
-     * Main View Style:
-     * Style Loader for mainView, a helper method for that loads css styling for mainView
-     */
-    private void mainViewStyleLoader() {
-        Style.styleBorderPane(borderpane);
-        Style.styleMainVBox(mainLeftVBox);
-        Style.styleMainVBox(mainRightVBox);
-        Style.styleMainHBox(mainHBox);
-        Style.styleButtonForMainView(logoutButton);
-        Style.styleButtonForMainView(mainQuitButton);
-        Style.styleButtonForMainView(userEdit);
-        Style.styleButtonForMainView(inventoryButton);
-        Style.styleButtonForMainView(addButton);
-        Style.styleButtonForMainView(editButton);
-        Style.styleButtonForMainView(deleteButton);
-        Style.styleTableView(inventoryTable);
-    }
-
+   /**
+    * Main View Style:
+    * Style Loader for mainView, a helper method for that loads css styling for mainView
+    */
+   private void mainViewStyleLoader() {
+      Style.styleBorderPane(borderpane);
+      Style.styleMainVBox(mainLeftVBox);
+      Style.styleMainVBox(mainRightVBox);
+      Style.styleMainHBox(mainHBox);
+      Style.styleMainSearchField(searchField);
+      Style.styleButtonForMainView(logoutButton);
+      Style.styleButtonForMainView(mainQuitButton);
+      Style.styleButtonForMainView(userEdit);
+      Style.styleButtonForMainView(inventoryButton);
+      Style.styleButtonForMainView(addButton);
+      Style.styleButtonForMainView(editButton);
+      Style.styleButtonForMainView(deleteButton);
+      Style.styleTableView(inventoryTable);
+   }
 }

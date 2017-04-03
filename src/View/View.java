@@ -1,10 +1,12 @@
 package View;
 
 import Controller.Controller;
+import Controller.Item;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -30,9 +32,12 @@ public class View {
    private GridPane gridPane = new GridPane();
    private HBox hbox = new HBox();
    private VBox vbox = new VBox();
-   private Scene loginScene = new Scene(vbox, 1000, 800);
+   private Scene loginScene = new Scene(vbox, 1280, 800);
 
    // Objects used in mainView
+   private Label labelMainUserID = new Label();
+   private Label labelMainUserName = new Label();
+   private Label labelAccessLevel = new Label();
    private Button logoutButton = new Button("Logout");
    private Button mainQuitButton = new Button("Quit");
    private Button addButton = new Button("Add");
@@ -41,12 +46,13 @@ public class View {
    private Button inventoryButton = new Button("Inventory");
    private Button userEdit = new Button("User Edit");
    private TextField searchField = new TextField();
-   private TableView inventoryTable = new TableView();
+   private TableView inventoryTable = new TableView<>();
    private HBox mainHBox = new HBox();
+   private VBox mainTopVBox = new VBox();
    private VBox mainRightVBox = new VBox();
    private VBox mainLeftVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
-   private Scene mainScene = new Scene(borderpane, 1000, 800);
+   private Scene mainScene = new Scene(borderpane, 1200, 800);
 
    View(Controller c, Stage stage) {
       this.c = c;
@@ -128,6 +134,26 @@ public class View {
     */
    private Scene mainView() {
 
+      TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
+      idColumn.setMinWidth(25);
+      idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+      TableColumn<Item, Integer> quantityColumn = new TableColumn("QUANTITY");
+      quantityColumn.setMinWidth(25);
+      quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+      TableColumn<Item, String> nameColumn = new TableColumn("NAME");
+      nameColumn.setMinWidth(100);
+      nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+
+      TableColumn<Item, String> descriptionColumn = new TableColumn("DESCRIPTION");
+      descriptionColumn.setMinWidth(500);
+      descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
+
+      inventoryTable.setPadding(new Insets(10,10,10,10));
+      inventoryTable.setItems(c.getItems());
+      inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
+
       // Does not work yet.
       logoutButton.setOnAction(event -> {
          primaryStage.setScene(loginView());
@@ -138,10 +164,16 @@ public class View {
 
       searchField.setPromptText("Search");
 
-      inventoryTable.setPadding(new Insets(10,10,10,10));
-
       mainHBox.setAlignment(Pos.TOP_CENTER);
-      mainHBox.getChildren().add(searchField);
+      mainHBox.getChildren().add(labelMainUserID);
+      mainHBox.getChildren().add(getCurrentUserName());
+      mainHBox.getChildren().add(labelAccessLevel);
+
+      mainTopVBox.setAlignment(Pos.TOP_CENTER);
+      mainTopVBox.setSpacing(10);
+      mainTopVBox.setPadding(new Insets(10,10,10,10));
+      mainTopVBox.getChildren().add(mainHBox);
+      mainTopVBox.getChildren().add(searchField);
 
       mainRightVBox.getChildren().add(addButton);
       mainRightVBox.getChildren().add(editButton);
@@ -154,7 +186,7 @@ public class View {
 
       borderpane.setRight(mainRightVBox);
       borderpane.setLeft(mainLeftVBox);
-      borderpane.setTop(mainHBox);
+      borderpane.setTop(mainTopVBox);
       borderpane.setCenter(inventoryTable);
 
       mainViewStyleLoader();
@@ -180,5 +212,19 @@ public class View {
       Style.styleButtonForMainView(editButton);
       Style.styleButtonForMainView(deleteButton);
       Style.styleTableView(inventoryTable);
+   }
+
+   public Label getCurrentUserID() {
+      return labelMainUserID;
+   }
+
+   public Label getCurrentUserName() {
+      String user = userNameField.getText();
+      labelMainUserName.setText(user);
+      return labelMainUserName;
+   }
+
+   public Label getCurrentUserAccessLevel() {
+      return labelAccessLevel;
    }
 }

@@ -39,14 +39,14 @@ public class DataLayer {
 
    public void update(Item item){
       String query = "UPDATE inventory ";
-      query += "SET amount = " + item.getQuantity() + ", ";
-      query += "name = " + item.getName() + ",";
-      query += "description = " + item.getDescription() + ", WHERE id = " + item.getId() + ";";
+      query += "SET quantity = " + item.getQuantity() + ", ";
+      query += "name = '" + item.getName() + "', ";
+      query += "description = '" + item.getDescription() + "' \n";
+      query += "WHERE id = " + item.getId() + ";";
       try{
          stmt = connection.createStatement();
          stmt.executeUpdate(query);
 
-         System.out.println(query); //test
       }catch(SQLException e){
          System.out.println(e);
       }

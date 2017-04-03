@@ -65,6 +65,13 @@ public class View {
      */
    public Scene loginView() {
 
+       // This is only a temporary setup for loginButton
+       loginButton.setOnAction(event -> {
+           mainView();
+           primaryStage.setScene(mainScene);
+           primaryStage.show();
+       });
+
        quitButton.setOnAction(event -> {
            primaryStage.close();
        });
@@ -73,15 +80,19 @@ public class View {
         passwordField.setPromptText("Password");
 
         // TODO burde laves om til noget med bedre kode konvention
+        /*
         loginButton.setOnAction(e -> {
            String user = userNameField.getText();
            String pass = passwordField.getText();
 
            if (c.verifyUser(user, pass)) {
               // TODO
-               primaryStage.setScene(mainView());
+              mainView();
+              primaryStage.setScene(mainView());
+              primaryStage.show();
            }
         });
+        */
 
         gridPane.add(userIdLabel, 0, 0);
         gridPane.add(userNameField, 1, 0);
@@ -124,6 +135,13 @@ public class View {
      * @return mainScene
      */
     public Scene mainView() {
+
+        // Does not work yet.
+        logoutButton.setOnAction(event -> {
+            loginView();
+            primaryStage.setScene(loginScene);
+            primaryStage.show();
+        });
 
         mainQuitButton.setOnAction(evente -> {
             primaryStage.close();

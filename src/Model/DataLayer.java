@@ -70,29 +70,7 @@ public class DataLayer {
          System.out.println(e);
       }
    }
-/*
-   public Item fetchItem(int index){
-      String query = "SELECT * from sql8166696.inventory WHERE id = " + index;
-      String name;
-      String description;
-      int quantity;
-      Item t = null;
 
-      try{
-         stmt = connection.createStatement();
-         rs = stmt.executeQuery(query);
-         while(rs.next()){
-            quantity = rs.getInt(2);
-            name = rs.getString(3);
-            description = rs.getString(4);
-            t = new Item(index,quantity,name,description);
-         }
-      }catch(SQLException e){
-         System.out.println(e);
-      }
-      return t;
-   }
-   */
    public ArrayList<Item> fetchItems(){
       ArrayList<Item> items = new ArrayList<>();
       String query = "SELECT * from sql8166696.inventory";
@@ -114,11 +92,10 @@ public class DataLayer {
             items.add(t);
          }
       }catch(SQLException e){
-         System.out.println(e + "");
+         System.out.println(e);
       }
       return items;
    }
-
 
    public void cleanUpEnviroment(){
      try{

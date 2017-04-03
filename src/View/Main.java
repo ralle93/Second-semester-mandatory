@@ -26,19 +26,9 @@ public class Main extends Application{
       v = new View(c, primaryStage);
       c.connectDb();
       rasmusTest();
+
    }
 
    public void rasmusTest(){
-      //System.out.println(c.updateItem(d.fetchItem(1)));
-      /*ObservableList<Item> list = c.getItems();
-
-      for (Item i : list) {
-         System.out.println(i.getName());
-      }
-
-      for (int i = 1; i < 20; i++) {
-         Item item = c.dataFetch(i);
-         System.out.println(item);
-      }*/
    }
 }

@@ -58,6 +58,7 @@ public class DataLayer {
       String description;
       int quantity;
       Item t = new Item();
+      t = null;
 
       try{
          stmt = connection.createStatement();
@@ -68,6 +69,7 @@ public class DataLayer {
             description = rs.getString(4);
             t = new Item(index,quantity,name,description);
          }
+
          if(t != null){
             return t;
          } return null;

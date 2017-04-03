@@ -160,32 +160,7 @@ public class View {
       inventoryTable.setItems(c.getItems());
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
 
-      // Search
-      searchField.setOnKeyPressed(e -> {
-         if (e.getCode().equals(KeyCode.ENTER)) {
-            ObservableList<Item> list = c.getItems();
-            ObservableList<Item> searchResults = FXCollections.observableArrayList();
-            String searchStr = searchField.getText().toLowerCase();
-
-            for (Item i : list) {
-               if (i.getName().toLowerCase().contains(searchStr)) {
-                  searchResults.add(i);
-               } else if (i.getDescription().toLowerCase().contains(searchStr)) {
-                  searchResults.add(i);
-               } else if (Integer.toString(i.getId()).contains(searchStr)) {
-                  searchResults.add(i);
-               }
-            }
-
-            inventoryTable.setItems(searchResults);
-         }
-      });
-
-      searchField.lengthProperty().addListener((observable, oldValue, newValue) -> {
-         if (searchField.getText().equals(null) || searchField.getText().length() == 0) {
-            inventoryTable.setItems(c.getItems());
-         }
-      });
+      search();
 
       // Does not work yet.
       logoutButton.setOnAction(event -> {
@@ -245,6 +220,35 @@ public class View {
       Style.styleButtonForMainView(editButton);
       Style.styleButtonForMainView(deleteButton);
       Style.styleTableView(inventoryTable);
+   }
+
+   private void search() {
+      // Search
+      searchField.setOnKeyPressed(e -> {
+         if (e.getCode().equals(KeyCode.ENTER)) {
+            ObservableList<Item> list = c.getItems();
+            ObservableList<Item> searchResults = FXCollections.observableArrayList();
+            String searchStr = searchField.getText().toLowerCase();
+
+            for (Item i : list) {
+               if (i.getName().toLowerCase().contains(searchStr)) {
+                  searchResults.add(i);
+               } else if (i.getDescription().toLowerCase().contains(searchStr)) {
+                  searchResults.add(i);
+               } else if (Integer.toString(i.getId()).contains(searchStr)) {
+                  searchResults.add(i);
+               }
+            }
+
+            inventoryTable.setItems(searchResults);
+         }
+      });
+
+      searchField.lengthProperty().addListener((observable, oldValue, newValue) -> {
+         if (searchField.getText().equals(null) || searchField.getText().length() == 0) {
+            inventoryTable.setItems(c.getItems());
+         }
+      });
    }
 
    public Label getCurrentUserID() {

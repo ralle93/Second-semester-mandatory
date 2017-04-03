@@ -31,12 +31,10 @@ public class DataLayer {
 
    public void addItemToDB(Item item){
 
-      cleanUpEnviroment();
    }
 
    public void removeItemFromDb(Item item){
 
-      cleanUpEnviroment();
    }
 
    public void update(Item item){
@@ -49,7 +47,6 @@ public class DataLayer {
          stmt = connection.createStatement();
          stmt.executeUpdate(query);
 
-         cleanUpEnviroment();
       }catch(SQLException e){
          System.out.println(e);
       }
@@ -70,7 +67,6 @@ public class DataLayer {
             name = rs.getString(3);
             description = rs.getString(4);
             t = new Item(index,quantity,name,description);
-            cleanUpEnviroment();
          }
          return t;
       }catch(SQLException e){

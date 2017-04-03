@@ -26,6 +26,7 @@ public class Main extends Application{
       v = new View(c, primaryStage);
       c.connectDb();
       rasmusTest();
+
    }
 
    public void testMethod() {
@@ -38,16 +39,9 @@ public class Main extends Application{
       System.out.println(c.verifyUser("mikk7506","1234"));
    }
    public void rasmusTest(){
-      //System.out.println(c.updateItem(d.fetchItem(1)));
-      /*ObservableList<Item> list = c.getItems();
+     Item t = new Item(10, "Tommy Action Figur", "Defekt, mangler 6-pack");
+      c.addItemToDb(t);
 
-      for (Item i : list) {
-         System.out.println(i.getName());
-      }
 
-      for (int i = 1; i < 20; i++) {
-         Item item = c.dataFetch(i);
-         System.out.println(item);
-      }*/
    }
 }

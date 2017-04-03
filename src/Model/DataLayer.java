@@ -30,7 +30,22 @@ public class DataLayer {
    }
 
    public void addItemToDB(Item item){
+      String query ="INSERT INTO inventory (quantity, name, description) \n";
+      query += "VALUES ();";
+      String name;
+      String description;
+      int quantity;
+      Item t = null;
 
+      try{
+         stmt = connection.createStatement();
+
+         stmt.executeUpdate(query);
+
+
+      }catch(SQLException e){
+         System.out.println(e);
+      }
    }
 
    public void removeItemFromDb(Item item){
@@ -106,7 +121,6 @@ public class DataLayer {
                   temp.setUsername(rs.getString(1));
                   temp.setPassword(rs.getString(2));
                   temp.setEmail(rs.getString(4));
-                  cleanUpEnviroment();
 
                   return temp;
                }

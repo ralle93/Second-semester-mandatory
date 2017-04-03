@@ -40,8 +40,10 @@ public class View {
    private Button deleteButton = new Button("Delete");
    private Button inventoryButton = new Button("Inventory");
    private Button userEdit = new Button("User Edit");
+   private TextField searchField = new TextField();
    private TableView inventoryTable = new TableView();
    private HBox mainHBox = new HBox();
+   private VBox mainRightVBox = new VBox();
    private VBox mainLeftVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
    private Scene mainScene = new Scene(borderpane, 1000, 800);
@@ -144,20 +146,23 @@ public class View {
 
         mainQuitButton.setOnAction(evente -> primaryStage.close());
 
+        searchField.setPromptText("Search");
+
         inventoryTable.setPadding(new Insets(10,10,10,10));
 
         mainHBox.setAlignment(Pos.TOP_CENTER);
-        mainHBox.getChildren().add(addButton);
-        mainHBox.getChildren().add(editButton);
-        mainHBox.getChildren().add(deleteButton);
+        mainHBox.getChildren().add(searchField);
 
-        mainLeftVBox.setSpacing(10);
-        mainLeftVBox.setAlignment(Pos.BOTTOM_CENTER);
+        mainRightVBox.getChildren().add(addButton);
+        mainRightVBox.getChildren().add(editButton);
+        mainRightVBox.getChildren().add(deleteButton);
+
         mainLeftVBox.getChildren().add(inventoryButton);
         mainLeftVBox.getChildren().add(userEdit);
         mainLeftVBox.getChildren().add(logoutButton);
         mainLeftVBox.getChildren().add(mainQuitButton);
 
+        borderpane.setRight(mainRightVBox);
         borderpane.setLeft(mainLeftVBox);
         borderpane.setTop(mainHBox);
         borderpane.setCenter(inventoryTable);
@@ -174,6 +179,7 @@ public class View {
     private void mainViewStyleLoader() {
         Style.styleBorderPane(borderpane);
         Style.styleMainVBox(mainLeftVBox);
+        Style.styleMainVBox(mainRightVBox);
         Style.styleMainHBox(mainHBox);
         Style.styleButtonForMainView(logoutButton);
         Style.styleButtonForMainView(mainQuitButton);

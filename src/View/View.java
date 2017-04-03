@@ -181,6 +181,12 @@ public class View {
          }
       });
 
+      searchField.lengthProperty().addListener((observable, oldValue, newValue) -> {
+         if (searchField.getText().equals(null) || searchField.getText().length() == 0) {
+            inventoryTable.setItems(c.getItems());
+         }
+      });
+
       // Does not work yet.
       logoutButton.setOnAction(event -> {
          primaryStage.setScene(loginView());

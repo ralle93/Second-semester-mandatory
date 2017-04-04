@@ -17,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.text.NumberFormat;
+
 /**
  * Tommy is primary contributor for this class.
  */
@@ -42,8 +44,8 @@ public class View {
    private Label labelMainUserEmaiL = new Label();
    private Label labelMainUserName = new Label();
    private Label labelAccessLevel = new Label();
-   private Label uniqueItems = new Label("TEST");
-   private Label totalQuantity = new Label("TEST");
+   private Label uniqueItems = new Label();
+   private Label totalQuantity = new Label();
    private Button logoutButton = new Button("Logout");
    private Button mainQuitButton = new Button("Quit");
    private Button addButton = new Button("Add");
@@ -171,8 +173,16 @@ public class View {
       descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
 
       inventoryTable.setPadding(new Insets(10,10,10,10));
-      inventoryTable.setItems(c.getItems());
+      ObservableList<Item> itemList = c.getItems();
+      inventoryTable.setItems(itemList);
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
+
+      uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(itemList.size()));
+      int total = 0;
+      for (Item i : itemList) {
+         total += i.getQuantity();
+      }
+      totalQuantity.setText("Total quantity: " + NumberFormat.getIntegerInstance().format(total));
 
       search();
 

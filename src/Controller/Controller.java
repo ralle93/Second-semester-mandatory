@@ -61,6 +61,10 @@ public class Controller {
       return false;
    }
 
+   public void closeConnection(){
+      d.cleanUpEnviroment();
+   }
+
    public ObservableList<Item> getItems() {
       ObservableList<Item> list = FXCollections.observableArrayList();
       list.addAll(d.fetchItems());

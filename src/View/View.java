@@ -308,7 +308,7 @@ public class View {
    }
 
    public Label getCurrentUserAccessLevel() {
-      labelAccessLevel.setText("Access Level: ");
+      labelAccessLevel.setText("Access Level: " + c.getLoggedUser().getAccessLevel());
       return labelAccessLevel;
    }
 

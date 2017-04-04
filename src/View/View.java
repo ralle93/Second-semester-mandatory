@@ -14,7 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.text.NumberFormat;
@@ -288,6 +287,9 @@ public class View {
       Style.styleloginLabel(uniqueItems);
       Style.styleloginLabel(totalQuantity);
       Style.styleMainAddBox(mainHBoxAdd, mainCenterVBox);
+      Style.styleTextfield(addQuantity);
+      Style.styleTextfield(addName);
+      Style.styleTextfield(addDescription);
    }
 
    private void search() {

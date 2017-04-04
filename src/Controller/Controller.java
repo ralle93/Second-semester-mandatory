@@ -32,6 +32,29 @@ public class Controller {
 
       return false;
    }
+   public boolean createUser(User user){
+      if(user != null){
+         d.createUser(user);
+         return true;
+      }
+      return false;
+   }
+
+   public boolean updateUser(User user){
+      if(user!= null){
+         d.updateUser(user);
+         return true;
+      }
+      return false;
+   }
+
+   public boolean deleteUser(User user){
+      if(user!= null){
+         d.deleteUser(user);
+         return true;
+      }
+      return false;
+   }
 
    public void connectDb(){
       d.connectToDb();

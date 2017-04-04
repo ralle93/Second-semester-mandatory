@@ -76,7 +76,10 @@ public class View {
     */
    private Scene loginView() {
 
-      quitButton.setOnAction(event -> primaryStage.close());
+      quitButton.setOnAction(event -> {
+         primaryStage.close();
+         c.closeConnection();
+      });
 
       userNameField.setPromptText("Username");
       passwordField.setPromptText("Password");
@@ -168,7 +171,12 @@ public class View {
          primaryStage.show();
       });
 
-      mainQuitButton.setOnAction(evente -> primaryStage.close());
+      mainQuitButton.setOnAction(evente -> {
+         primaryStage.close();
+         c.closeConnection();
+      });
+
+      primaryStage.setOnCloseRequest(e -> c.closeConnection());
 
       searchField.setPromptText("Search");
 

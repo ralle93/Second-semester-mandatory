@@ -14,6 +14,10 @@ public class Controller {
    private DataLayer d;
    private User loggedUser;
 
+   public User getLoggedUser() {
+      return loggedUser;
+   }
+
    public Controller(DataLayer dataLayer) {
       this.d = dataLayer;
    }
@@ -55,6 +59,10 @@ public class Controller {
          return true;
       }
       return false;
+   }
+
+   public void closeConnection(){
+      d.cleanUpEnviroment();
    }
 
    public ObservableList<Item> getItems() {

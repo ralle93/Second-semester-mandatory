@@ -13,14 +13,13 @@ public class DataLayer {
    private Connection connection;
    private Statement stmt;
    private ResultSet rs;
+   private final String dbURL = "jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8166696?useSSL=false";
+   private final String username = "sql8166696";
+   private final String password = "Lp7AZi7fVf";
 
    public DataLayer(){}
 
    public void connectToDb(){
-      final String dbURL = "jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8166696?useSSL=false";
-      final String username = "sql8166696";
-      final String password = "Lp7AZi7fVf";
-
       try {
          connection = DriverManager.getConnection(dbURL, username, password);
          if(connection != null){
@@ -46,7 +45,6 @@ public class DataLayer {
    public void removeItemFromDb(Item item){
       String query = "DELETE FROM inventory \n";
       query += "WHERE id = " + item.getId() +";";
-      System.out.println(query);
       try{
          stmt = connection.createStatement();
          stmt.executeUpdate(query);

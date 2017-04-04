@@ -33,13 +33,13 @@ class Style {
     }
 
     static void styleloginTitleLabel(Label label) {
-        label.setPadding(new Insets(25,50,25,50));
+        label.setPadding(new Insets(10,50,10,50));
         label.setStyle("-fx-text-fill: cadetblue;"+
                        "-fx-font-size: 48px;"+
                        "-fx-font-family: monospace;"+
                        "-fx-border-color: cadetblue;"+
-                       "-fx-border-width: 3px;"+
-                       "-fx-border-radius: 10%");
+                       "-fx-border-width: 2px;"+
+                       "-fx-border-radius: 20%");
     }
 
     static void styleloginLabel(Label label) {
@@ -56,11 +56,11 @@ class Style {
                         "-fx-border-radius: 20%;"
         );
         button.setOnMouseEntered(event -> button.setStyle(
-                "-fx-border-radius: 20%;"+
-                "-fx-text-fill: azure;"+
-                "-fx-background-color: cadetblue;"+
-                "-fx-border-width: 2px;"+
-                "-fx-border-color: transparent;")
+                        "-fx-border-radius: 20%;"+
+                        "-fx-text-fill: azure;"+
+                        "-fx-background-color: cadetblue;"+
+                        "-fx-border-width: 2px;"+
+                        "-fx-border-color: transparent;")
         );
         button.setOnMouseExited(event -> button.setStyle(
                         "-fx-text-fill: cadetblue;"+
@@ -108,9 +108,9 @@ class Style {
 
     static void styleMainHBox(HBox hbox) {
         hbox.setPadding(new Insets(10,10,10,10));
-        hbox.setSpacing(10);
+        hbox.setSpacing(100);
         hbox.setAlignment(Pos.CENTER);
-        hbox.setStyle("-fx-background-color: azure;");
+        hbox.setStyle("-fx-background-color: cadetblue;" + "-fx-border-radius: 20%;" + "-fx-border-width: 20px;" + "-fx-border-color: cadetblue;");
     }
 
     static void styleMainSearchField(TextField textField) {
@@ -120,7 +120,8 @@ class Style {
         textField.setStyle("-fx-border-color: cadetblue;"+
                             "-fx-border-width: 2px;"+
                             "-fx-border-radius: 20%;"+
-                            "-fx-background-color: transparent;");
+                            "-fx-background-color: transparent;"+
+                           "-fx-text-fill: cadetblue;");
     }
 
     static void styleButtonForMainView(Button button) {
@@ -152,6 +153,12 @@ class Style {
         tableView.setStyle("-fx-border-width: 5px;"+
                             "-fx-border-color: cadetblue;"+
                             "-fx-border-radius: 2%;"+
-                            "-fx-background-color: azure;");
+                            "-fx-background-color: transparent;");
+
+    }
+
+    static void styleMainBottomHBox(HBox hbox) {
+        hbox.setAlignment(Pos.BOTTOM_CENTER);
+        hbox.setSpacing(50);
     }
 }

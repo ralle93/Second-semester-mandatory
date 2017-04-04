@@ -16,6 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.text.NumberFormat;
+
 /**
  * Tommy is primary contributor for this class.
  */
@@ -38,9 +40,11 @@ public class View {
    private Scene loginScene = new Scene(vbox, 1280, 800);
 
    // Objects used in mainView
-   private Label labelMainUserID = new Label();
+   private Label labelMainUserEmaiL = new Label();
    private Label labelMainUserName = new Label();
    private Label labelAccessLevel = new Label();
+   private Label uniqueItems = new Label();
+   private Label totalQuantity = new Label();
    private Button logoutButton = new Button("Logout");
    private Button mainQuitButton = new Button("Quit");
    private Button addButton = new Button("Add");
@@ -51,9 +55,12 @@ public class View {
    private TextField searchField = new TextField();
    private TableView inventoryTable = new TableView<>();
    private HBox mainHBox = new HBox();
+   private HBox mainHBoxAdd = new HBox();
+   private HBox mainBottomHBox = new HBox();
    private VBox mainTopVBox = new VBox();
    private VBox mainRightVBox = new VBox();
    private VBox mainLeftVBox = new VBox();
+   private VBox mainCenterVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
    private Scene mainScene = new Scene(borderpane, 1200, 800);
 
@@ -64,7 +71,7 @@ public class View {
 
       loginView();
 
-      primaryStage.setTitle("Inventory Management version. 0.01");
+      primaryStage.setTitle("Inventory Management version. 0.1");
       primaryStage.setScene(loginScene);
       primaryStage.show();
    }
@@ -160,8 +167,16 @@ public class View {
       descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
 
       inventoryTable.setPadding(new Insets(10,10,10,10));
-      inventoryTable.setItems(c.getItems());
+      ObservableList<Item> itemList = c.getItems();
+      inventoryTable.setItems(itemList);
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
+
+      uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(itemList.size()));
+      int total = 0;
+      for (Item i : itemList) {
+         total += i.getQuantity();
+      }
+      totalQuantity.setText("Total quantity: " + NumberFormat.getIntegerInstance().format(total));
 
       search();
 
@@ -180,10 +195,14 @@ public class View {
 
       searchField.setPromptText("Search");
 
+      addButton.setOnAction(event -> {
+         mainCenterVBox.getChildren().add(mainHBoxAdd);
+         mainCenterVBox.getChildren().add(inventoryTable);
+      });
+
       mainHBox.setAlignment(Pos.TOP_CENTER);
-      mainHBox.getChildren().add(labelMainUserID);
       mainHBox.getChildren().add(getCurrentUserName());
-      mainHBox.getChildren().add(labelAccessLevel);
+      mainHBox.getChildren().add(getCurrentUserAccessLevel());
 
       mainTopVBox.setAlignment(Pos.TOP_CENTER);
       mainTopVBox.setSpacing(10);
@@ -200,10 +219,16 @@ public class View {
       mainLeftVBox.getChildren().add(logoutButton);
       mainLeftVBox.getChildren().add(mainQuitButton);
 
+      mainCenterVBox.getChildren().add(inventoryTable);
+
+      mainBottomHBox.getChildren().add(uniqueItems);
+      mainBottomHBox.getChildren().add(totalQuantity);
+
       borderpane.setRight(mainRightVBox);
       borderpane.setLeft(mainLeftVBox);
       borderpane.setTop(mainTopVBox);
-      borderpane.setCenter(inventoryTable);
+      borderpane.setCenter(mainCenterVBox);
+      borderpane.setBottom(mainBottomHBox);
 
       mainViewStyleLoader();
 
@@ -228,6 +253,9 @@ public class View {
       Style.styleButtonForMainView(editButton);
       Style.styleButtonForMainView(deleteButton);
       Style.styleTableView(inventoryTable);
+      Style.styleMainBottomHBox(mainBottomHBox);
+      Style.styleloginLabel(uniqueItems);
+      Style.styleloginLabel(totalQuantity);
    }
 
    private void search() {
@@ -259,17 +287,18 @@ public class View {
       });
    }
 
-   public Label getCurrentUserID() {
-      return labelMainUserID;
+   public Label getCurrentUserEmail() {
+      return labelMainUserEmaiL;
    }
 
    public Label getCurrentUserName() {
       String user = userNameField.getText();
-      labelMainUserName.setText(user);
+      labelMainUserName.setText("Current User: " + user);
       return labelMainUserName;
    }
 
    public Label getCurrentUserAccessLevel() {
+      labelAccessLevel.setText("Access Level: ");
       return labelAccessLevel;
    }
 }

@@ -5,7 +5,6 @@ import Controller.User;
 import Controller.Item;
 import Model.DataLayer;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
 /**
@@ -40,6 +39,5 @@ public class Main extends Application{
       System.out.println(c.verifyUser("mikk7506","1234"));
    }
    public void rasmusTest(){
-      d.deleteUser(new User(1,"username","passwords","kk@g.dk"));
    }
 }

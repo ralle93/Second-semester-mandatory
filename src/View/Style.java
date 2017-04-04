@@ -106,11 +106,14 @@ class Style {
         vbox.setStyle("-fx-background-color: azure;");
     }
 
-    static void styleMainHBox(HBox hbox) {
-        hbox.setPadding(new Insets(10,10,10,10));
-        hbox.setSpacing(100);
+    static void styleMainHBox(HBox hbox, Label label1, Label label2) {
+        hbox.setPadding(new Insets(0,10,0,10));
+        hbox.setSpacing(50);
         hbox.setAlignment(Pos.CENTER);
         hbox.setStyle("-fx-background-color: cadetblue;" + "-fx-border-radius: 20%;" + "-fx-border-width: 20px;" + "-fx-border-color: cadetblue;");
+        label1.setStyle("-fx-text-fill: azure;"+"-fx-font-family: monospace;");
+        label2.setStyle("-fx-text-fill: azure;"+"-fx-font-family: monospace;");
+
     }
 
     static void styleMainSearchField(TextField textField) {

@@ -37,7 +37,7 @@ public class View {
    private GridPane gridPane = new GridPane();
    private HBox hbox = new HBox();
    private VBox vbox = new VBox();
-   private Scene loginScene = new Scene(vbox, 1280, 800);
+   private Scene loginScene = new Scene(vbox, 1300, 900);
 
    // Objects used in mainView
    private Label labelMainUserEmaiL = new Label();
@@ -70,7 +70,7 @@ public class View {
    private VBox mainLeftVBox = new VBox();
    private VBox mainCenterVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
-   private Scene mainScene = new Scene(borderpane, 1200, 800);
+   private Scene mainScene = new Scene(borderpane, 1300, 900);
 
    View(Controller c, Stage stage) {
       this.c = c;
@@ -269,7 +269,7 @@ public class View {
       Style.styleBorderPane(borderpane);
       Style.styleMainVBox(mainLeftVBox);
       Style.styleMainVBox(mainRightVBox);
-      Style.styleMainHBox(mainHBox);
+      Style.styleMainHBox(mainHBox, labelMainUserName, labelAccessLevel);
       Style.styleMainSearchField(searchField);
       Style.styleButtonForMainView(logoutButton);
       Style.styleButtonForMainView(mainQuitButton);
@@ -286,6 +286,11 @@ public class View {
       Style.styleTextfield(addQuantity);
       Style.styleTextfield(addName);
       Style.styleTextfield(addDescription);
+      Style.styleButtons(applyButton);
+      Style.styleButtons(cancelButton);
+      Style.styleloginLabel(addNameLabel);
+      Style.styleloginLabel(addQuantityLabel);
+      Style.styleloginLabel(addDescriptionLabel);
    }
 
    private void search() {

@@ -336,6 +336,7 @@ public class View {
       Style.styleButtonForMainView(editButton);
       Style.styleButtonForMainView(deleteButton);
       Style.styleTableView(inventoryTable);
+      Style.styleTableView(userTable);
       Style.styleMainBottomHBox(mainBottomHBox);
       Style.styleloginLabel(uniqueItems);
       Style.styleloginLabel(totalQuantity);

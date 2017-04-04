@@ -161,4 +161,8 @@ class Style {
         hbox.setAlignment(Pos.BOTTOM_CENTER);
         hbox.setSpacing(50);
     }
+
+    static void styleMainAddBox() {
+
+    }
 }

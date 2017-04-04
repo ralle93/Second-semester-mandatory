@@ -2,12 +2,14 @@ package View;
 
 import Controller.Controller;
 import Controller.Item;
+import Controller.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -62,6 +64,7 @@ public class View {
    private TextField addQuantity = new TextField();
    private TextField addDescription = new TextField();
    private TableView inventoryTable = new TableView<>();
+   private TableView userTable = new TableView<>();
    private HBox mainHBox = new HBox();
    private HBox mainHBoxAdd = new HBox();
    private HBox mainBottomHBox = new HBox();
@@ -186,6 +189,8 @@ public class View {
       inventoryTable.setItems(itemList);
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
 
+      userTable = loadUserTable();
+
       uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(itemList.size()));
       int total = 0;
       for (Item i : itemList) {
@@ -195,7 +200,6 @@ public class View {
 
       search();
 
-      // Does not work yet.
       logoutButton.setOnAction(event -> {
          gridPane.getChildren().clear();
          hbox.getChildren().clear();
@@ -206,7 +210,7 @@ public class View {
          primaryStage.show();
       });
 
-      mainQuitButton.setOnAction(evente -> {
+      mainQuitButton.setOnAction(e -> {
          primaryStage.close();
          c.closeConnection();
       });
@@ -274,7 +278,44 @@ public class View {
 
       mainViewStyleLoader();
 
+      inventoryButton.setOnAction(e -> {
+         mainCenterVBox.getChildren().clear();
+         mainCenterVBox.getChildren().add(inventoryTable);
+      });
+
+      userEdit.setOnAction(e -> {
+         mainCenterVBox.getChildren().clear();
+         mainCenterVBox.getChildren().add(userTable);
+      });
+
       return mainScene;
+    }
+
+    private TableView loadUserTable() {
+       TableView temp = new TableView();
+
+       TableColumn<User, String> userColumn = new TableColumn("USERNAME");
+       userColumn.setMinWidth(25);
+       userColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+       TableColumn<User, String> passColumn = new TableColumn("PASSWORD");
+       passColumn.setMinWidth(25);
+       passColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+
+       TableColumn<User, Integer> accessColumn = new TableColumn("ACCESS LEVEL");
+       accessColumn.setMinWidth(100);
+       accessColumn.setCellValueFactory(new PropertyValueFactory("acces_lvl"));
+
+       TableColumn<User, String> eMailColumn = new TableColumn("EMAIL ADDRESS");
+       eMailColumn.setMinWidth(500);
+       eMailColumn.setCellValueFactory(new PropertyValueFactory("email"));
+
+       temp.setPadding(new Insets(10,10,10,10));
+       ObservableList<User> userList = c.getUsers();
+       temp.setItems(userList);
+       temp.getColumns().addAll(userColumn, passColumn, accessColumn, eMailColumn);
+
+       return temp;
     }
 
    /**

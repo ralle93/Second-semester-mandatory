@@ -98,4 +98,11 @@ public class Controller {
 
       return list;
    }
+
+   public ObservableList<User> getUsers() {
+      ObservableList<User> list = FXCollections.observableArrayList();
+      list.addAll(d.fetchUsers());
+
+      return list;
+   }
 }

@@ -46,6 +46,9 @@ public class View {
    private Label labelAccessLevel = new Label();
    private Label uniqueItems = new Label();
    private Label totalQuantity = new Label();
+   private Label addQuantityLabel = new Label("Quantity");
+   private Label addNameLabel = new Label("Name:");
+   private Label addDescriptionLabel = new Label("Description:");
    private Button logoutButton = new Button("Logout");
    private Button mainQuitButton = new Button("Quit");
    private Button addButton = new Button("Add");
@@ -280,6 +283,7 @@ public class View {
       Style.styleMainBottomHBox(mainBottomHBox);
       Style.styleloginLabel(uniqueItems);
       Style.styleloginLabel(totalQuantity);
+      Style.styleMainAddBox(mainHBoxAdd, mainCenterVBox);
    }
 
    private void search() {
@@ -327,8 +331,13 @@ public class View {
    }
 
    public void addMenuBox(HBox hbox) {
+      addQuantity.setMinWidth(50);
+      addQuantity.setMaxWidth(50);
+      hbox.getChildren().add(addQuantityLabel);
       hbox.getChildren().add(addQuantity);
+      hbox.getChildren().add(addNameLabel);
       hbox.getChildren().add(addName);
+      hbox.getChildren().add(addDescriptionLabel);
       hbox.getChildren().add(addDescription);
       hbox.getChildren().add(applyButton);
       hbox.getChildren().add(cancelButton);

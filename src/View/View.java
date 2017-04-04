@@ -41,6 +41,8 @@ public class View {
    private Label labelMainUserEmaiL = new Label();
    private Label labelMainUserName = new Label();
    private Label labelAccessLevel = new Label();
+   private Label uniqueItems = new Label();
+   private Label totalQuantity = new Label();
    private Button logoutButton = new Button("Logout");
    private Button mainQuitButton = new Button("Quit");
    private Button addButton = new Button("Add");

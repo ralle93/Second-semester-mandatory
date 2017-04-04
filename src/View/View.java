@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.text.NumberFormat;
@@ -52,7 +53,12 @@ public class View {
    private Button deleteButton = new Button("Delete");
    private Button inventoryButton = new Button("Inventory");
    private Button userEdit = new Button("User Edit");
+   private Button applyButton = new Button("Apply");
+   private Button cancelButton = new Button("Cancel");
    private TextField searchField = new TextField();
+   private TextField addName = new TextField();
+   private TextField addQuantity = new TextField();
+   private TextField addDescription = new TextField();
    private TableView inventoryTable = new TableView<>();
    private HBox mainHBox = new HBox();
    private HBox mainHBoxAdd = new HBox();
@@ -197,7 +203,7 @@ public class View {
 
       addButton.setOnAction(event -> {
          mainCenterVBox.getChildren().add(mainHBoxAdd);
-         mainCenterVBox.getChildren().add(inventoryTable);
+         addMenuBox(mainHBoxAdd);
       });
 
       mainHBox.setAlignment(Pos.TOP_CENTER);
@@ -300,5 +306,13 @@ public class View {
    public Label getCurrentUserAccessLevel() {
       labelAccessLevel.setText("Access Level: ");
       return labelAccessLevel;
+   }
+
+   public void addMenuBox(HBox hbox) {
+      hbox.getChildren().add(addQuantity);
+      hbox.getChildren().add(addName);
+      hbox.getChildren().add(addDescription);
+      hbox.getChildren().add(applyButton);
+      hbox.getChildren().add(cancelButton);
    }
 }

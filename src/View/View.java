@@ -224,7 +224,7 @@ public class View {
       });
 
       cancelButton.setOnAction(event -> {
-         mainCenterVBox.getChildren().remove(mainHBoxAdd);
+         mainCenterVBox.getChildren().remove(mainHBoxAdd); //
       });
 
       mainHBox.setAlignment(Pos.TOP_CENTER);

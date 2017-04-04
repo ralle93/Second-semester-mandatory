@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- *         ralle drengen arbejder her
+ *      ralle drengen arbejder her
  */
 public class DataLayer {
    private Connection connection;
@@ -30,28 +30,39 @@ public class DataLayer {
       }
    }
 
+   public void createUser(User user){
+      String query ="INSERT INTO login_data (username, password, acces_lvl, email) \n";
+      query += "VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "', " + user.getAccessLevel() + ", '";
+      query += user.getEmail() + "');";
+      tryAndCatch(query);
+   }
+
+   public void updateUser(User user){
+      String query = "UPDATE login_data ";
+      query += "SET username = '" + user.getUsername() +"', " + "password = '" + user.getPassword() + "', ";
+      query += "acces_lvl = '" + user.getAccessLevel() + "', email = '" + user.getEmail() + "' \n";
+      query += "WHERE username = '" + user.getUsername() + "';";
+      tryAndCatch(query);
+
+   }
+
+   public void deleteUser(User user){
+      String query = "DELETE FROM login_data \n";
+      query += "WHERE username = '" + user.getUsername() +"';";
+      tryAndCatch(query);
+
+   }
+
    public void addItemToDB(Item item){
       String query ="INSERT INTO inventory (quantity, name, description) \n";
       query += "VALUES (" + item.getQuantity() + ", '" + item.getName() + "', '" + item.getDescription() + "');";
-      try{
-         stmt = connection.createStatement();
-         stmt.executeUpdate(query);
-
-      }catch(SQLException e){
-         System.out.println(e);
-      }
+      tryAndCatch(query);
    }
 
    public void removeItemFromDb(Item item){
       String query = "DELETE FROM inventory \n";
       query += "WHERE id = " + item.getId() +";";
-      try{
-         stmt = connection.createStatement();
-         stmt.executeUpdate(query);
-
-      }catch(SQLException e){
-         System.out.println(e);
-      }
+      tryAndCatch(query);
    }
 
    public void update(Item item){
@@ -60,13 +71,7 @@ public class DataLayer {
       query += "name = '" + item.getName() + "', ";
       query += "description = '" + item.getDescription() + "' \n";
       query += "WHERE id = " + item.getId() + ";";
-      try{
-         stmt = connection.createStatement();
-         stmt.executeUpdate(query);
-
-      }catch(SQLException e){
-         System.out.println(e);
-      }
+      tryAndCatch(query);
    }
 
    public ArrayList<Item> fetchItems(){
@@ -109,6 +114,16 @@ public class DataLayer {
      }catch(SQLException e){
         System.out.println(e);
      }
+   }
+
+   private void tryAndCatch(String query){
+      try{
+         stmt = connection.createStatement();
+         stmt.executeUpdate(query);
+
+      }catch(SQLException e){
+         System.out.println(e);
+      }
    }
 
    public User fetchUser(String user, String pass) {

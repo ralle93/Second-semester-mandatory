@@ -186,6 +186,7 @@ public class View {
       searchField.setPromptText("Search");
 
       addButton.setOnAction(event -> {
+         //
          mainCenterVBox.getChildren().add(mainHBoxAdd);
          mainCenterVBox.getChildren().add(inventoryTable);
       });

@@ -162,7 +162,13 @@ class Style {
         hbox.setSpacing(50);
     }
 
-    static void styleMainAddBox() {
-
+    static void styleMainAddBox(HBox hbox, VBox vbox) {
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setPadding(new Insets(10,10,10,10));
+        hbox.setSpacing(10);
+        hbox.setStyle("-fx-border-color: cadetblue;"+
+                        "-fx-border-radius: 2%;"+
+                        "-fx-border-width: 5px;");
+        vbox.setSpacing(10);
     }
 }

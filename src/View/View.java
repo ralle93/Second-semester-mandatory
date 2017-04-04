@@ -186,7 +186,6 @@ public class View {
       searchField.setPromptText("Search");
 
       addButton.setOnAction(event -> {
-         //
          mainCenterVBox.getChildren().add(mainHBoxAdd);
          mainCenterVBox.getChildren().add(inventoryTable);
       });
@@ -245,6 +244,8 @@ public class View {
       Style.styleButtonForMainView(deleteButton);
       Style.styleTableView(inventoryTable);
       Style.styleMainBottomHBox(mainBottomHBox);
+      Style.styleloginLabel(uniqueItems);
+      Style.styleloginLabel(totalQuantity);
    }
 
    private void search() {

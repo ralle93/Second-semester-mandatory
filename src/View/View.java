@@ -205,6 +205,10 @@ public class View {
       searchField.setPromptText("Search");
 
       addButton.setOnAction(event -> {
+         addQuantity.setText("");
+         addName.setText("");
+         addDescription.setText("");
+
          mainCenterVBox.getChildren().add(mainHBoxAdd);
          addMenuBox(mainHBoxAdd);
       });
@@ -224,7 +228,7 @@ public class View {
       });
 
       cancelButton.setOnAction(event -> {
-         mainCenterVBox.getChildren().remove(mainHBoxAdd); //
+         mainCenterVBox.getChildren().remove(mainHBoxAdd);
       });
 
       mainHBox.setAlignment(Pos.TOP_CENTER);

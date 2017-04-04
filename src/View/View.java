@@ -156,7 +156,7 @@ public class View {
     * GUI setup for mainView.
     * @return mainScene
     */
-   private Scene mainView() {
+   private Scene mainView(){
 
       TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
       idColumn.setMinWidth(25);
@@ -204,7 +204,7 @@ public class View {
       searchField.setPromptText("Search");
 
       addButton.setOnAction(event -> {
-         mainCenterVBox.getChildren().add(mainHBoxAdd);
+         mainCenterVBox.getChildren().add(mainHBoxAdd); //laves om til setVisble(true); og add(mainHboxAdd) flyttes et andetsted
          addMenuBox(mainHBoxAdd);
       });
 

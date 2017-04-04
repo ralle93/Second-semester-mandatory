@@ -156,4 +156,9 @@ class Style {
                             "-fx-background-color: transparent;");
 
     }
+
+    static void styleMainBottomHBox(HBox hbox) {
+        hbox.setAlignment(Pos.BOTTOM_CENTER);
+        hbox.setSpacing(50);
+    }
 }

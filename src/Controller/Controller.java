@@ -18,6 +18,10 @@ public class Controller {
       return loggedUser;
    }
 
+   public void setLoggedUser(User user) {
+      loggedUser = user;
+   }
+
    public Controller(DataLayer dataLayer) {
       this.d = dataLayer;
    }

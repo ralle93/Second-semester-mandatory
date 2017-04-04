@@ -102,13 +102,20 @@ public class View {
       userNameField.setText("mikk7506");
       passwordField.setText("12345");
 
-      // TODO burde laves om til noget med bedre kode konvention
       loginButton.setOnAction(e -> {
          String user = userNameField.getText();
          String pass = passwordField.getText();
 
          if (c.verifyUser(user, pass)) {
-            // TODO
+            mainHBox.getChildren().clear();
+            mainHBoxAdd.getChildren().clear();
+            mainBottomHBox.getChildren().clear();
+            mainTopVBox.getChildren().clear();
+            mainRightVBox.getChildren().clear();
+            mainLeftVBox.getChildren().clear();
+            mainCenterVBox.getChildren().clear();
+            borderpane.getChildren().clear();
+
             primaryStage.setScene(mainView());
             primaryStage.show();
          } else {
@@ -190,6 +197,11 @@ public class View {
 
       // Does not work yet.
       logoutButton.setOnAction(event -> {
+         gridPane.getChildren().clear();
+         hbox.getChildren().clear();
+         vbox.getChildren().clear();
+
+         c.setLoggedUser(null);
          primaryStage.setScene(loginView());
          primaryStage.show();
       });

@@ -38,7 +38,7 @@ public class View {
    private Scene loginScene = new Scene(vbox, 1280, 800);
 
    // Objects used in mainView
-   private Label labelMainUserID = new Label();
+   private Label labelMainUserEmaiL = new Label();
    private Label labelMainUserName = new Label();
    private Label labelAccessLevel = new Label();
    private Button logoutButton = new Button("Logout");
@@ -173,9 +173,8 @@ public class View {
       searchField.setPromptText("Search");
 
       mainHBox.setAlignment(Pos.TOP_CENTER);
-      mainHBox.getChildren().add(labelMainUserID);
       mainHBox.getChildren().add(getCurrentUserName());
-      mainHBox.getChildren().add(labelAccessLevel);
+      mainHBox.getChildren().add(getCurrentUserAccessLevel());
 
       mainTopVBox.setAlignment(Pos.TOP_CENTER);
       mainTopVBox.setSpacing(10);
@@ -251,17 +250,18 @@ public class View {
       });
    }
 
-   public Label getCurrentUserID() {
-      return labelMainUserID;
+   public Label getCurrentUserEmail() {
+      return labelMainUserEmaiL;
    }
 
    public Label getCurrentUserName() {
       String user = userNameField.getText();
-      labelMainUserName.setText(user);
+      labelMainUserName.setText("Current User: " + user);
       return labelMainUserName;
    }
 
    public Label getCurrentUserAccessLevel() {
+      labelAccessLevel.setText("Access Level: ");
       return labelAccessLevel;
    }
 }

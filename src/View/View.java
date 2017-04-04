@@ -206,6 +206,24 @@ public class View {
          addMenuBox(mainHBoxAdd);
       });
 
+      applyButton.setOnAction(event -> {
+         try {
+            int quantity = Integer.parseInt(addQuantity.getText());
+            String name = addName.getText();
+            String description = addDescription.getText();
+            Item item = new Item(quantity, name, description);
+            c.addItemToDb(item);
+
+            mainCenterVBox.getChildren().remove(mainHBoxAdd);
+         } catch (NumberFormatException ex) {
+            System.out.println("You need to enter an integer you noob!");
+         }
+      });
+
+      cancelButton.setOnAction(event -> {
+         mainCenterVBox.getChildren().remove(mainHBoxAdd);
+      });
+
       mainHBox.setAlignment(Pos.TOP_CENTER);
       mainHBox.getChildren().add(getCurrentUserName());
       mainHBox.getChildren().add(getCurrentUserAccessLevel());

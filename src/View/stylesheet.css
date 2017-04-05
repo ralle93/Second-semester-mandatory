@@ -19,8 +19,35 @@
     -fx-border-width: 3px;
 }
 
+#inventory_table {
+    -fx-border-width: 1px;
+    -fx-background-color: transparent;
+}
+
+#main_center_vbox {
+    -fx-background-color: transparent;
+    -fx-border-color: cadetblue;
+    -fx-border-width: 4px;
+    -fx-border-radius: 2%;
+    -fx-background-radius: 2%;
+}
+
 #login_hbox {
     -fx-spacing: 50px;
+}
+
+#main_hbox {
+    -fx-spacing: 200px;
+    -fx-background-color: cadetblue;
+    -fx-border-radius: 20%;
+}
+
+#main_current_user_label, #main_current_user_access_level_label {
+    -fx-text-fill: azure;
+}
+
+#main_border_pane {
+    -fx-background-color: azure;
 }
 
 .label {

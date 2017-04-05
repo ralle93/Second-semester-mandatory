@@ -42,7 +42,6 @@ public class View {
    private Scene loginScene = new Scene(getloginVBox(), 1300, 900);
 
    // Objects used in mainView
-   private Label labelMainUserEmaiL = new Label();
    private Label labelMainUserName = new Label();
    private Label labelAccessLevel = new Label();
    private Label uniqueItems = new Label();
@@ -186,30 +185,25 @@ public class View {
     * MAIN VIEW RELATED METHODS STARTS HERE:
     *******************************************************************************************************************/
 
-   /**
-    * Get method for show the username of the currently logged in user.
-    * @return labelMainUserName
-    */
+   // Get method for show the username of the currently logged in user.
    public Label getCurrentUserName() {
       String user = userNameField.getText();
+      labelMainUserName.setId("main_current_user_label");
       labelMainUserName.setText("Current User: " + user);
       return labelMainUserName;
    }
 
-   /**
-    * Get method for show what level a user has.
-    * @return labelAccessLevel
-    */
+   // Get method for show what level a user has.
    public Label getCurrentUserAccessLevel() {
+      labelAccessLevel.setId("main_current_user_access_level_label");
       labelAccessLevel.setText("Access Level: ");
       return labelAccessLevel;
    }
 
-   /**
-    * Get method for inventory Table.
-    * @return inventoryTable
-    */
+   // Get method for inventory Table.
    private TableView getInventoryTable() {
+      inventoryTable.setId("inventory_table");
+
       TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
       idColumn.setMinWidth(25);
       idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -240,10 +234,7 @@ public class View {
       return inventoryTable;
    }
 
-   /**
-    * Get method for User Table
-    * @return temp
-    */
+   // Get method for User Table
    private TableView getUserTable() {
       TableView userTable = new TableView();
 
@@ -271,10 +262,9 @@ public class View {
       return userTable;
    }
 
-   /**
-    * Method used for allowing search in Inventory Table
-    */
+   // Method used for allowing search in Inventory Table
    private void search() {
+      searchField.setPromptText("Search");
       searchField.setOnKeyPressed(e -> {
          if (e.getCode().equals(KeyCode.ENTER)) {
             ObservableList<Item> list = c.getItems();
@@ -301,13 +291,13 @@ public class View {
       });
    }
 
-   private Scene mainView() {
+   /**
+    * Get Method for Logout Button.
+    *
+    * @return
+    */
 
-      loadCSS(mainScene);
-      getInventoryTable();
-      userTable = getUserTable();
-      search();
-
+   private Button getLogoutButton() {
       logoutButton.setOnAction(event -> {
          gridPane.getChildren().clear();
          loginHBox.getChildren().clear();
@@ -319,25 +309,20 @@ public class View {
          primaryStage.setScene(loginView());
          primaryStage.show();
       });
+      return logoutButton;
+   }
 
+   // Get method for Quit Button in Main View
+   private Button getMainQuitButton() {
       mainQuitButton.setOnAction(e -> {
          primaryStage.close();
          c.closeConnection();
       });
+      return mainQuitButton;
+   }
 
-      primaryStage.setOnCloseRequest(e -> c.closeConnection());
-
-      searchField.setPromptText("Search");
-
-      addButton.setOnAction(event -> {
-         addQuantity.setText("");
-         addName.setText("");
-         addDescription.setText("");
-
-         mainCenterVBox.getChildren().add(mainHBoxAdd);
-         addMenuBox(mainHBoxAdd);
-      });
-
+   //Get Method for Apply Button
+   private Button getApplyButton() {
       applyButton.setOnAction(event -> {
          try {
             int quantity = Integer.parseInt(addQuantity.getText());
@@ -351,42 +336,89 @@ public class View {
             System.out.println("You need to enter an integer you noob!");
          }
       });
+      return applyButton;
+   }
 
+   // Get Method for cancel adding to Inventory Table.
+   private Button getCancelButton() {
       cancelButton.setOnAction(event -> {
          mainCenterVBox.getChildren().remove(mainHBoxAdd);
       });
+      return cancelButton;
+   }
 
+   // Method for AddMenuBox.
+   public void addMenuBox(HBox hbox) {
+      addQuantity.setMinWidth(50);
+      addQuantity.setMaxWidth(50);
+      hbox.getChildren().add(addQuantityLabel);
+      hbox.getChildren().add(addQuantity);
+      hbox.getChildren().add(addNameLabel);
+      hbox.getChildren().add(addName);
+      hbox.getChildren().add(addDescriptionLabel);
+      hbox.getChildren().add(addDescription);
+      hbox.getChildren().add(getApplyButton());
+      hbox.getChildren().add(getCancelButton());
+   }
+
+   // Get Method for AddButton.
+   public Button getAddButton() {
+      addButton.setOnAction(event -> {
+         addQuantity.setText("");
+         addName.setText("");
+         addDescription.setText("");
+
+         mainCenterVBox.getChildren().add(mainHBoxAdd);
+         addMenuBox(mainHBoxAdd);
+      });
+      return addButton;
+   }
+
+   private Scene mainView() {
+
+      loadCSS(mainScene);
+      getInventoryTable();
+      userTable = getUserTable();
+      search();
+
+      primaryStage.setOnCloseRequest(e -> c.closeConnection());
+
+      mainHBox.setId("main_hbox");
       mainHBox.setAlignment(Pos.TOP_CENTER);
       mainHBox.getChildren().add(getCurrentUserName());
       mainHBox.getChildren().add(getCurrentUserAccessLevel());
 
+      mainTopVBox.setId("main_top_vbox");
       mainTopVBox.setAlignment(Pos.TOP_CENTER);
       mainTopVBox.setSpacing(10);
       mainTopVBox.setPadding(new Insets(10,10,10,10));
       mainTopVBox.getChildren().add(mainHBox);
       mainTopVBox.getChildren().add(searchField);
 
-      mainRightVBox.getChildren().add(addButton);
+      mainRightVBox.setId("main_right_vbox");
+      mainRightVBox.getChildren().add(getAddButton());
       mainRightVBox.getChildren().add(editButton);
       mainRightVBox.getChildren().add(deleteButton);
 
+      mainLeftVBox.setId("main_left_vbox");
       mainLeftVBox.getChildren().add(inventoryButton);
       mainLeftVBox.getChildren().add(userEdit);
-      mainLeftVBox.getChildren().add(logoutButton);
-      mainLeftVBox.getChildren().add(mainQuitButton);
+      mainLeftVBox.getChildren().add(getLogoutButton());
+      mainLeftVBox.getChildren().add(getMainQuitButton());
 
+      mainCenterVBox.setId("main_center_vbox");
       mainCenterVBox.getChildren().add(inventoryTable);
 
+      mainBottomHBox.setId("main_bottom_hbox");
       mainBottomHBox.getChildren().add(uniqueItems);
       mainBottomHBox.getChildren().add(totalQuantity);
 
+      borderpane.setId("main_border_pane");
       borderpane.setRight(mainRightVBox);
       borderpane.setLeft(mainLeftVBox);
       borderpane.setTop(mainTopVBox);
       borderpane.setCenter(mainCenterVBox);
       borderpane.setBottom(mainBottomHBox);
-
-      //mainViewStyleLoader();
 
       inventoryButton.setOnAction(e -> {
          mainCenterVBox.getChildren().clear();
@@ -397,20 +429,6 @@ public class View {
          mainCenterVBox.getChildren().clear();
          mainCenterVBox.getChildren().add(userTable);
       });
-
       return mainScene;
     }
-
-   public void addMenuBox(HBox hbox) {
-      addQuantity.setMinWidth(50);
-      addQuantity.setMaxWidth(50);
-      hbox.getChildren().add(addQuantityLabel);
-      hbox.getChildren().add(addQuantity);
-      hbox.getChildren().add(addNameLabel);
-      hbox.getChildren().add(addName);
-      hbox.getChildren().add(addDescriptionLabel);
-      hbox.getChildren().add(addDescription);
-      hbox.getChildren().add(applyButton);
-      hbox.getChildren().add(cancelButton);
-   }
 }

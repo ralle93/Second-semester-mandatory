@@ -29,17 +29,17 @@ public class View {
    private Stage primaryStage = new Stage();
 
    // Objects used in loginView
-   private Label loginLabel = new Label("LOGIN");
+   private Label loginLabel = new Label();
    private Label userIdLabel = new Label("Username:");
    private Label userPassword = new Label("User Password:");
-   private Button quitButton = new Button("Quit");
+   private Button quitButton = new Button();
    private Button loginButton = new Button("Login");
    private TextField userNameField = new TextField();
    private PasswordField passwordField = new PasswordField();
    private GridPane gridPane = new GridPane();
-   private HBox hbox = new HBox();
-   private VBox vbox = new VBox();
-   private Scene loginScene = new Scene(vbox, 1300, 900);
+   private HBox loginHBox = new HBox();
+   private VBox loginVBox = new VBox();
+   private Scene loginScene = new Scene(getloginVBox(), 1300, 900);
 
    // Objects used in mainView
    private Label labelMainUserEmaiL = new Label();
@@ -75,6 +75,7 @@ public class View {
    private BorderPane borderpane = new BorderPane();
    private Scene mainScene = new Scene(borderpane, 1300, 900);
 
+   // Constructor for View class
    View(Controller c, Stage stage) {
       this.c = c;
 
@@ -87,24 +88,34 @@ public class View {
       primaryStage.show();
    }
 
-   /**
-    * Login View:
-    * GUI setup for loginView.
-    * @return loginScene
-    */
-   private Scene loginView() {
+   // load CSS from a stylesheet.
+   private Scene loadCSS(Scene scene) {
+      scene.getStylesheets().add("/View/stylesheet.css");
+      return scene;
+   }
 
+   // Get method for login label.
+   private Label getLoginLabel() {
+      loginLabel.setId("login_login_label");
+      loginLabel.setText("Login");
+      return loginLabel;
+   }
+
+   // Get method for quit button in login View.
+   private Button getQuitButton() {
+      quitButton.setId("login_quit_button");
+      quitButton.setText("Quit");
       quitButton.setOnAction(event -> {
          primaryStage.close();
          c.closeConnection();
       });
+      return quitButton;
+   }
 
-      userNameField.setPromptText("Username");
-      passwordField.setPromptText("Password");
-
-      userNameField.setText("mikk7506");
-      passwordField.setText("12345");
-
+   // Get method for Login button in login view
+   private Button getLoginButton() {
+      loginButton.setId("login_login_button");
+      loginButton.setText("Login");
       loginButton.setOnAction(e -> {
          String user = userNameField.getText();
          String pass = passwordField.getText();
@@ -125,40 +136,50 @@ public class View {
             System.out.println("login error");
          }
       });
+      return loginButton;
+   }
 
+   // Get method for login gridpane.
+   private GridPane getLoginGridPane() {
+      gridPane.setId("login_gridpane");
       gridPane.add(userIdLabel, 0, 0);
       gridPane.add(userNameField, 1, 0);
       gridPane.add(userPassword, 0,1);
       gridPane.add(passwordField, 1,1);
-
-      hbox.setAlignment(Pos.CENTER);
-      hbox.getChildren().add(quitButton);
-      hbox.getChildren().add(loginButton);
-
-      vbox.getChildren().add(loginLabel);
-      vbox.getChildren().add(gridPane);
-      vbox.getChildren().add(hbox);
-
-      loginViewStyleLoader();
-
-      return loginScene;
+      return gridPane;
    }
 
-   /**
-    * Login View Style:
-    * Style Loader for loginView, a helper method for that loads css styling for loginView
-    */
-   private void loginViewStyleLoader() {
-      Style.styleLoginVBox(vbox);
-      Style.styleLoginHBox(hbox);
-      Style.styleloginGrid(gridPane);
-      Style.styleloginTitleLabel(loginLabel);
-      Style.styleloginLabel(userIdLabel);
-      Style.styleloginLabel(userPassword);
-      Style.styleButtons(loginButton);
-      Style.styleButtons(quitButton);
-      Style.styleTextfield(userNameField);
-      Style.stylePasswordField(passwordField);
+   // Get method for loginHBox.
+   private HBox getloginHbox() {
+      loginHBox.setId("login_hbox");
+      loginHBox.setAlignment(Pos.CENTER);
+      loginHBox.getChildren().add(getQuitButton());
+      loginHBox.getChildren().add(getLoginButton());
+      return loginHBox;
+   }
+
+   // Get method for loginVBox.
+   private VBox getloginVBox() {
+      loginVBox.setId("login_vbox");
+      loginVBox.getChildren().add(getLoginLabel());
+      loginVBox.getChildren().add(getLoginGridPane());
+      loginVBox.getChildren().add(getloginHbox());
+      return loginVBox;
+   }
+
+   // Get method for loginView returns login scene.
+   private Scene loginView() {
+
+      loadCSS(loginScene);
+
+      userNameField.setPromptText("Username");
+      passwordField.setPromptText("Password");
+
+      // TODO: Only used for testing purposes needs to be deleted at completion
+      userNameField.setText("mikk7506");
+      passwordField.setText("12345");
+
+      return loginScene;
    }
 
    /**
@@ -167,6 +188,8 @@ public class View {
     * @return mainScene
     */
    private Scene mainView() {
+
+      loadCSS(mainScene);
 
       TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
       idColumn.setMinWidth(25);
@@ -202,8 +225,8 @@ public class View {
 
       logoutButton.setOnAction(event -> {
          gridPane.getChildren().clear();
-         hbox.getChildren().clear();
-         vbox.getChildren().clear();
+         loginHBox.getChildren().clear();
+         loginVBox.getChildren().clear();
 
          c.setLoggedUser(null);
          primaryStage.setScene(loginView());
@@ -276,7 +299,7 @@ public class View {
       borderpane.setCenter(mainCenterVBox);
       borderpane.setBottom(mainBottomHBox);
 
-      mainViewStyleLoader();
+      //mainViewStyleLoader();
 
       inventoryButton.setOnAction(e -> {
          mainCenterVBox.getChildren().clear();
@@ -322,6 +345,7 @@ public class View {
     * Main View Style:
     * Style Loader for mainView, a helper method for that loads css styling for mainView
     */
+   /*
    private void mainViewStyleLoader() {
       Style.styleBorderPane(borderpane);
       Style.styleMainVBox(mainLeftVBox);
@@ -350,6 +374,7 @@ public class View {
       Style.styleloginLabel(addQuantityLabel);
       Style.styleloginLabel(addDescriptionLabel);
    }
+   */
 
    private void search() {
       // Search

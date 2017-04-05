@@ -312,6 +312,8 @@ public class View {
          gridPane.getChildren().clear();
          loginHBox.getChildren().clear();
          loginVBox.getChildren().clear();
+         inventoryTable.getColumns().clear();
+         userTable.getColumns().clear();
 
          c.setLoggedUser(null);
          primaryStage.setScene(loginView());

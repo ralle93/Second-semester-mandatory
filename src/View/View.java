@@ -182,15 +182,34 @@ public class View {
       return loginScene;
    }
 
+   /********************************************************************************************************************
+    * MAIN VIEW RELATED METHODS STARTS HERE:
+    *******************************************************************************************************************/
+
    /**
-    * Main View:
-    * GUI setup for mainView.
-    * @return mainScene
+    * Get method for show the username of the currently logged in user.
+    * @return labelMainUserName
     */
-   private Scene mainView() {
+   public Label getCurrentUserName() {
+      String user = userNameField.getText();
+      labelMainUserName.setText("Current User: " + user);
+      return labelMainUserName;
+   }
 
-      loadCSS(mainScene);
+   /**
+    * Get method for show what level a user has.
+    * @return labelAccessLevel
+    */
+   public Label getCurrentUserAccessLevel() {
+      labelAccessLevel.setText("Access Level: ");
+      return labelAccessLevel;
+   }
 
+   /**
+    * Get method for inventory Table.
+    * @return inventoryTable
+    */
+   private TableView getInventoryTable() {
       TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
       idColumn.setMinWidth(25);
       idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -212,15 +231,81 @@ public class View {
       inventoryTable.setItems(itemList);
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
 
-      userTable = loadUserTable();
-
       uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(itemList.size()));
       int total = 0;
       for (Item i : itemList) {
          total += i.getQuantity();
       }
       totalQuantity.setText("Total quantity: " + NumberFormat.getIntegerInstance().format(total));
+      return inventoryTable;
+   }
 
+   /**
+    * Get method for User Table
+    * @return temp
+    */
+   private TableView getUserTable() {
+      TableView userTable = new TableView();
+
+      TableColumn<User, String> userColumn = new TableColumn("USERNAME");
+      userColumn.setMinWidth(25);
+      userColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+      TableColumn<User, String> passColumn = new TableColumn("PASSWORD");
+      passColumn.setMinWidth(25);
+      passColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+
+      TableColumn<User, Integer> accessColumn = new TableColumn("ACCESS LEVEL");
+      accessColumn.setMinWidth(100);
+      accessColumn.setCellValueFactory(new PropertyValueFactory("acces_lvl"));
+
+      TableColumn<User, String> eMailColumn = new TableColumn("EMAIL ADDRESS");
+      eMailColumn.setMinWidth(500);
+      eMailColumn.setCellValueFactory(new PropertyValueFactory("email"));
+
+      userTable.setPadding(new Insets(10,10,10,10));
+      ObservableList<User> userList = c.getUsers();
+      userTable.setItems(userList);
+      userTable.getColumns().addAll(userColumn, passColumn, accessColumn, eMailColumn);
+
+      return userTable;
+   }
+
+   /**
+    * Method used for allowing search in Inventory Table
+    */
+   private void search() {
+      searchField.setOnKeyPressed(e -> {
+         if (e.getCode().equals(KeyCode.ENTER)) {
+            ObservableList<Item> list = c.getItems();
+            ObservableList<Item> searchResults = FXCollections.observableArrayList();
+            String searchStr = searchField.getText().toLowerCase();
+
+            for (Item i : list) {
+               if (i.getName().toLowerCase().contains(searchStr)) {
+                  searchResults.add(i);
+               } else if (i.getDescription().toLowerCase().contains(searchStr)) {
+                  searchResults.add(i);
+               } else if (Integer.toString(i.getId()).contains(searchStr)) {
+                  searchResults.add(i);
+               }
+            }
+            inventoryTable.setItems(searchResults);
+         }
+      });
+
+      searchField.lengthProperty().addListener((observable, oldValue, newValue) -> {
+         if (searchField.getText().equals(null) || searchField.getText().length() == 0) {
+            inventoryTable.setItems(c.getItems());
+         }
+      });
+   }
+
+   private Scene mainView() {
+
+      loadCSS(mainScene);
+      getInventoryTable();
+      userTable = getUserTable();
       search();
 
       logoutButton.setOnAction(event -> {
@@ -313,112 +398,6 @@ public class View {
 
       return mainScene;
     }
-
-    private TableView loadUserTable() {
-       TableView temp = new TableView();
-
-       TableColumn<User, String> userColumn = new TableColumn("USERNAME");
-       userColumn.setMinWidth(25);
-       userColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-
-       TableColumn<User, String> passColumn = new TableColumn("PASSWORD");
-       passColumn.setMinWidth(25);
-       passColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
-
-       TableColumn<User, Integer> accessColumn = new TableColumn("ACCESS LEVEL");
-       accessColumn.setMinWidth(100);
-       accessColumn.setCellValueFactory(new PropertyValueFactory("acces_lvl"));
-
-       TableColumn<User, String> eMailColumn = new TableColumn("EMAIL ADDRESS");
-       eMailColumn.setMinWidth(500);
-       eMailColumn.setCellValueFactory(new PropertyValueFactory("email"));
-
-       temp.setPadding(new Insets(10,10,10,10));
-       ObservableList<User> userList = c.getUsers();
-       temp.setItems(userList);
-       temp.getColumns().addAll(userColumn, passColumn, accessColumn, eMailColumn);
-
-       return temp;
-    }
-
-   /**
-    * Main View Style:
-    * Style Loader for mainView, a helper method for that loads css styling for mainView
-    */
-   /*
-   private void mainViewStyleLoader() {
-      Style.styleBorderPane(borderpane);
-      Style.styleMainVBox(mainLeftVBox);
-      Style.styleMainVBox(mainRightVBox);
-      Style.styleMainHBox(mainHBox, labelMainUserName, labelAccessLevel);
-      Style.styleMainSearchField(searchField);
-      Style.styleButtonForMainView(logoutButton);
-      Style.styleButtonForMainView(mainQuitButton);
-      Style.styleButtonForMainView(userEdit);
-      Style.styleButtonForMainView(inventoryButton);
-      Style.styleButtonForMainView(addButton);
-      Style.styleButtonForMainView(editButton);
-      Style.styleButtonForMainView(deleteButton);
-      Style.styleTableView(inventoryTable);
-      Style.styleTableView(userTable);
-      Style.styleMainBottomHBox(mainBottomHBox);
-      Style.styleloginLabel(uniqueItems);
-      Style.styleloginLabel(totalQuantity);
-      Style.styleMainAddBox(mainHBoxAdd, mainCenterVBox);
-      Style.styleTextfield(addQuantity);
-      Style.styleTextfield(addName);
-      Style.styleTextfield(addDescription);
-      Style.styleButtons(applyButton);
-      Style.styleButtons(cancelButton);
-      Style.styleloginLabel(addNameLabel);
-      Style.styleloginLabel(addQuantityLabel);
-      Style.styleloginLabel(addDescriptionLabel);
-   }
-   */
-
-   private void search() {
-      // Search
-      searchField.setOnKeyPressed(e -> {
-         if (e.getCode().equals(KeyCode.ENTER)) {
-            ObservableList<Item> list = c.getItems();
-            ObservableList<Item> searchResults = FXCollections.observableArrayList();
-            String searchStr = searchField.getText().toLowerCase();
-
-            for (Item i : list) {
-               if (i.getName().toLowerCase().contains(searchStr)) {
-                  searchResults.add(i);
-               } else if (i.getDescription().toLowerCase().contains(searchStr)) {
-                  searchResults.add(i);
-               } else if (Integer.toString(i.getId()).contains(searchStr)) {
-                  searchResults.add(i);
-               }
-            }
-
-            inventoryTable.setItems(searchResults);
-         }
-      });
-
-      searchField.lengthProperty().addListener((observable, oldValue, newValue) -> {
-         if (searchField.getText().equals(null) || searchField.getText().length() == 0) {
-            inventoryTable.setItems(c.getItems());
-         }
-      });
-   }
-
-   public Label getCurrentUserEmail() {
-      return labelMainUserEmaiL;
-   }
-
-   public Label getCurrentUserName() {
-      String user = userNameField.getText();
-      labelMainUserName.setText("Current User: " + user);
-      return labelMainUserName;
-   }
-
-   public Label getCurrentUserAccessLevel() {
-      labelAccessLevel.setText("Access Level: ");
-      return labelAccessLevel;
-   }
 
    public void addMenuBox(HBox hbox) {
       addQuantity.setMinWidth(50);

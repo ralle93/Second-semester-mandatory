@@ -18,6 +18,10 @@ public class Controller {
       return loggedUser;
    }
 
+   public void setLoggedUser(User user) {
+      loggedUser = user;
+   }
+
    public Controller(DataLayer dataLayer) {
       this.d = dataLayer;
    }
@@ -91,6 +95,13 @@ public class Controller {
    public ObservableList<Item> getItems() {
       ObservableList<Item> list = FXCollections.observableArrayList();
       list.addAll(d.fetchItems());
+
+      return list;
+   }
+
+   public ObservableList<User> getUsers() {
+      ObservableList<User> list = FXCollections.observableArrayList();
+      list.addAll(d.fetchUsers());
 
       return list;
    }

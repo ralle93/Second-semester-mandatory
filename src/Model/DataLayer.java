@@ -100,6 +100,32 @@ public class DataLayer {
       return items;
    }
 
+   public ArrayList<User> fetchUsers(){
+      ArrayList<User> users = new ArrayList<>();
+      String query = "SELECT * from sql8166696.login_data";
+      String username;
+      String password;
+      int acces_lvl;
+      String email;
+      User u;
+      try{
+         stmt = connection.createStatement();
+         rs = stmt.executeQuery(query);
+
+         while(rs.next()){
+            username = rs.getString(1);
+            password = rs.getString(2);
+            acces_lvl = rs.getInt(3);
+            email = rs.getString(4);
+            u = new User(acces_lvl, username, password, email);
+            users.add(u);
+         }
+      }catch(SQLException e){
+         System.out.println(e);
+      }
+      return users;
+   }
+
    public void cleanUpEnviroment(){
      try{
         if(connection!= null){

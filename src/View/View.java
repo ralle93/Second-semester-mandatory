@@ -2,12 +2,14 @@ package View;
 
 import Controller.Controller;
 import Controller.Item;
+import Controller.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -37,7 +39,7 @@ public class View {
    private GridPane gridPane = new GridPane();
    private HBox hbox = new HBox();
    private VBox vbox = new VBox();
-   private Scene loginScene = new Scene(vbox, 1280, 800);
+   private Scene loginScene = new Scene(vbox, 1300, 900);
 
    // Objects used in mainView
    private Label labelMainUserEmaiL = new Label();
@@ -62,6 +64,7 @@ public class View {
    private TextField addQuantity = new TextField();
    private TextField addDescription = new TextField();
    private TableView inventoryTable = new TableView<>();
+   private TableView userTable = new TableView<>();
    private HBox mainHBox = new HBox();
    private HBox mainHBoxAdd = new HBox();
    private HBox mainBottomHBox = new HBox();
@@ -70,7 +73,7 @@ public class View {
    private VBox mainLeftVBox = new VBox();
    private VBox mainCenterVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
-   private Scene mainScene = new Scene(borderpane, 1200, 800);
+   private Scene mainScene = new Scene(borderpane, 1300, 900);
 
    View(Controller c, Stage stage) {
       this.c = c;
@@ -102,13 +105,20 @@ public class View {
       userNameField.setText("mikk7506");
       passwordField.setText("12345");
 
-      // TODO burde laves om til noget med bedre kode konvention
       loginButton.setOnAction(e -> {
          String user = userNameField.getText();
          String pass = passwordField.getText();
 
          if (c.verifyUser(user, pass)) {
-            // TODO
+            mainHBox.getChildren().clear();
+            mainHBoxAdd.getChildren().clear();
+            mainBottomHBox.getChildren().clear();
+            mainTopVBox.getChildren().clear();
+            mainRightVBox.getChildren().clear();
+            mainLeftVBox.getChildren().clear();
+            mainCenterVBox.getChildren().clear();
+            borderpane.getChildren().clear();
+
             primaryStage.setScene(mainView());
             primaryStage.show();
          } else {
@@ -179,6 +189,8 @@ public class View {
       inventoryTable.setItems(itemList);
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
 
+      userTable = loadUserTable();
+
       uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(itemList.size()));
       int total = 0;
       for (Item i : itemList) {
@@ -188,13 +200,17 @@ public class View {
 
       search();
 
-      // Does not work yet.
       logoutButton.setOnAction(event -> {
+         gridPane.getChildren().clear();
+         hbox.getChildren().clear();
+         vbox.getChildren().clear();
+
+         c.setLoggedUser(null);
          primaryStage.setScene(loginView());
          primaryStage.show();
       });
 
-      mainQuitButton.setOnAction(evente -> {
+      mainQuitButton.setOnAction(e -> {
          primaryStage.close();
          c.closeConnection();
       });
@@ -204,7 +220,11 @@ public class View {
       searchField.setPromptText("Search");
 
       addButton.setOnAction(event -> {
-         mainCenterVBox.getChildren().add(mainHBoxAdd); //laves om til setVisble(true); og add(mainHboxAdd) flyttes et andetsted
+         addQuantity.setText("");
+         addName.setText("");
+         addDescription.setText("");
+
+         mainCenterVBox.getChildren().add(mainHBoxAdd);
          addMenuBox(mainHBoxAdd);
       });
 
@@ -223,7 +243,7 @@ public class View {
       });
 
       cancelButton.setOnAction(event -> {
-         mainCenterVBox.getChildren().remove(mainHBoxAdd); //
+         mainCenterVBox.getChildren().remove(mainHBoxAdd);
       });
 
       mainHBox.setAlignment(Pos.TOP_CENTER);
@@ -258,7 +278,44 @@ public class View {
 
       mainViewStyleLoader();
 
+      inventoryButton.setOnAction(e -> {
+         mainCenterVBox.getChildren().clear();
+         mainCenterVBox.getChildren().add(inventoryTable);
+      });
+
+      userEdit.setOnAction(e -> {
+         mainCenterVBox.getChildren().clear();
+         mainCenterVBox.getChildren().add(userTable);
+      });
+
       return mainScene;
+    }
+
+    private TableView loadUserTable() {
+       TableView temp = new TableView();
+
+       TableColumn<User, String> userColumn = new TableColumn("USERNAME");
+       userColumn.setMinWidth(25);
+       userColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+       TableColumn<User, String> passColumn = new TableColumn("PASSWORD");
+       passColumn.setMinWidth(25);
+       passColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+
+       TableColumn<User, Integer> accessColumn = new TableColumn("ACCESS LEVEL");
+       accessColumn.setMinWidth(100);
+       accessColumn.setCellValueFactory(new PropertyValueFactory("acces_lvl"));
+
+       TableColumn<User, String> eMailColumn = new TableColumn("EMAIL ADDRESS");
+       eMailColumn.setMinWidth(500);
+       eMailColumn.setCellValueFactory(new PropertyValueFactory("email"));
+
+       temp.setPadding(new Insets(10,10,10,10));
+       ObservableList<User> userList = c.getUsers();
+       temp.setItems(userList);
+       temp.getColumns().addAll(userColumn, passColumn, accessColumn, eMailColumn);
+
+       return temp;
     }
 
    /**
@@ -269,7 +326,7 @@ public class View {
       Style.styleBorderPane(borderpane);
       Style.styleMainVBox(mainLeftVBox);
       Style.styleMainVBox(mainRightVBox);
-      Style.styleMainHBox(mainHBox);
+      Style.styleMainHBox(mainHBox, labelMainUserName, labelAccessLevel);
       Style.styleMainSearchField(searchField);
       Style.styleButtonForMainView(logoutButton);
       Style.styleButtonForMainView(mainQuitButton);
@@ -279,6 +336,7 @@ public class View {
       Style.styleButtonForMainView(editButton);
       Style.styleButtonForMainView(deleteButton);
       Style.styleTableView(inventoryTable);
+      Style.styleTableView(userTable);
       Style.styleMainBottomHBox(mainBottomHBox);
       Style.styleloginLabel(uniqueItems);
       Style.styleloginLabel(totalQuantity);
@@ -286,6 +344,11 @@ public class View {
       Style.styleTextfield(addQuantity);
       Style.styleTextfield(addName);
       Style.styleTextfield(addDescription);
+      Style.styleButtons(applyButton);
+      Style.styleButtons(cancelButton);
+      Style.styleloginLabel(addNameLabel);
+      Style.styleloginLabel(addQuantityLabel);
+      Style.styleloginLabel(addDescriptionLabel);
    }
 
    private void search() {

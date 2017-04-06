@@ -418,6 +418,8 @@ public class View {
             addDescription.setText(selectedItem.getDescription());
 
             addEditMenu();
+         } else {
+            System.out.println("Please select an item to edit!");
          }
       });
 

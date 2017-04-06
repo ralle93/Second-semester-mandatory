@@ -9,9 +9,9 @@ import javafx.stage.Stage;
  * Mikkel is primary contributor for this class
  */
 public class Main extends Application{
-   public DataLayer d;
-   public Controller c;
-   public View v;
+   private DataLayer d;
+   private Controller c;
+   private View v;
 
    public static void main(String[] args) {
       launch();

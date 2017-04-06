@@ -345,7 +345,7 @@ class View {
                c.addItemToDb(item);
             }
 
-            mainCenterVBox.getChildren().remove(mainHBoxAdd);
+            mainCenterVBox.getChildren().remove(addMenuVBox);
 
             updateTable();
          } catch (NumberFormatException ex) {
@@ -358,7 +358,7 @@ class View {
    // Get Method for cancel adding to Inventory Table.
    private Button getCancelButton() {
       cancelButton.setOnAction(event -> {
-         mainCenterVBox.getChildren().remove(mainHBoxAdd);
+         mainCenterVBox.getChildren().remove(addMenuVBox);
          isEditing = false;
       });
       return cancelButton;
@@ -379,7 +379,6 @@ class View {
       HBox hbox6 = new HBox();
       hbox6.setSpacing(10);
       BorderPane addBorderPane = new BorderPane();
-
       addQuantity.setMinWidth(50);
       addQuantity.setMaxWidth(50);
       try {
@@ -391,9 +390,7 @@ class View {
          hbox6.getChildren().add(getApplyButton());
          hbox6.getChildren().add(getCancelButton());
          addBorderPane.setLeft(addQuantity);
-
          addBorderPane.setRight(hbox6);
-         vbox.setSpacing(10);
          vbox.getChildren().add(hbox1);
          vbox.getChildren().add(hbox2);
          vbox.getChildren().add(hbox3);
@@ -409,11 +406,9 @@ class View {
    private Button getAddButton() {
       addButton.setOnAction(event -> {
          isEditing = false;
-
          addQuantity.setText("");
          addName.setText("");
          addDescription.setText("");
-
          addEditMenu();
       });
       return addButton;

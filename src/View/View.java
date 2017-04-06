@@ -74,6 +74,9 @@ public class View {
    private BorderPane borderpane = new BorderPane();
    private Scene mainScene = new Scene(borderpane, 1280, 720);
 
+   private boolean isEditing = false;
+   private Item selectedItem;
+
    // Constructor for View class
    View(Controller c, Stage stage) {
       this.c = c;
@@ -332,8 +335,15 @@ public class View {
             int quantity = Integer.parseInt(addQuantity.getText());
             String name = addName.getText();
             String description = addDescription.getText();
-            Item item = new Item(quantity, name, description);
-            c.addItemToDb(item);
+
+            if (isEditing) {
+               Item item = new Item(selectedItem.getId(), quantity, name, description);
+               c.updateItem(item);
+               isEditing = false;
+            } else {
+               Item item = new Item(quantity, name, description);
+               c.addItemToDb(item);
+            }
 
             mainCenterVBox.getChildren().remove(mainHBoxAdd);
 
@@ -349,6 +359,7 @@ public class View {
    private Button getCancelButton() {
       cancelButton.setOnAction(event -> {
          mainCenterVBox.getChildren().remove(mainHBoxAdd);
+         isEditing = false;
       });
       return cancelButton;
    }
@@ -357,14 +368,18 @@ public class View {
    public void addMenuBox(HBox hbox) {
       addQuantity.setMinWidth(50);
       addQuantity.setMaxWidth(50);
-      hbox.getChildren().add(addQuantityLabel);
-      hbox.getChildren().add(addQuantity);
-      hbox.getChildren().add(addNameLabel);
-      hbox.getChildren().add(addName);
-      hbox.getChildren().add(addDescriptionLabel);
-      hbox.getChildren().add(addDescription);
-      hbox.getChildren().add(getApplyButton());
-      hbox.getChildren().add(getCancelButton());
+      try {
+         hbox.getChildren().add(addQuantityLabel);
+         hbox.getChildren().add(addQuantity);
+         hbox.getChildren().add(addNameLabel);
+         hbox.getChildren().add(addName);
+         hbox.getChildren().add(addDescriptionLabel);
+         hbox.getChildren().add(addDescription);
+         hbox.getChildren().add(getApplyButton());
+         hbox.getChildren().add(getCancelButton());
+      } catch (IllegalArgumentException ex) {
+         System.out.println("No exception to see here");
+      }
    }
 
    // Get Method for AddButton.
@@ -374,12 +389,38 @@ public class View {
          addName.setText("");
          addDescription.setText("");
 
-         mainCenterVBox.getChildren().add(mainHBoxAdd);
-         addMenuBox(mainHBoxAdd);
+         addEditMenu();
       });
       return addButton;
    }
 
+   // Method to show the add and edit menu
+   public void addEditMenu() {
+      mainCenterVBox.getChildren().add(mainHBoxAdd);
+      addMenuBox(mainHBoxAdd);
+   }
+
+   // Get method for editButton
+   public Button getEditButton() {
+      editButton.setOnAction(event -> {
+         ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
+         selectedItem = items.get(0);
+
+         if (selectedItem != null) {
+            isEditing = true;
+
+            addQuantity.setText(String.valueOf(selectedItem.getQuantity()));
+            addName.setText(selectedItem.getName());
+            addDescription.setText(selectedItem.getDescription());
+
+            addEditMenu();
+         }
+      });
+
+      return editButton;
+   }
+
+   // Get method for deleteButton.
    public Button getDeleteButton() {
       deleteButton.setOnAction(event -> {
          ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
@@ -417,7 +458,7 @@ public class View {
       mainRightVBox.setId("main_right_vbox");
       mainRightVBox.setPadding(new Insets(20,10,20,10));
       mainRightVBox.getChildren().add(getAddButton());
-      mainRightVBox.getChildren().add(editButton);
+      mainRightVBox.getChildren().add(getEditButton());
       mainRightVBox.getChildren().add(getDeleteButton());
 
       mainLeftVBox.setId("main_left_vbox");

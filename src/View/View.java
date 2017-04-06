@@ -389,6 +389,8 @@ public class View {
    // Get Method for AddButton.
    public Button getAddButton() {
       addButton.setOnAction(event -> {
+         isEditing = false;
+
          addQuantity.setText("");
          addName.setText("");
          addDescription.setText("");
@@ -400,8 +402,12 @@ public class View {
 
    // Method to show the add and edit menu
    public void addEditMenu() {
-      mainCenterVBox.getChildren().add(mainHBoxAdd);
-      addMenuBox(mainHBoxAdd);
+      try {
+         mainCenterVBox.getChildren().add(mainHBoxAdd);
+         addMenuBox(mainHBoxAdd);
+      } catch (IllegalArgumentException ex) {
+         System.out.println("No exception to see here");
+      }
    }
 
    // Get method for editButton

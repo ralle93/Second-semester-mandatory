@@ -463,22 +463,79 @@ class View {
       return deleteButton;
    }
 
+   // Method for AddMenuBox.
+   private VBox addUserBox() {
+      VBox vbox = new VBox();
+      Label addUserNameLabel = new Label("Username:");
+      Label addPasswordLabel = new Label("Password:");
+      Label addEmailLabel = new Label("Email:");
+      TextField addUserName = new TextField();
+      addUserName.setPromptText("Enter new Username");
+      PasswordField addPassword = new PasswordField();
+      addPassword.setPromptText("Enter new Password");
+      TextField addEmail = new TextField();
+      addEmail.setPromptText("Enter an Email Address");
+      HBox hbox1 = new HBox();
+      hbox1.setSpacing(10);
+      HBox hbox2 = new HBox();
+      hbox2.setSpacing(10);
+      HBox hbox3 = new HBox();
+      hbox3.setSpacing(10);
+      HBox hbox4 = new HBox();
+      hbox4.setSpacing(10);
+      HBox hbox5 = new HBox();
+      hbox5.setSpacing(10);
+      HBox hbox6 = new HBox();
+      hbox6.setSpacing(10);
+      HBox hbox7 = new HBox();
+      hbox7.setSpacing(10);
+      BorderPane addBorderPane = new BorderPane();
+      addQuantity.setMinWidth(50);
+      addQuantity.setMaxWidth(50);
+      try {
+         hbox1.getChildren().add(addUserNameLabel);
+         hbox2.getChildren().add(addUserName);
+         hbox3.getChildren().add(addPasswordLabel);
+         hbox4.getChildren().add(addPassword);
+         hbox5.getChildren().add(addEmailLabel);
+         hbox6.getChildren().add(addEmail);
+         hbox7.getChildren().add(getApplyButton());
+         hbox7.getChildren().add(getCancelButton());
+         addBorderPane.setRight(hbox6);
+         vbox.getChildren().add(hbox1);
+         vbox.getChildren().add(hbox2);
+         vbox.getChildren().add(hbox3);
+         vbox.getChildren().add(hbox4);
+         vbox.getChildren().add(hbox5);
+         vbox.getChildren().add(addBorderPane);
+      } catch (IllegalArgumentException ex) {
+         System.out.println("No exception to see here");
+      }
+      return vbox;
+   }
+
    private Button getAddUserButton() {
+      VBox userVBox = new VBox();
       Button addUserButton = new Button();
       addUserButton.setText("Add User");
+      addUserButton.setOnAction(event -> {
+         mainCenterVBox.getChildren().clear();
+         mainCenterVBox.getChildren().add(userTable);
+         mainCenterVBox.getChildren().add(addUserBox());
+      });
       return addUserButton;
    }
 
    private Button getEditUserButton() {
       Button editUserButton = new Button();
       editUserButton.setText("Edit User");
+
       return editUserButton;
    }
 
    private Button getDeleteUserButton() {
       Button deleteUserButton = new Button();
       deleteUserButton.setText("Delete User");
-
       return deleteUserButton;
    }
 

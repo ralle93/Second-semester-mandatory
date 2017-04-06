@@ -200,6 +200,19 @@ public class View {
       return labelAccessLevel;
    }
 
+   // Method for updating the inventory table
+   private void updateTable() {
+      ObservableList<Item> items = c.getItems();
+      inventoryTable.setItems(items);
+
+      uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(items.size()));
+      int total = 0;
+      for (Item i : items) {
+         total += i.getQuantity();
+      }
+      totalQuantity.setText("Total quantity: " + NumberFormat.getIntegerInstance().format(total));
+   }
+
    // Get method for inventory Table.
    private TableView getInventoryTable() {
       inventoryTable.setId("inventory_table");
@@ -221,16 +234,10 @@ public class View {
       descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
 
       inventoryTable.setPadding(new Insets(10,10,10,10));
-      ObservableList<Item> itemList = c.getItems();
-      inventoryTable.setItems(itemList);
+
+      updateTable();
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
 
-      uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(itemList.size()));
-      int total = 0;
-      for (Item i : itemList) {
-         total += i.getQuantity();
-      }
-      totalQuantity.setText("Total quantity: " + NumberFormat.getIntegerInstance().format(total));
       return inventoryTable;
    }
 
@@ -329,6 +336,8 @@ public class View {
             c.addItemToDb(item);
 
             mainCenterVBox.getChildren().remove(mainHBoxAdd);
+
+            updateTable();
          } catch (NumberFormatException ex) {
             System.out.println("You need to enter an integer you noob!");
          }
@@ -371,6 +380,18 @@ public class View {
       return addButton;
    }
 
+   public Button getDeleteButton() {
+      deleteButton.setOnAction(event -> {
+         ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
+         Item item = items.get(0);
+         c.removeItemFromDb(item);
+
+         updateTable();
+      });
+
+      return deleteButton;
+   }
+
    private Scene mainView() {
 
       loadCSS(mainScene);
@@ -397,7 +418,7 @@ public class View {
       mainRightVBox.setPadding(new Insets(20,10,20,10));
       mainRightVBox.getChildren().add(getAddButton());
       mainRightVBox.getChildren().add(editButton);
-      mainRightVBox.getChildren().add(deleteButton);
+      mainRightVBox.getChildren().add(getDeleteButton());
 
       mainLeftVBox.setId("main_left_vbox");
       mainLeftVBox.setPadding(new Insets(20,10,20,10));

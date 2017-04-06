@@ -22,20 +22,5 @@ public class Main extends Application{
       c = new Controller(d);
       v = new View(c, primaryStage);
       c.connectDb();
-      rasmusTest();
-   }
-
-   // TODO This has to be removed on completion
-   public void testMethod() {
-      DataLayer d = new DataLayer();
-      d.connectToDb();
-      Controller c = new Controller(d);
-
-      System.out.println(c.verifyUser("mikk7506", "12345"));
-      System.out.println(c.verifyUser("mikk7506","1234"));
-   }
-
-   // TODO This has to be removed on completion
-   public void rasmusTest(){
    }
 }

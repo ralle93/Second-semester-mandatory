@@ -37,9 +37,11 @@
 }
 
 #main_hbox {
+    -fx-padding: 25;
     -fx-spacing: 200px;
     -fx-background-color: cadetblue;
-    -fx-border-radius: 20%;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
 }
 
 #main_current_user_label, #main_current_user_access_level_label {
@@ -47,6 +49,7 @@
 }
 
 #main_border_pane {
+    -fx-padding: 25;
     -fx-background-color: azure;
 }
 
@@ -65,11 +68,11 @@
     -fx-font-family: monospace;
     -fx-font-size: 18px;
     -fx-text-fill: cadetblue;
-
 }
 
 .button {
-    -fx-border-radius: 20%;
+    -fx-pref-width: 175px;
+    -fx-border-radius: 20px;
     -fx-border-width: 2px;
     -fx-border-color: cadetblue;
     -fx-background-color: azure;
@@ -79,8 +82,9 @@
 }
 
 .button:hover {
-    -fx-background-radius: 36%;
-    -fx-border-radius: 20%;
+    -fx-pref-width: 175px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
     -fx-border-width: 2px;
     -fx-border-color: cadetblue;
     -fx-background-color: cadetblue;

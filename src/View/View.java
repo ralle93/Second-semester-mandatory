@@ -39,7 +39,7 @@ public class View {
    private GridPane gridPane = new GridPane();
    private HBox loginHBox = new HBox();
    private VBox loginVBox = new VBox();
-   private Scene loginScene = new Scene(getloginVBox(), 1300, 900);
+   private Scene loginScene = new Scene(getloginVBox(), 1280, 720);
 
    // Objects used in mainView
    private Label labelMainUserName = new Label();
@@ -72,7 +72,7 @@ public class View {
    private VBox mainLeftVBox = new VBox();
    private VBox mainCenterVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
-   private Scene mainScene = new Scene(borderpane, 1300, 900);
+   private Scene mainScene = new Scene(borderpane, 1280, 720);
 
    // Constructor for View class
    View(Controller c, Stage stage) {
@@ -186,7 +186,7 @@ public class View {
     *******************************************************************************************************************/
 
    // Get method for show the username of the currently logged in user.
-   public Label getCurrentUserName() {
+   private Label getCurrentUserName() {
       String user = userNameField.getText();
       labelMainUserName.setId("main_current_user_label");
       labelMainUserName.setText("Current User: " + user);
@@ -194,7 +194,7 @@ public class View {
    }
 
    // Get method for show what level a user has.
-   public Label getCurrentUserAccessLevel() {
+   private Label getCurrentUserAccessLevel() {
       labelAccessLevel.setId("main_current_user_access_level_label");
       labelAccessLevel.setText("Access Level: ");
       return labelAccessLevel;
@@ -205,11 +205,11 @@ public class View {
       inventoryTable.setId("inventory_table");
 
       TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
-      idColumn.setMinWidth(25);
+      idColumn.setMinWidth(150);
       idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
       TableColumn<Item, Integer> quantityColumn = new TableColumn("QUANTITY");
-      quantityColumn.setMinWidth(25);
+      quantityColumn.setMinWidth(100);
       quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
       TableColumn<Item, String> nameColumn = new TableColumn("NAME");
@@ -217,7 +217,7 @@ public class View {
       nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
 
       TableColumn<Item, String> descriptionColumn = new TableColumn("DESCRIPTION");
-      descriptionColumn.setMinWidth(500);
+      descriptionColumn.setMinWidth(450);
       descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
 
       inventoryTable.setPadding(new Insets(10,10,10,10));
@@ -239,11 +239,11 @@ public class View {
       TableView userTable = new TableView();
 
       TableColumn<User, String> userColumn = new TableColumn("USERNAME");
-      userColumn.setMinWidth(25);
+      userColumn.setMinWidth(50);
       userColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
       TableColumn<User, String> passColumn = new TableColumn("PASSWORD");
-      passColumn.setMinWidth(25);
+      passColumn.setMinWidth(50);
       passColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
 
       TableColumn<User, Integer> accessColumn = new TableColumn("ACCESS LEVEL");
@@ -251,7 +251,7 @@ public class View {
       accessColumn.setCellValueFactory(new PropertyValueFactory("acces_lvl"));
 
       TableColumn<User, String> eMailColumn = new TableColumn("EMAIL ADDRESS");
-      eMailColumn.setMinWidth(500);
+      eMailColumn.setMinWidth(450);
       eMailColumn.setCellValueFactory(new PropertyValueFactory("email"));
 
       userTable.setPadding(new Insets(10,10,10,10));
@@ -299,9 +299,6 @@ public class View {
 
    private Button getLogoutButton() {
       logoutButton.setOnAction(event -> {
-         gridPane.getChildren().clear();
-         loginHBox.getChildren().clear();
-         loginVBox.getChildren().clear();
          inventoryTable.getColumns().clear();
          userTable.getColumns().clear();
 
@@ -384,32 +381,39 @@ public class View {
       primaryStage.setOnCloseRequest(e -> c.closeConnection());
 
       mainHBox.setId("main_hbox");
+      mainHBox.setPadding(new Insets (20,10,20,10));
       mainHBox.setAlignment(Pos.TOP_CENTER);
       mainHBox.getChildren().add(getCurrentUserName());
       mainHBox.getChildren().add(getCurrentUserAccessLevel());
 
       mainTopVBox.setId("main_top_vbox");
       mainTopVBox.setAlignment(Pos.TOP_CENTER);
-      mainTopVBox.setSpacing(10);
-      mainTopVBox.setPadding(new Insets(10,10,10,10));
+      mainTopVBox.setSpacing(30);
+      mainTopVBox.setPadding(new Insets(20,10,20,10));
       mainTopVBox.getChildren().add(mainHBox);
       mainTopVBox.getChildren().add(searchField);
 
       mainRightVBox.setId("main_right_vbox");
+      mainRightVBox.setPadding(new Insets(20,10,20,10));
       mainRightVBox.getChildren().add(getAddButton());
       mainRightVBox.getChildren().add(editButton);
       mainRightVBox.getChildren().add(deleteButton);
 
       mainLeftVBox.setId("main_left_vbox");
+      mainLeftVBox.setPadding(new Insets(20,10,20,10));
       mainLeftVBox.getChildren().add(inventoryButton);
       mainLeftVBox.getChildren().add(userEdit);
       mainLeftVBox.getChildren().add(getLogoutButton());
       mainLeftVBox.getChildren().add(getMainQuitButton());
 
       mainCenterVBox.setId("main_center_vbox");
+      mainCenterVBox.setPadding(new Insets(5,5,5,5));
       mainCenterVBox.getChildren().add(inventoryTable);
 
       mainBottomHBox.setId("main_bottom_hbox");
+      mainBottomHBox.setPadding(new Insets(20,10,10,20));
+      mainBottomHBox.setAlignment(Pos.BOTTOM_CENTER);
+      mainBottomHBox.setSpacing(200);
       mainBottomHBox.getChildren().add(uniqueItems);
       mainBottomHBox.getChildren().add(totalQuantity);
 

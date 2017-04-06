@@ -17,6 +17,7 @@
     -fx-border-color: cadetblue;
     -fx-border-radius: 20%;
     -fx-border-width: 3px;
+
 }
 
 #inventory_table, #user_table {

@@ -466,6 +466,7 @@ class View {
    // Method for AddMenuBox.
    private VBox addUserBox() {
       VBox vbox = new VBox();
+      vbox.setId("add_user_vbox");
       Label addUserNameLabel = new Label("Username:");
       Label addPasswordLabel = new Label("Password:");
       Label addEmailLabel = new Label("Email:");
@@ -501,7 +502,8 @@ class View {
          hbox6.getChildren().add(addEmail);
          hbox7.getChildren().add(getApplyButton());
          hbox7.getChildren().add(getCancelButton());
-         addBorderPane.setRight(hbox6);
+         addBorderPane.setLeft(hbox6);
+         addBorderPane.setRight(hbox7);
          vbox.getChildren().add(hbox1);
          vbox.getChildren().add(hbox2);
          vbox.getChildren().add(hbox3);

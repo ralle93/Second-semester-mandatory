@@ -20,13 +20,6 @@
 
 }
 
-#inventory_table, #user_table {
-    -fx-border-radius: 10px;
-    -fx-border-color: cadetblue;
-    -fx-background-color: transparent;
-    -fx-border-width: 4px;
-}
-
 #main_center_vbox {
     -fx-background-color: transparent;
     -fx-padding: 25px;
@@ -61,7 +54,7 @@
     -fx-border-width: 4px;
 }
 
-#add_menu_vbox {
+#add_menu_vbox, #add_user_vbox {
     -fx-spacing: 10px;
     -fx-border-width: 4px;
     -fx-border-radius: 10px;
@@ -118,3 +111,9 @@
     -fx-text-fill: azure;
 }
 
+.table-view {
+    -fx-border-color: cadetblue;
+    -fx-border-radius: 10px;
+    -fx-border-width: 4px;
+    -fx-background-radius: 10px;
+}

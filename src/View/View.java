@@ -460,8 +460,26 @@ class View {
             System.out.println("Please select an item to delete!");
          }
       });
-
       return deleteButton;
+   }
+
+   private Button getAddUserButton() {
+      Button addUserButton = new Button();
+      addUserButton.setText("Add User");
+      return addUserButton;
+   }
+
+   private Button getEditUserButton() {
+      Button editUserButton = new Button();
+      editUserButton.setText("Edit User");
+      return editUserButton;
+   }
+
+   private Button getDeleteUserButton() {
+      Button deleteUserButton = new Button();
+      deleteUserButton.setText("Delete User");
+
+      return deleteUserButton;
    }
 
    private Scene mainView() {
@@ -526,6 +544,10 @@ class View {
       userEdit.setOnAction(e -> {
          mainCenterVBox.getChildren().clear();
          mainCenterVBox.getChildren().add(userTable);
+         mainRightVBox.getChildren().clear();
+         mainRightVBox.getChildren().add(getAddUserButton());
+         mainRightVBox.getChildren().add(getEditUserButton());
+         mainRightVBox.getChildren().add(getDeleteUserButton());
       });
       return mainScene;
     }

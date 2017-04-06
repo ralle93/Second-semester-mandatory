@@ -30,6 +30,7 @@
 #main_center_vbox {
     -fx-background-color: transparent;
     -fx-padding: 25px;
+    -fx-spacing: 20px;
 }
 
 #main_left_vbox {
@@ -63,7 +64,7 @@
 #add_menu_vbox {
     -fx-spacing: 10px;
     -fx-border-width: 4px;
-    -fx-border-radius: 5px;
+    -fx-border-radius: 10px;
     -fx-border-color: cadetblue;
     -fx-padding: 25px;
 }

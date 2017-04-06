@@ -64,6 +64,7 @@ public class View {
    private TextField addDescription = new TextField();
    private TableView inventoryTable = new TableView<>();
    private TableView userTable = new TableView<>();
+   private HBox addBox = new HBox();
    private HBox mainHBox = new HBox();
    private HBox mainHBoxAdd = new HBox();
    private HBox mainBottomHBox = new HBox();
@@ -91,9 +92,8 @@ public class View {
    }
 
    // load CSS from a stylesheet.
-   private Scene loadCSS(Scene scene) {
+   private void loadCSS(Scene scene) {
       scene.getStylesheets().add("/View/stylesheet.css");
-      return scene;
    }
 
    // Get method for login label.
@@ -246,6 +246,8 @@ public class View {
 
    // Get method for User Table
    private TableView getUserTable() {
+      userTable.setId("user_table");
+
       TableView userTable = new TableView();
 
       TableColumn<User, String> userColumn = new TableColumn("USERNAME");
@@ -274,6 +276,8 @@ public class View {
 
    // Method used for allowing search in Inventory Table
    private void search() {
+      searchField.setMinWidth(800);
+      searchField.setMaxWidth(800);
       searchField.setPromptText("Search");
       searchField.setOnKeyPressed(e -> {
          if (e.getCode().equals(KeyCode.ENTER)) {
@@ -457,6 +461,7 @@ public class View {
 
       mainRightVBox.setId("main_right_vbox");
       mainRightVBox.setPadding(new Insets(20,10,20,10));
+      mainRightVBox.setSpacing(20);
       mainRightVBox.getChildren().add(getAddButton());
       mainRightVBox.getChildren().add(getEditButton());
       mainRightVBox.getChildren().add(getDeleteButton());

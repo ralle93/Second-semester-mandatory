@@ -437,9 +437,13 @@ public class View {
       deleteButton.setOnAction(event -> {
          ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
          Item item = items.get(0);
-         c.removeItemFromDb(item);
 
-         updateTable();
+         if (item != null) {
+            c.removeItemFromDb(item);
+            updateTable();
+         } else {
+            System.out.println("Please select an item to delete!");
+         }
       });
 
       return deleteButton;

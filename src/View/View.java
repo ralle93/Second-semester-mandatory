@@ -408,6 +408,8 @@ class View {
    // Get Method for AddButton.
    private Button getAddButton() {
       addButton.setOnAction(event -> {
+         isEditing = false;
+
          addQuantity.setText("");
          addName.setText("");
          addDescription.setText("");
@@ -419,9 +421,13 @@ class View {
 
    // Method to show the add and edit menu
    private void addEditMenu() {
-      addMenuVBox.setId("add_menu_vbox");
-      mainCenterVBox.getChildren().add(addMenuVBox);
-      addMenuBox(addMenuVBox);
+      try {
+         addMenuVBox.setId("add_menu_vbox");
+         mainCenterVBox.getChildren().add(addMenuVBox);
+         addMenuBox(addMenuVBox);
+      } catch (IllegalArgumentException ex) {
+         System.out.println("No exception to see here");
+      }
    }
 
    // Get method for editButton
@@ -451,9 +457,13 @@ class View {
       deleteButton.setOnAction(event -> {
          ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
          Item item = items.get(0);
-         c.removeItemFromDb(item);
 
-         updateTable();
+         if (item != null) {
+            c.removeItemFromDb(item);
+            updateTable();
+         } else {
+            System.out.println("Please select an item to delete!");
+         }
       });
 
       return deleteButton;

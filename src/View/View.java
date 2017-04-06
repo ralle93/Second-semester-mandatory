@@ -23,7 +23,7 @@ import java.text.NumberFormat;
 /**
  * Tommy is primary contributor for this class.
  */
-public class View {
+class View {
    private Controller c;
 
    private Stage primaryStage = new Stage();
@@ -64,7 +64,6 @@ public class View {
    private TextField addDescription = new TextField();
    private TableView inventoryTable = new TableView<>();
    private TableView userTable = new TableView<>();
-   private HBox addBox = new HBox();
    private HBox mainHBox = new HBox();
    private HBox mainHBoxAdd = new HBox();
    private HBox mainBottomHBox = new HBox();
@@ -72,6 +71,7 @@ public class View {
    private VBox mainRightVBox = new VBox();
    private VBox mainLeftVBox = new VBox();
    private VBox mainCenterVBox = new VBox();
+   private VBox addMenuVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
    private Scene mainScene = new Scene(borderpane, 1280, 720);
 
@@ -217,7 +217,7 @@ public class View {
    }
 
    // Get method for inventory Table.
-   private TableView getInventoryTable() {
+   private void getInventoryTable() {
       inventoryTable.setId("inventory_table");
 
       TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
@@ -240,8 +240,6 @@ public class View {
 
       updateTable();
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
-
-      return inventoryTable;
    }
 
    // Get method for User Table
@@ -307,10 +305,8 @@ public class View {
 
    /**
     * Get Method for Logout Button.
-    *
-    * @return
+    * @return logoutButton
     */
-
    private Button getLogoutButton() {
       logoutButton.setOnAction(event -> {
          inventoryTable.getColumns().clear();
@@ -369,25 +365,48 @@ public class View {
    }
 
    // Method for AddMenuBox.
-   public void addMenuBox(HBox hbox) {
+   private void addMenuBox(VBox vbox) {
+      HBox hbox1 = new HBox();
+      hbox1.setSpacing(10);
+      HBox hbox2 = new HBox();
+      hbox2.setSpacing(10);
+      HBox hbox3 = new HBox();
+      hbox3.setSpacing(10);
+      HBox hbox4 = new HBox();
+      hbox4.setSpacing(10);
+      HBox hbox5 = new HBox();
+      hbox5.setSpacing(10);
+      HBox hbox6 = new HBox();
+      hbox6.setSpacing(10);
+      BorderPane addBorderPane = new BorderPane();
+
       addQuantity.setMinWidth(50);
       addQuantity.setMaxWidth(50);
       try {
-         hbox.getChildren().add(addQuantityLabel);
-         hbox.getChildren().add(addQuantity);
-         hbox.getChildren().add(addNameLabel);
-         hbox.getChildren().add(addName);
-         hbox.getChildren().add(addDescriptionLabel);
-         hbox.getChildren().add(addDescription);
-         hbox.getChildren().add(getApplyButton());
-         hbox.getChildren().add(getCancelButton());
+         hbox1.getChildren().add(addNameLabel);
+         hbox2.getChildren().add(addName);
+         hbox3.getChildren().add(addDescriptionLabel);
+         hbox4.getChildren().add(addDescription);
+         hbox5.getChildren().add(addQuantityLabel);
+         hbox6.getChildren().add(getApplyButton());
+         hbox6.getChildren().add(getCancelButton());
+         addBorderPane.setLeft(addQuantity);
+
+         addBorderPane.setRight(hbox6);
+         vbox.setSpacing(10);
+         vbox.getChildren().add(hbox1);
+         vbox.getChildren().add(hbox2);
+         vbox.getChildren().add(hbox3);
+         vbox.getChildren().add(hbox4);
+         vbox.getChildren().add(hbox5);
+         vbox.getChildren().add(addBorderPane);
       } catch (IllegalArgumentException ex) {
          System.out.println("No exception to see here");
       }
    }
 
    // Get Method for AddButton.
-   public Button getAddButton() {
+   private Button getAddButton() {
       addButton.setOnAction(event -> {
          addQuantity.setText("");
          addName.setText("");
@@ -399,13 +418,14 @@ public class View {
    }
 
    // Method to show the add and edit menu
-   public void addEditMenu() {
-      mainCenterVBox.getChildren().add(mainHBoxAdd);
-      addMenuBox(mainHBoxAdd);
+   private void addEditMenu() {
+      addMenuVBox.setId("add_menu_vbox");
+      mainCenterVBox.getChildren().add(addMenuVBox);
+      addMenuBox(addMenuVBox);
    }
 
    // Get method for editButton
-   public Button getEditButton() {
+   private Button getEditButton() {
       editButton.setOnAction(event -> {
          ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
          selectedItem = items.get(0);
@@ -427,7 +447,7 @@ public class View {
    }
 
    // Get method for deleteButton.
-   public Button getDeleteButton() {
+   private Button getDeleteButton() {
       deleteButton.setOnAction(event -> {
          ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
          Item item = items.get(0);

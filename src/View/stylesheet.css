@@ -59,6 +59,13 @@
     -fx-border-width: 4px;
 }
 
+#add_menu_vbox {
+    -fx-border-width: 4px;
+    -fx-border-radius: 5px;
+    -fx-border-color: cadetblue;
+    -fx-padding: 25px;
+}
+
 #main_current_user_label, #main_current_user_access_level_label {
     -fx-text-fill: azure;
 }

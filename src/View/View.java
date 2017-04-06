@@ -62,6 +62,9 @@ class View {
    private TextField addName = new TextField();
    private TextField addQuantity = new TextField();
    private TextField addDescription = new TextField();
+   private TextField addUserName = new TextField();
+   private TextField addEmail = new TextField();
+   private PasswordField addPassword = new PasswordField();
    private TableView inventoryTable = new TableView<>();
    private TableView userTable = new TableView<>();
    private HBox mainHBox = new HBox();
@@ -76,7 +79,9 @@ class View {
    private Scene mainScene = new Scene(borderpane, 1280, 720);
 
    private boolean isEditing = false;
+   private boolean isUserEditing = false;
    private Item selectedItem;
+   private User selectedUser;
 
    // Constructor for View class
    View(Controller c, Stage stage) {
@@ -242,6 +247,11 @@ class View {
       inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
    }
 
+   private void updateUserTable() {
+      ObservableList<User> userList = c.getUsers();
+      userTable.setItems(userList);
+   }
+
    // Get method for User Table
    private TableView getUserTable() {
       userTable.setId("user_table");
@@ -265,8 +275,10 @@ class View {
       eMailColumn.setCellValueFactory(new PropertyValueFactory("email"));
 
       userTable.setPadding(new Insets(10,10,10,10));
+
       ObservableList<User> userList = c.getUsers();
       userTable.setItems(userList);
+
       userTable.getColumns().addAll(userColumn, passColumn, accessColumn, eMailColumn);
 
       return userTable;
@@ -331,25 +343,45 @@ class View {
    //Get Method for Apply Button
    private Button getApplyButton() {
       applyButton.setOnAction(event -> {
-         try {
-            int quantity = Integer.parseInt(addQuantity.getText());
-            String name = addName.getText();
-            String description = addDescription.getText();
+         if (isUserEditing) {
+            String userName = addUserName.getText();
+            String password = addPassword.getText();
+            String email = addEmail.getText();
 
             if (isEditing) {
-               Item item = new Item(selectedItem.getId(), quantity, name, description);
-               c.updateItem(item);
+               selectedUser = new User(selectedUser.getAccessLevel(), selectedUser.getUsername(), password, email);
+               c.updateUser(selectedUser);
                isEditing = false;
             } else {
-               Item item = new Item(quantity, name, description);
-               c.addItemToDb(item);
+               User user = new User(0, userName, password, email);
+               c.createUser(user);
             }
 
-            mainCenterVBox.getChildren().remove(addMenuVBox);
 
-            updateTable();
-         } catch (NumberFormatException ex) {
-            System.out.println("You need to enter an integer you noob!");
+            updateUserTable();
+            mainCenterVBox.getChildren().clear();
+            mainCenterVBox.getChildren().add(userTable);
+         } else {
+            try {
+               int quantity = Integer.parseInt(addQuantity.getText());
+               String name = addName.getText();
+               String description = addDescription.getText();
+
+               if (isEditing) {
+                  Item item = new Item(selectedItem.getId(), quantity, name, description);
+                  c.updateItem(item);
+                  isEditing = false;
+               } else {
+                  Item item = new Item(quantity, name, description);
+                  c.addItemToDb(item);
+               }
+
+               mainCenterVBox.getChildren().remove(addMenuVBox);
+
+               updateTable();
+            } catch (NumberFormatException ex) {
+               System.out.println("You need to enter an integer you noob!");
+            }
          }
       });
       return applyButton;
@@ -358,7 +390,12 @@ class View {
    // Get Method for cancel adding to Inventory Table.
    private Button getCancelButton() {
       cancelButton.setOnAction(event -> {
-         mainCenterVBox.getChildren().remove(addMenuVBox);
+         if(isUserEditing) {
+            mainCenterVBox.getChildren().clear();
+            mainCenterVBox.getChildren().add(userTable);
+         } else {
+            mainCenterVBox.getChildren().remove(addMenuVBox);
+         }
          isEditing = false;
       });
       return cancelButton;
@@ -470,11 +507,8 @@ class View {
       Label addUserNameLabel = new Label("Username:");
       Label addPasswordLabel = new Label("Password:");
       Label addEmailLabel = new Label("Email:");
-      TextField addUserName = new TextField();
       addUserName.setPromptText("Enter new Username");
-      PasswordField addPassword = new PasswordField();
       addPassword.setPromptText("Enter new Password");
-      TextField addEmail = new TextField();
       addEmail.setPromptText("Enter an Email Address");
       HBox hbox1 = new HBox();
       hbox1.setSpacing(10);
@@ -521,9 +555,14 @@ class View {
       Button addUserButton = new Button();
       addUserButton.setText("Add User");
       addUserButton.setOnAction(event -> {
+         isEditing = false;
          mainCenterVBox.getChildren().clear();
          mainCenterVBox.getChildren().add(userTable);
          mainCenterVBox.getChildren().add(addUserBox());
+
+         addUserName.setText("");
+         addPassword.setText("");
+         addEmail.setText("");
       });
       return addUserButton;
    }
@@ -532,12 +571,43 @@ class View {
       Button editUserButton = new Button();
       editUserButton.setText("Edit User");
 
+      editUserButton.setOnAction(event -> {
+         ObservableList<User> users = userTable.getSelectionModel().getSelectedItems();
+         selectedUser = users.get(0);
+
+         if (selectedUser != null) {
+            isEditing = true;
+            mainCenterVBox.getChildren().clear();
+            mainCenterVBox.getChildren().add(userTable);
+            mainCenterVBox.getChildren().add(addUserBox());
+
+            addUserName.setText(selectedUser.getUsername());
+            addPassword.setText(selectedUser.getPassword());
+            addEmail.setText(selectedUser.getEmail());
+         } else {
+            System.out.println("Please select a user to edit!");
+         }
+      });
+
       return editUserButton;
    }
 
    private Button getDeleteUserButton() {
       Button deleteUserButton = new Button();
       deleteUserButton.setText("Delete User");
+
+      deleteUserButton.setOnAction(event -> {
+         ObservableList<User> users = userTable.getSelectionModel().getSelectedItems();
+         User user = users.get(0);
+
+         if (user != null) {
+            c.deleteUser(user);
+            updateUserTable();
+         } else {
+            System.out.println("Please select a user to delete!");
+         }
+      });
+
       return deleteUserButton;
    }
 
@@ -598,6 +668,13 @@ class View {
       inventoryButton.setOnAction(e -> {
          mainCenterVBox.getChildren().clear();
          mainCenterVBox.getChildren().add(inventoryTable);
+
+         mainRightVBox.getChildren().clear();
+         mainRightVBox.getChildren().add(addButton);
+         mainRightVBox.getChildren().add(editButton);
+         mainRightVBox.getChildren().add(deleteButton);
+
+         isUserEditing = false;
       });
 
       userEdit.setOnAction(e -> {
@@ -607,6 +684,8 @@ class View {
          mainRightVBox.getChildren().add(getAddUserButton());
          mainRightVBox.getChildren().add(getEditUserButton());
          mainRightVBox.getChildren().add(getDeleteUserButton());
+
+         isUserEditing = true;
       });
       return mainScene;
     }

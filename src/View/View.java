@@ -181,11 +181,7 @@ class View {
 
       userNameField.setPromptText("Username");
       passwordField.setPromptText("Password");
-
-      // TODO: Only used for testing purposes needs to be deleted at completion
-      userNameField.setText("mikk7506");
-      passwordField.setText("12345");
-
+      
       return loginScene;
    }
 

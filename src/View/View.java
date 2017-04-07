@@ -321,6 +321,9 @@ class View {
          userTable.getColumns().clear();
 
          c.setLoggedUser(null);
+         userNameField.clear();
+         passwordField.clear();
+         userNameField.requestFocus();
          primaryStage.setScene(loginView());
          primaryStage.show();
       });

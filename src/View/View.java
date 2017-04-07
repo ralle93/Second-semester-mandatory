@@ -288,7 +288,7 @@ class View {
    private void search() {
       searchField.setMinWidth(800);
       searchField.setMaxWidth(800);
-      searchField.setPromptText("Search");
+      searchField.setPromptText("Search items");
       searchField.setOnKeyPressed(e -> {
          if (e.getCode().equals(KeyCode.ENTER)) {
             ObservableList<Item> list = c.getItems();

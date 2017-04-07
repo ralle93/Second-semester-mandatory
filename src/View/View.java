@@ -181,7 +181,7 @@ class View {
 
       userNameField.setPromptText("Username");
       passwordField.setPromptText("Password");
-      
+
       return loginScene;
    }
 
@@ -200,7 +200,7 @@ class View {
    // Get method for show what level a user has.
    private Label getCurrentUserAccessLevel() {
       labelAccessLevel.setId("main_current_user_access_level_label");
-      labelAccessLevel.setText("Access Level: ");
+      labelAccessLevel.setText("Access Level: " + c.getLoggedUser().getAccessLevel());
       return labelAccessLevel;
    }
 
@@ -390,7 +390,9 @@ class View {
             mainCenterVBox.getChildren().clear();
             mainCenterVBox.getChildren().add(userTable);
          } else {
-            mainCenterVBox.getChildren().remove(addMenuVBox);
+            mainCenterVBox.getChildren().clear();
+            mainCenterVBox.getChildren().add(inventoryTable);
+
          }
          isEditing = false;
       });

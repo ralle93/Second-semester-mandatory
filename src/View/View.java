@@ -352,8 +352,10 @@ class View {
             String email = addEmail.getText();
 
             if (isEditing) {
-               selectedUser = new User(selectedUser.getAccessLevel(), selectedUser.getUsername(), password, email);
-               c.updateUser(selectedUser);
+               User user = new User(selectedUser.getAccessLevel(), userName, password, email);
+               c.deleteUser(selectedUser);
+               c.createUser(user);
+
                isEditing = false;
             } else {
                User user = new User(0, userName, password, email);

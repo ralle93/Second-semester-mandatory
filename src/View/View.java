@@ -423,25 +423,23 @@ class View {
       BorderPane addBorderPane = new BorderPane();
       addQuantity.setMinWidth(50);
       addQuantity.setMaxWidth(50);
-      try {
-         hbox1.getChildren().add(addNameLabel);
-         hbox2.getChildren().add(addName);
-         hbox3.getChildren().add(addDescriptionLabel);
-         hbox4.getChildren().add(addDescription);
-         hbox5.getChildren().add(addQuantityLabel);
-         hbox6.getChildren().add(getApplyButton());
-         hbox6.getChildren().add(getCancelButton());
-         addBorderPane.setLeft(addQuantity);
-         addBorderPane.setRight(hbox6);
-         vbox.getChildren().add(hbox1);
-         vbox.getChildren().add(hbox2);
-         vbox.getChildren().add(hbox3);
-         vbox.getChildren().add(hbox4);
-         vbox.getChildren().add(hbox5);
-         vbox.getChildren().add(addBorderPane);
-      } catch (IllegalArgumentException ex) {
-         System.out.println("No exception to see here");
-      }
+
+      hbox1.getChildren().add(addNameLabel);
+      hbox2.getChildren().add(addName);
+      hbox3.getChildren().add(addDescriptionLabel);
+      hbox4.getChildren().add(addDescription);
+      hbox5.getChildren().add(addQuantityLabel);
+      hbox6.getChildren().add(getApplyButton());
+      hbox6.getChildren().add(getCancelButton());
+      addBorderPane.setLeft(addQuantity);
+      addBorderPane.setRight(hbox6);
+      vbox.getChildren().clear();
+      vbox.getChildren().add(hbox1);
+      vbox.getChildren().add(hbox2);
+      vbox.getChildren().add(hbox3);
+      vbox.getChildren().add(hbox4);
+      vbox.getChildren().add(hbox5);
+      vbox.getChildren().add(addBorderPane);
    }
 
    // Get Method for AddButton.
@@ -458,13 +456,11 @@ class View {
 
    // Method to show the add and edit menu
    private void addEditMenu() {
-      try {
-         addMenuVBox.setId("add_menu_vbox");
-         mainCenterVBox.getChildren().add(addMenuVBox);
-         addMenuBox(addMenuVBox);
-      } catch (IllegalArgumentException ex) {
-         System.out.println("No exception to see here");
-      }
+      addMenuVBox.setId("add_menu_vbox");
+      mainCenterVBox.getChildren().clear();
+      mainCenterVBox.getChildren().add(inventoryTable);
+      mainCenterVBox.getChildren().add(addMenuVBox);
+      addMenuBox(addMenuVBox);
    }
 
    // Get method for editButton

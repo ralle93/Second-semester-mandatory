@@ -178,7 +178,11 @@ class View {
    private Scene loginView() {
 
       loadCSS(loginScene);
-
+      loginScene.setOnKeyPressed(e -> {
+         if(e.getCode().equals(KeyCode.ENTER)){
+            loginButton.fire();
+         }
+      });
       userNameField.setPromptText("Username");
       passwordField.setPromptText("Password");
 

@@ -23,7 +23,7 @@ import java.text.NumberFormat;
 /**
  * Tommy is primary contributor for this class.
  */
-public class View {
+class View {
    private Controller c;
 
    private Stage primaryStage = new Stage();
@@ -62,6 +62,9 @@ public class View {
    private TextField addName = new TextField();
    private TextField addQuantity = new TextField();
    private TextField addDescription = new TextField();
+   private TextField addUserName = new TextField();
+   private TextField addEmail = new TextField();
+   private PasswordField addPassword = new PasswordField();
    private TableView inventoryTable = new TableView<>();
    private TableView userTable = new TableView<>();
    private HBox mainHBox = new HBox();
@@ -71,8 +74,14 @@ public class View {
    private VBox mainRightVBox = new VBox();
    private VBox mainLeftVBox = new VBox();
    private VBox mainCenterVBox = new VBox();
+   private VBox addMenuVBox = new VBox();
    private BorderPane borderpane = new BorderPane();
    private Scene mainScene = new Scene(borderpane, 1280, 720);
+
+   private boolean isEditing = false;
+   private boolean isUserEditing = false;
+   private Item selectedItem;
+   private User selectedUser;
 
    // Constructor for View class
    View(Controller c, Stage stage) {
@@ -88,9 +97,8 @@ public class View {
    }
 
    // load CSS from a stylesheet.
-   private Scene loadCSS(Scene scene) {
+   private void loadCSS(Scene scene) {
       scene.getStylesheets().add("/View/stylesheet.css");
-      return scene;
    }
 
    // Get method for login label.
@@ -173,11 +181,7 @@ public class View {
 
       userNameField.setPromptText("Username");
       passwordField.setPromptText("Password");
-
-      // TODO: Only used for testing purposes needs to be deleted at completion
-      userNameField.setText("mikk7506");
-      passwordField.setText("12345");
-
+      
       return loginScene;
    }
 
@@ -200,8 +204,21 @@ public class View {
       return labelAccessLevel;
    }
 
+   // Method for updating the inventory table
+   private void updateTable() {
+      ObservableList<Item> items = c.getItems();
+      inventoryTable.setItems(items);
+
+      uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(items.size()));
+      int total = 0;
+      for (Item i : items) {
+         total += i.getQuantity();
+      }
+      totalQuantity.setText("Total quantity: " + NumberFormat.getIntegerInstance().format(total));
+   }
+
    // Get method for inventory Table.
-   private TableView getInventoryTable() {
+   private void getInventoryTable() {
       inventoryTable.setId("inventory_table");
 
       TableColumn<Item, Integer> idColumn = new TableColumn("ITEM NUMBER");
@@ -221,21 +238,20 @@ public class View {
       descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
 
       inventoryTable.setPadding(new Insets(10,10,10,10));
-      ObservableList<Item> itemList = c.getItems();
-      inventoryTable.setItems(itemList);
-      inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
 
-      uniqueItems.setText("Unique items: " + NumberFormat.getIntegerInstance().format(itemList.size()));
-      int total = 0;
-      for (Item i : itemList) {
-         total += i.getQuantity();
-      }
-      totalQuantity.setText("Total quantity: " + NumberFormat.getIntegerInstance().format(total));
-      return inventoryTable;
+      updateTable();
+      inventoryTable.getColumns().addAll(idColumn, quantityColumn, nameColumn, descriptionColumn);
+   }
+
+   private void updateUserTable() {
+      ObservableList<User> userList = c.getUsers();
+      userTable.setItems(userList);
    }
 
    // Get method for User Table
    private TableView getUserTable() {
+      userTable.setId("user_table");
+
       TableView userTable = new TableView();
 
       TableColumn<User, String> userColumn = new TableColumn("USERNAME");
@@ -255,8 +271,10 @@ public class View {
       eMailColumn.setCellValueFactory(new PropertyValueFactory("email"));
 
       userTable.setPadding(new Insets(10,10,10,10));
+
       ObservableList<User> userList = c.getUsers();
       userTable.setItems(userList);
+
       userTable.getColumns().addAll(userColumn, passColumn, accessColumn, eMailColumn);
 
       return userTable;
@@ -264,6 +282,8 @@ public class View {
 
    // Method used for allowing search in Inventory Table
    private void search() {
+      searchField.setMinWidth(800);
+      searchField.setMaxWidth(800);
       searchField.setPromptText("Search");
       searchField.setOnKeyPressed(e -> {
          if (e.getCode().equals(KeyCode.ENTER)) {
@@ -293,10 +313,8 @@ public class View {
 
    /**
     * Get Method for Logout Button.
-    *
-    * @return
+    * @return logoutButton
     */
-
    private Button getLogoutButton() {
       logoutButton.setOnAction(event -> {
          inventoryTable.getColumns().clear();
@@ -321,16 +339,45 @@ public class View {
    //Get Method for Apply Button
    private Button getApplyButton() {
       applyButton.setOnAction(event -> {
-         try {
-            int quantity = Integer.parseInt(addQuantity.getText());
-            String name = addName.getText();
-            String description = addDescription.getText();
-            Item item = new Item(quantity, name, description);
-            c.addItemToDb(item);
+         if (isUserEditing) {
+            String userName = addUserName.getText();
+            String password = addPassword.getText();
+            String email = addEmail.getText();
 
-            mainCenterVBox.getChildren().remove(mainHBoxAdd);
-         } catch (NumberFormatException ex) {
-            System.out.println("You need to enter an integer you noob!");
+            if (isEditing) {
+               selectedUser = new User(selectedUser.getAccessLevel(), selectedUser.getUsername(), password, email);
+               c.updateUser(selectedUser);
+               isEditing = false;
+            } else {
+               User user = new User(0, userName, password, email);
+               c.createUser(user);
+            }
+
+
+            updateUserTable();
+            mainCenterVBox.getChildren().clear();
+            mainCenterVBox.getChildren().add(userTable);
+         } else {
+            try {
+               int quantity = Integer.parseInt(addQuantity.getText());
+               String name = addName.getText();
+               String description = addDescription.getText();
+
+               if (isEditing) {
+                  Item item = new Item(selectedItem.getId(), quantity, name, description);
+                  c.updateItem(item);
+                  isEditing = false;
+               } else {
+                  Item item = new Item(quantity, name, description);
+                  c.addItemToDb(item);
+               }
+
+               mainCenterVBox.getChildren().remove(addMenuVBox);
+
+               updateTable();
+            } catch (NumberFormatException ex) {
+               System.out.println("You need to enter an integer you noob!");
+            }
          }
       });
       return applyButton;
@@ -339,36 +386,225 @@ public class View {
    // Get Method for cancel adding to Inventory Table.
    private Button getCancelButton() {
       cancelButton.setOnAction(event -> {
-         mainCenterVBox.getChildren().remove(mainHBoxAdd);
+         if(isUserEditing) {
+            mainCenterVBox.getChildren().clear();
+            mainCenterVBox.getChildren().add(userTable);
+         } else {
+            mainCenterVBox.getChildren().remove(addMenuVBox);
+         }
+         isEditing = false;
       });
       return cancelButton;
    }
 
    // Method for AddMenuBox.
-   public void addMenuBox(HBox hbox) {
+   private void addMenuBox(VBox vbox) {
+      HBox hbox1 = new HBox();
+      hbox1.setSpacing(10);
+      HBox hbox2 = new HBox();
+      hbox2.setSpacing(10);
+      HBox hbox3 = new HBox();
+      hbox3.setSpacing(10);
+      HBox hbox4 = new HBox();
+      hbox4.setSpacing(10);
+      HBox hbox5 = new HBox();
+      hbox5.setSpacing(10);
+      HBox hbox6 = new HBox();
+      hbox6.setSpacing(10);
+      BorderPane addBorderPane = new BorderPane();
       addQuantity.setMinWidth(50);
       addQuantity.setMaxWidth(50);
-      hbox.getChildren().add(addQuantityLabel);
-      hbox.getChildren().add(addQuantity);
-      hbox.getChildren().add(addNameLabel);
-      hbox.getChildren().add(addName);
-      hbox.getChildren().add(addDescriptionLabel);
-      hbox.getChildren().add(addDescription);
-      hbox.getChildren().add(getApplyButton());
-      hbox.getChildren().add(getCancelButton());
+      try {
+         hbox1.getChildren().add(addNameLabel);
+         hbox2.getChildren().add(addName);
+         hbox3.getChildren().add(addDescriptionLabel);
+         hbox4.getChildren().add(addDescription);
+         hbox5.getChildren().add(addQuantityLabel);
+         hbox6.getChildren().add(getApplyButton());
+         hbox6.getChildren().add(getCancelButton());
+         addBorderPane.setLeft(addQuantity);
+         addBorderPane.setRight(hbox6);
+         vbox.getChildren().add(hbox1);
+         vbox.getChildren().add(hbox2);
+         vbox.getChildren().add(hbox3);
+         vbox.getChildren().add(hbox4);
+         vbox.getChildren().add(hbox5);
+         vbox.getChildren().add(addBorderPane);
+      } catch (IllegalArgumentException ex) {
+         System.out.println("No exception to see here");
+      }
    }
 
    // Get Method for AddButton.
-   public Button getAddButton() {
+   private Button getAddButton() {
       addButton.setOnAction(event -> {
+         isEditing = false;
          addQuantity.setText("");
          addName.setText("");
          addDescription.setText("");
-
-         mainCenterVBox.getChildren().add(mainHBoxAdd);
-         addMenuBox(mainHBoxAdd);
+         addEditMenu();
       });
       return addButton;
+   }
+
+   // Method to show the add and edit menu
+   private void addEditMenu() {
+      try {
+         addMenuVBox.setId("add_menu_vbox");
+         mainCenterVBox.getChildren().add(addMenuVBox);
+         addMenuBox(addMenuVBox);
+      } catch (IllegalArgumentException ex) {
+         System.out.println("No exception to see here");
+      }
+   }
+
+   // Get method for editButton
+   private Button getEditButton() {
+      editButton.setOnAction(event -> {
+         ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
+         selectedItem = items.get(0);
+
+         if (selectedItem != null) {
+            isEditing = true;
+
+            addQuantity.setText(String.valueOf(selectedItem.getQuantity()));
+            addName.setText(selectedItem.getName());
+            addDescription.setText(selectedItem.getDescription());
+
+            addEditMenu();
+         } else {
+            System.out.println("Please select an item to edit!");
+         }
+      });
+
+      return editButton;
+   }
+
+   // Get method for deleteButton.
+   private Button getDeleteButton() {
+      deleteButton.setOnAction(event -> {
+         ObservableList<Item> items = inventoryTable.getSelectionModel().getSelectedItems();
+         Item item = items.get(0);
+
+         if (item != null) {
+            c.removeItemFromDb(item);
+            updateTable();
+         } else {
+            System.out.println("Please select an item to delete!");
+         }
+      });
+      return deleteButton;
+   }
+
+   // Method for AddMenuBox.
+   private VBox addUserBox() {
+      VBox vbox = new VBox();
+      vbox.setId("add_user_vbox");
+      Label addUserNameLabel = new Label("Username:");
+      Label addPasswordLabel = new Label("Password:");
+      Label addEmailLabel = new Label("Email:");
+      addUserName.setPromptText("Enter new Username");
+      addPassword.setPromptText("Enter new Password");
+      addEmail.setPromptText("Enter an Email Address");
+      HBox hbox1 = new HBox();
+      hbox1.setSpacing(10);
+      HBox hbox2 = new HBox();
+      hbox2.setSpacing(10);
+      HBox hbox3 = new HBox();
+      hbox3.setSpacing(10);
+      HBox hbox4 = new HBox();
+      hbox4.setSpacing(10);
+      HBox hbox5 = new HBox();
+      hbox5.setSpacing(10);
+      HBox hbox6 = new HBox();
+      hbox6.setSpacing(10);
+      HBox hbox7 = new HBox();
+      hbox7.setSpacing(10);
+      BorderPane addBorderPane = new BorderPane();
+      addQuantity.setMinWidth(50);
+      addQuantity.setMaxWidth(50);
+      try {
+         hbox1.getChildren().add(addUserNameLabel);
+         hbox2.getChildren().add(addUserName);
+         hbox3.getChildren().add(addPasswordLabel);
+         hbox4.getChildren().add(addPassword);
+         hbox5.getChildren().add(addEmailLabel);
+         hbox6.getChildren().add(addEmail);
+         hbox7.getChildren().add(getApplyButton());
+         hbox7.getChildren().add(getCancelButton());
+         addBorderPane.setLeft(hbox6);
+         addBorderPane.setRight(hbox7);
+         vbox.getChildren().add(hbox1);
+         vbox.getChildren().add(hbox2);
+         vbox.getChildren().add(hbox3);
+         vbox.getChildren().add(hbox4);
+         vbox.getChildren().add(hbox5);
+         vbox.getChildren().add(addBorderPane);
+      } catch (IllegalArgumentException ex) {
+         System.out.println("No exception to see here");
+      }
+      return vbox;
+   }
+
+   private Button getAddUserButton() {
+      VBox userVBox = new VBox();
+      Button addUserButton = new Button();
+      addUserButton.setText("Add User");
+      addUserButton.setOnAction(event -> {
+         isEditing = false;
+         mainCenterVBox.getChildren().clear();
+         mainCenterVBox.getChildren().add(userTable);
+         mainCenterVBox.getChildren().add(addUserBox());
+
+         addUserName.setText("");
+         addPassword.setText("");
+         addEmail.setText("");
+      });
+      return addUserButton;
+   }
+
+   private Button getEditUserButton() {
+      Button editUserButton = new Button();
+      editUserButton.setText("Edit User");
+
+      editUserButton.setOnAction(event -> {
+         ObservableList<User> users = userTable.getSelectionModel().getSelectedItems();
+         selectedUser = users.get(0);
+
+         if (selectedUser != null) {
+            isEditing = true;
+            mainCenterVBox.getChildren().clear();
+            mainCenterVBox.getChildren().add(userTable);
+            mainCenterVBox.getChildren().add(addUserBox());
+
+            addUserName.setText(selectedUser.getUsername());
+            addPassword.setText(selectedUser.getPassword());
+            addEmail.setText(selectedUser.getEmail());
+         } else {
+            System.out.println("Please select a user to edit!");
+         }
+      });
+
+      return editUserButton;
+   }
+
+   private Button getDeleteUserButton() {
+      Button deleteUserButton = new Button();
+      deleteUserButton.setText("Delete User");
+
+      deleteUserButton.setOnAction(event -> {
+         ObservableList<User> users = userTable.getSelectionModel().getSelectedItems();
+         User user = users.get(0);
+
+         if (user != null) {
+            c.deleteUser(user);
+            updateUserTable();
+         } else {
+            System.out.println("Please select a user to delete!");
+         }
+      });
+
+      return deleteUserButton;
    }
 
    private Scene mainView() {
@@ -395,9 +631,10 @@ public class View {
 
       mainRightVBox.setId("main_right_vbox");
       mainRightVBox.setPadding(new Insets(20,10,20,10));
+      mainRightVBox.setSpacing(20);
       mainRightVBox.getChildren().add(getAddButton());
-      mainRightVBox.getChildren().add(editButton);
-      mainRightVBox.getChildren().add(deleteButton);
+      mainRightVBox.getChildren().add(getEditButton());
+      mainRightVBox.getChildren().add(getDeleteButton());
 
       mainLeftVBox.setId("main_left_vbox");
       mainLeftVBox.setPadding(new Insets(20,10,20,10));
@@ -427,11 +664,24 @@ public class View {
       inventoryButton.setOnAction(e -> {
          mainCenterVBox.getChildren().clear();
          mainCenterVBox.getChildren().add(inventoryTable);
+
+         mainRightVBox.getChildren().clear();
+         mainRightVBox.getChildren().add(addButton);
+         mainRightVBox.getChildren().add(editButton);
+         mainRightVBox.getChildren().add(deleteButton);
+
+         isUserEditing = false;
       });
 
       userEdit.setOnAction(e -> {
          mainCenterVBox.getChildren().clear();
          mainCenterVBox.getChildren().add(userTable);
+         mainRightVBox.getChildren().clear();
+         mainRightVBox.getChildren().add(getAddUserButton());
+         mainRightVBox.getChildren().add(getEditUserButton());
+         mainRightVBox.getChildren().add(getDeleteUserButton());
+
+         isUserEditing = true;
       });
       return mainScene;
     }

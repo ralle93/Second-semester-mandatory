@@ -43,7 +43,6 @@ public class DataLayer {
       query += "acces_lvl = '" + user.getAccessLevel() + "', email = '" + user.getEmail() + "' \n";
       query += "WHERE username = '" + user.getUsername() + "';";
       tryAndCatch(query);
-
    }
 
    public void deleteUser(User user){

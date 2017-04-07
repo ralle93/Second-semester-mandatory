@@ -267,8 +267,8 @@ class View {
       passColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
 
       TableColumn<User, Integer> accessColumn = new TableColumn("ACCESS LEVEL");
-      accessColumn.setMinWidth(100);
-      accessColumn.setCellValueFactory(new PropertyValueFactory("acces_lvl"));
+      accessColumn.setMinWidth(200);
+      accessColumn.setCellValueFactory(new PropertyValueFactory("accessLevel"));
 
       TableColumn<User, String> eMailColumn = new TableColumn("EMAIL ADDRESS");
       eMailColumn.setMinWidth(450);
